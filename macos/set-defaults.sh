@@ -1,11 +1,25 @@
-# Sets reasonable macOS defaults.
-#
-# Or, in other words, set shit how I like in macOS.
-#
-# The original idea (and a couple settings) were grabbed from:
-#   https://github.com/mathiasbynens/dotfiles/blob/master/.macos
-#
-# Run ./set-defaults.sh and you'll be good to go.
+# Set MacOS preferences - Borrowed from https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+
+# Close any open System Preferences panes, to prevent them from overriding
+
+
+# chflag settings
+# Show the ~/Library folder
+chflags nohidden ~/Library
+
+# Set Dock to no-hide and left
+defaults write com.apple.dock orientation left
+defaults write com.apple.dock autohide -bool false
+
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Automatically quit printer app once the print jobs complete
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+print_success "Are you sure you want to open this app dialog disabled."
 
 # Disable press-and-hold for keys in favor of key repeat.
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -26,16 +40,6 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Run the screensaver if we're in the bottom-left hot corner.
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
-
-# Hide Safari's bookmark bar.
-defaults write com.apple.Safari.plist ShowFavoritesBar -bool false
-
-# Set up Safari for development.
-defaults write com.apple.Safari.SandboxBroker ShowDevelopMenu -bool true
-defaults write com.apple.Safari.plist IncludeDevelopMenu -bool true
-defaults write com.apple.Safari.plist WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari.plist "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+# Set Screenshots folder to ~/Pictures/Screenshots
+mkdir -p ~/Pictures/Screenshots
+defaults write com.apple.screencapture location ~/Pictures/Screenshots

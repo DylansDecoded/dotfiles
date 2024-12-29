@@ -5,7 +5,7 @@ brew 'wget'
 brew 'yt-dlp'
 
 cask '1password'
+cask '1password-cli'
 cask 'arq'
-cask 'plex'
 cask 'raycast'
 cask 'visual-studio-code'

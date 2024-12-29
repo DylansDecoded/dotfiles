@@ -1,6 +1,10 @@
 # Local/private config goes in the include
-[include]
-        path = ~/.gitconfig.local
+[includeIf "gitdir/i:~/Dev/personal/"]
+    path = ~/Dev/personal/.gitconfig-personal
+
+[includeIf "gitdir/i:~/Dev/work/"]
+    path = ~/Dev/work/.gitconfig-work
+
 [hub]
         protocol = https
 [alias]
@@ -16,13 +20,22 @@
         ui = true
 [core]
         excludesfile = ~/.gitignore
-        editor = vim
+        editor = nano
 [apply]
         whitespace = nowarn
+
 [mergetool]
         keepBackup = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
 [difftool]
         prompt = false
+        
 [help]
         autocorrect = 1
 [push]
@@ -38,3 +51,5 @@
 
 [init]
 	defaultBranch = main
+
+
