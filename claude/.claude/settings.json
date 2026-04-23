@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "mcp__*pull_request_read",
+      "mcp__github__actions_*",
+      "mcp__github__add_comment_to_pending_review",
+      "mcp__github__add_issue_comment",
+      "mcp__github__add_reply_to_pull_request_comment",
+      "mcp__github__create_branch",
+      "mcp__github__create_or_update_file",
+      "mcp__github__create_pull_request",
+      "mcp__github__get_*",
+      "mcp__github__github_support_docs_search",
+      "mcp__github__issue_read",
+      "mcp__github__issue_write",
+      "mcp__github__list_*",
+      "mcp__github__projects_get",
+      "mcp__github__projects_list",
+      "mcp__github__pull_request_read",
+      "mcp__github__pull_request_review_write",
+      "mcp__github__search_*",
+      "mcp__github__sub_issue_write",
+      "mcp__github__update_pull_request_branch",
+      "mcp__github__update_pull_request",
+      "Read"
+    ],
+    "deny": [],
+    "ask": [
+      "Bash(curl*)",
+      "Bash(gh * delete *)",
+      "Bash(gh pr close *)",
+      "Bash(git tag *)",
+      "Bash(rm*)",
+      "Bash(vercel * delete *)",
+      "Bash(vercel remove *)",
+      "Bash(vercel rm *)"
+    ],
+    "defaultMode": "auto",
+    "additionalDirectories": []
+  },
+  "model": "opus[1m]",
+  "worktree": {},
+  "enabledPlugins": {
+    "atlassian@claude-plugins-official": true,
+    "compound-engineering@compound-engineering-plugin": true,
+    "context7@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "skipAutoPermissionPrompt": true
+}
