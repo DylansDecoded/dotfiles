@@ -1,0 +1,7 @@
+[global]
+# Needed to load .env. Ref: https://direnv.net/man/direnv.toml.1.html#codeloaddotenvcode
+load_dotenv = true  
+
+[whitelist]
+prefix = [ "~/src/github.com/DylansDecoded/" ]
+# exact = [ "~/tmp/.env" ]

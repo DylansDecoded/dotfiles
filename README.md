@@ -2,8 +2,3 @@
 
 
 
-### TODO:
-
-- [ ] - Setup flags for specific machines (mac, linux, etc.)
-
-- []

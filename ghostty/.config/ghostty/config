@@ -1,41 +1,69 @@
-# Font
-font-family = Source Code Pro
-font-size = 14
+# =============================================================================
+# Font Settings
+# =============================================================================
+font-family = JetBrainsMono NF
+font-family = Noto Sans CJK TC Bold
+font-size = 17
+font-feature = liga
+font-feature = calt
 
+# =============================================================================
+# Cursor
+# =============================================================================
+cursor-style = underline
+cursor-style-blink = false
+
+# =============================================================================
 # Window
-window-width = 80
-window-height = 25
+# =============================================================================
+window-padding-x = 3
+window-padding-y = 3
+window-padding-balance = true
+background-opacity = 1.0
+macos-titlebar-style = hidden
+window-decoration = false
+window-save-state = always
+window-inherit-working-directory = true
+window-inherit-font-size = true
 
-# Scrollback
-scrollback-limit = 1000
+# Disable audible bell
+bell-features = no-audio
+
+# Scrollback, unlimited scrollback is not yet implemented in ghostty
+scrollback-limit = 200000
 
 # Cursor
 cursor-style-blink = true
 
-# macOS - option key sends Esc+ (alt)
-macos-option-as-alt = true
+# Keybindings
+macos-option-as-alt = left
+keybind = command+left=esc:OH
+keybind = command+right=esc:OF
+keybind = option+left=esc:b
+keybind = option+right=esc:f
+# theme = dark:Catppuccin Frappe
 
 # Ryuuko color scheme
-background = #2c3941
-foreground = #ececec
-cursor-color = #ececec
-cursor-text = #002831
-selection-background = #002831
-selection-foreground = #819090
+# background = #2c3941
+# foreground = #ececec
+# cursor-color = #ececec
+# cursor-text = #002831
+# selection-background = #002831
+# selection-foreground = #819090
 
-palette = 0=#2c3941
-palette = 1=#865f5b
-palette = 2=#66907d
-palette = 3=#b1a990
-palette = 4=#6a8e95
-palette = 5=#b18a73
-palette = 6=#88b2ac
-palette = 7=#ececec
-palette = 8=#5d7079
-palette = 9=#865f5b
-palette = 10=#66907d
-palette = 11=#b1a990
-palette = 12=#6a8e95
-palette = 13=#b18a73
-palette = 14=#88b2ac
-palette = 15=#ececec
+# palette = 0=#2c3941
+# palette = 1=#865f5b
+# palette = 2=#66907d
+# palette = 3=#b1a990
+# palette = 4=#6a8e95
+# palette = 5=#b18a73
+# palette = 6=#88b2ac
+# palette = 7=#ececec
+# palette = 8=#5d7079
+# palette = 9=#865f5b
+# palette = 10=#66907d
+# palette = 11=#b1a990
+# palette = 12=#6a8e95
+# palette = 13=#b18a73
+# palette = 14=#88b2ac
+# palette = 15=#ececec
