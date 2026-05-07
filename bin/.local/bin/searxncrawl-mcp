@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+repo="${SEARXNCRAWL_HOME:-$HOME/.local/share/mcp/searxNcrawl}"
+
+if [[ ! -d "$repo/.git" ]]; then
+  print -u2 "searxNcrawl is not installed at: $repo"
+  print -u2 "Run: setup-searxncrawl-mcp"
+  exit 1
+fi
+
+export SEARXNG_URL="${SEARXNG_URL:-http://10.1.20.93:8080/}"
+
+exec uv run --directory "$repo" python -m crawler.mcp_server

@@ -45,6 +45,10 @@ url = "https://mcp.context7.com/mcp"
 [mcp_servers.context7.env_http_headers]
 CONTEXT7_API_KEY = "CONTEXT7_API_KEY"
 
+[mcp_servers.palantir-mcp]
+command = "npx"
+args = ["-y", "palantir-mcp", "--foundry-api-url", "https://unit8.palantirfoundry.com"]
+
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp"
 bearer_token_env_var = "GITHUB_TOKEN"
@@ -233,6 +237,21 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [mcp_servers.openai_developer_docs.tools.search_openai_docs]
+approval_mode = "approve"
+
+[mcp_servers.searxncrawl]
+command = "/Users/dylan/.local/bin/searxncrawl-mcp"
+env = { SEARXNG_URL = "http://10.1.20.93:8080/" }
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+[mcp_servers.searxncrawl.tools.crawl]
+approval_mode = "approve"
+
+[mcp_servers.searxncrawl.tools.crawl_site]
+approval_mode = "approve"
+
+[mcp_servers.searxncrawl.tools.search]
 approval_mode = "approve"
 
 # https://github.com/openai/plugins/tree/main/plugins/cloudflare

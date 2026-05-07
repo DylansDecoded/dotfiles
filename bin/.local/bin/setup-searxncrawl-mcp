@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+repo="${SEARXNCRAWL_HOME:-$HOME/.local/share/mcp/searxNcrawl}"
+source_url="${SEARXNCRAWL_REPO_URL:-https://github.com/DasDigitaleMomentum/searxNcrawl.git}"
+searxng_url="${SEARXNG_URL:-http://10.1.20.93:8080/}"
+launcher="$HOME/.local/bin/searxncrawl-mcp"
+
+if ! command -v uv >/dev/null 2>&1; then
+  print -u2 "uv is required. Install it with: brew bundle install"
+  exit 1
+fi
+
+mkdir -p "${repo:h}"
+
+if [[ -d "$repo/.git" ]]; then
+  git -C "$repo" pull --ff-only
+else
+  git clone "$source_url" "$repo"
+fi
+
+SEARXNG_URL="$searxng_url" uv run --directory "$repo" playwright install chromium
+
+if [[ "${SEARXNCRAWL_SKIP_CLAUDE:-0}" == "1" ]]; then
+  print -u2 "Skipping Claude Code user MCP registration."
+elif command -v claude >/dev/null 2>&1; then
+  claude_json=$(printf '{"type":"stdio","command":"%s","env":{"SEARXNG_URL":"%s"}}' "$launcher" "$searxng_url")
+  claude mcp add-json --scope user searxncrawl "$claude_json"
+else
+  print -u2 "Claude Code CLI not found; skipping Claude user MCP registration."
+fi

@@ -17,3 +17,4 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 # Shims resolve mise-managed tools in non-interactive contexts (IDEs,
 # editor LSPs, cron). Full activation lives in .zshrc.
 source <(mise activate zsh --shims)
+export OPENCODE_ENABLE_EXA=1

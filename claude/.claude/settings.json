@@ -24,6 +24,9 @@
       "mcp__github__pull_request_read",
       "mcp__github__pull_request_review_write",
       "mcp__github__search_*",
+      "mcp__searxncrawl__crawl",
+      "mcp__searxncrawl__crawl_site",
+      "mcp__searxncrawl__search",
       "mcp__github__sub_issue_write",
       "mcp__github__update_pull_request_branch",
       "mcp__github__update_pull_request",
@@ -43,8 +46,13 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "worktree": {},
+  "statusLine": {
+    "type": "command",
+    "command": "sh ~/.claude/statusline-command.sh",
+    "padding": 0
+  },
   "enabledPlugins": {
     "atlassian@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
@@ -52,13 +60,20 @@
     "superpowers@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "superwhisper@superwhisper": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
       "source": {
         "source": "github",
         "repo": "EveryInc/compound-engineering-plugin"
+      }
+    },
+    "superwhisper": {
+      "source": {
+        "source": "github",
+        "repo": "superultrainc/superwhisper-claude-code"
       }
     }
   },
