@@ -1,0 +1,30 @@
+{
+    "mcpServers": {
+        "context7": {
+            "command": "npx",
+            "args": ["-y", "@upstash/context7-mcp@latest"]
+        },
+        "sequential-thinking": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+        },
+        "qmd": {
+            "command": "qmd",
+            "args": ["mcp"]
+        },
+        "fff": {
+            "type": "stdio",
+            "command": "fff-mcp",
+            "args": []
+        },
+        "searxncrawl": {
+            "type": "local",
+            "command": [
+                "/Users/dylan/.local/bin/searxncrawl-mcp"
+            ],
+            "environment": {
+                "SEARXNG_URL": "http://10.1.20.93:8080/"
+            }
+        }
+    }
+}

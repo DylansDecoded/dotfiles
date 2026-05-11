@@ -1,5 +1,5 @@
 model = "gpt-5.5"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "workspace-write"
 
@@ -44,10 +44,6 @@ url = "https://mcp.context7.com/mcp"
 
 [mcp_servers.context7.env_http_headers]
 CONTEXT7_API_KEY = "CONTEXT7_API_KEY"
-
-[mcp_servers.palantir-mcp]
-command = "npx"
-args = ["-y", "palantir-mcp", "--foundry-api-url", "https://unit8.palantirfoundry.com"]
 
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp"
