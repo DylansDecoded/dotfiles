@@ -161,6 +161,17 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Four-letter codes for the other view modes: `icnv`, `Nlsv`, `clmv`, `Flwv`
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
+# Clear per-folder view overrides stored in .DS_Store so list view actually
+# sticks for previously-visited folders. Without this, FXPreferredViewStyle
+# only affects folders Finder hasn't seen before.
+# Finder must be quit FIRST — otherwise it rewrites .DS_Store on shutdown
+# with whatever view state it had in memory.
+osascript -e 'tell application "Finder" to quit' 2>/dev/null
+sleep 2
+killall Finder 2>/dev/null
+sleep 1
+find "${HOME}" -name ".DS_Store" -delete 2>/dev/null
+
 # Show the ~/Library folder
 chflags nohidden ~/Library
 

@@ -6,6 +6,7 @@
   "permissions": {
     "allow": [
       "Bash",
+      "Bash(git push:*)",
       "mcp__*pull_request_read",
       "mcp__github__actions_*",
       "mcp__github__add_comment_to_pending_review",
@@ -46,7 +47,59 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
+          }
+        ]
+      }
+    ]
+  },
   "worktree": {},
   "statusLine": {
     "type": "command",
@@ -61,7 +114,11 @@
     "github@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "superwhisper@superwhisper": true
+    "superwhisper@superwhisper": true,
+    "serena@claude-plugins-official": true,
+    "terraform@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {

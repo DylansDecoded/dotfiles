@@ -21,3 +21,6 @@ autoload -Uz compinit && compinit
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-syntax-highlighting"   # must be last
+
+# Added by Windsurf
+export PATH="/Users/dylan/.codeium/windsurf/bin:$PATH"
