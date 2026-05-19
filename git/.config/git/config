@@ -41,6 +41,10 @@ pruneTags = true
   dc = diff --cached
   l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
 
+# Dotfiles repo
+[includeIf "gitdir:~/dotfiles/"]
+path = ~/.config/git/config-personal
+
 # Personal repos
 [includeIf "gitdir:~/Projects/personal/"]
 path = ~/.config/git/config-personal
