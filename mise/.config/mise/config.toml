@@ -7,5 +7,3 @@ uv = "latest"
 [settings]
 # Let uv handle virtual environments and packages
 python.uv_venv_auto = true
-
-
