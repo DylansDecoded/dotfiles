@@ -1,0 +1,18 @@
+{
+  "_comment": "User-scope Claude Code plugins to restore on a fresh machine. Regenerate with: jq '.plugins | keys' ~/.claude/plugins/installed_plugins.json. Restore with: just claude-plugins. Marketplaces beyond claude-plugins-official come from settings.json extraKnownMarketplaces.",
+  "plugins": [
+    "atlassian@claude-plugins-official",
+    "claude-md-management@claude-plugins-official",
+    "code-review@claude-plugins-official",
+    "code-simplifier@claude-plugins-official",
+    "compound-engineering@compound-engineering-plugin",
+    "context7@claude-plugins-official",
+    "github@claude-plugins-official",
+    "serena@claude-plugins-official",
+    "skill-creator@claude-plugins-official",
+    "superpowers@claude-plugins-official",
+    "superwhisper@superwhisper",
+    "swift-lsp@claude-plugins-official",
+    "terraform@claude-plugins-official"
+  ]
+}

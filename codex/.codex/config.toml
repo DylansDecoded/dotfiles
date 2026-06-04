@@ -235,9 +235,12 @@ approval_mode = "approve"
 [mcp_servers.openai_developer_docs.tools.search_openai_docs]
 approval_mode = "approve"
 
+# SEARXNG_URL is inherited from the login-shell environment (sourced from the
+# sops-encrypted secrets in ~/.config/secrets/env.sh). TOML does not expand env
+# vars, so it is intentionally not set here — keep the internal URL out of this
+# public repo. See README "Secrets" and `just secrets`.
 [mcp_servers.searxncrawl]
 command = "/Users/dylan/.local/bin/searxncrawl-mcp"
-env = { SEARXNG_URL = "http://10.1.20.93:8080/" }
 startup_timeout_sec = 30
 tool_timeout_sec = 120
 

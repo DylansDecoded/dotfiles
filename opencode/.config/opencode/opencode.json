@@ -13,7 +13,7 @@
       ],
       "enabled": true,
       "environment": {
-        "SEARXNG_URL": "http://10.1.20.93:8080/"
+        "SEARXNG_URL": "{env:SEARXNG_URL}"
       }
     }
   },

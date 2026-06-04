@@ -1,0 +1,8 @@
+# sops + age encryption rules.
+# The private key lives at ~/.config/sops/age/keys.txt (never committed) and is
+# escrowed in 1Password. Only the public recipient below is committed.
+# Encrypt a file with:  sops -e -i secrets/<name>.sops.yaml
+# Edit in place with:   sops secrets/<name>.sops.yaml
+creation_rules:
+  - path_regex: secrets/.*\.sops\.ya?ml$
+    age: age1mdmj4hl2e2m5rrvglf2rccy7m8875ff6sdkuh38g25g4gtz0md0sxx7u80
