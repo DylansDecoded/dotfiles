@@ -98,6 +98,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/dylan/.claude/skills/plan-executive-brief/scripts/plan_brief_hook.py"
+          }
+        ]
+      }
     ]
   },
   "worktree": {},
@@ -135,5 +146,6 @@
     }
   },
   "effortLevel": "high",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "model": "sonnet"
 }
