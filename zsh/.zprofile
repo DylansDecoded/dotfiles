@@ -19,10 +19,11 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 source <(mise activate zsh --shims)
 export OPENCODE_ENABLE_EXA=1
 
-# Secrets (sops + age). The age private key is escrowed in 1Password and lives
-# at ~/.config/sops/age/keys.txt on this machine. `just secrets` decrypts
-# secrets/env.sops.yaml into the cached file below; we source it so values like
-# SEARXNG_URL / CONTEXT7_API_KEY / GITHUB_TOKEN are exported to child processes
-# (Claude Code, Codex, opencode, Gemini and their MCP servers).
-export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+# Secrets (sops + age, keyless). The age private key lives only in 1Password;
+# sops (>=3.10) fetches it on demand via SOPS_AGE_KEY_CMD, so it never touches
+# disk. `just secrets` decrypts secrets/env.sops.yaml into the cached file
+# below; we source it so values like SEARXNG_URL / CONTEXT7_API_KEY /
+# GITHUB_TOKEN are exported to child processes (Claude Code, Codex, opencode,
+# Gemini and their MCP servers). Override the 1Password ref with OP_AGE_REF.
+export SOPS_AGE_KEY_CMD="op read ${OP_AGE_REF:-op://Private/sops/SOPS_PRIVATE_KEY}"
 [ -f "$HOME/.config/secrets/env.sh" ] && source "$HOME/.config/secrets/env.sh"

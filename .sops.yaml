@@ -1,6 +1,7 @@
 # sops + age encryption rules.
-# The private key lives at ~/.config/sops/age/keys.txt (never committed) and is
-# escrowed in 1Password. Only the public recipient below is committed.
+# Keyless: the private key lives only in 1Password (op://Private/sops/SOPS_PRIVATE_KEY).
+# sops (>=3.10) fetches it on demand via SOPS_AGE_KEY_CMD="op read ..." (exported in
+# .zprofile), so it never touches disk. Only the public recipient below is committed.
 # Encrypt a file with:  sops -e -i secrets/<name>.sops.yaml
 # Edit in place with:   sops secrets/<name>.sops.yaml
 creation_rules:

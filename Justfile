@@ -14,14 +14,23 @@ op_age_ref := env_var_or_default("OP_AGE_REF", "op://Private/sops/SOPS_PRIVATE_K
 default:
     @just --list
 
-# Full deploy. op-gated steps (age-key/secrets) run last, in dependency order.
-install: brew stow macos claude-cli claude-plugins age-key secrets
+# Full deploy. The op-gated secrets step runs last.
+install: brew stow macos claude-cli claude-plugins secrets
     # If 1Password CLI integration wasn't enabled yet, the op-gated steps stop with
     # guidance; enable it, then re-run `just install` (every step is idempotent).
     @echo "Done. Open a new login shell, then run 'just doctor' to verify."
 
 # Install everything in the Brewfile (brews, casks, fonts, VS Code extensions).
+# Third-party taps outside Homebrew's curated allowlist need explicit trust
+# (brew >=6) before their formulae/casks can load — trust every tap the
+# Brewfile declares so a newly added tap doesn't silently need this repeated.
 brew:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    grep -E '^tap "' {{dotfiles}}/macos/Brewfile | sed -E 's/^tap "([^"]+)".*/\1/' | while read -r t; do
+      brew tap "$t"
+      brew trust --tap "$t"
+    done
     brew bundle --file={{dotfiles}}/macos/Brewfile
 
 # Fail unless the 1Password CLI is authenticated (desktop app integration or `op signin`).
@@ -41,26 +50,13 @@ _op-check:
       exit 1
     fi
 
-# Restore the sops age private key from 1Password into ~/.config/sops/age/keys.txt.
-age-key: _op-check
-    #!/usr/bin/env bash
-    set -euo pipefail
-    KEYFILE="$HOME/.config/sops/age/keys.txt"
-    if [ -f "$KEYFILE" ]; then
-      echo "age key already present at $KEYFILE"
-      exit 0
-    fi
-    umask 077
-    mkdir -p "$(dirname "$KEYFILE")"
-    op read "{{op_age_ref}}" > "$KEYFILE"
-    chmod 600 "$KEYFILE"
-    echo "Restored age key from 1Password ({{op_age_ref}}) -> $KEYFILE"
-
 # Decrypt sops secrets into ~/.config/secrets/env.sh (sourced by .zprofile).
-secrets: age-key
+# Keyless: sops (>=3.10) fetches the age key live from 1Password via SOPS_AGE_KEY_CMD;
+# the private key never touches disk.
+secrets: _op-check
     #!/usr/bin/env bash
     set -euo pipefail
-    export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+    export SOPS_AGE_KEY_CMD="op read {{op_age_ref}}"
     umask 077
     mkdir -p "$HOME/.config/secrets"
     sops -d --output-type dotenv {{dotfiles}}/secrets/env.sops.yaml \
@@ -95,6 +91,7 @@ claude-cli:
     fi
 
 # Restore user-scope Claude plugins from the tracked snapshot.
+# Marketplaces must be registered before plugins can resolve from them.
 claude-plugins:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -102,11 +99,16 @@ claude-plugins:
       echo "claude CLI not found — run 'just claude-cli' first. Skipping."
       exit 0
     fi
-    jq -r '.plugins[]' {{dotfiles}}/claude/.claude/plugins-snapshot.json | while read -r p; do
+    claude plugin marketplace add anthropics/claude-plugins-official
+    claude plugin marketplace add EveryInc/compound-engineering-plugin
+    claude plugin marketplace add superultrainc/superwhisper-claude-code
+    fail=0
+    while read -r p; do
       [ -z "$p" ] && continue
       echo "Installing plugin: $p"
-      claude plugin install "$p" || echo "  (skipped/failed: $p)"
-    done
+      claude plugin install "$p" || { echo "  FAILED: $p"; fail=1; }
+    done < <(jq -r '.plugins[]' {{dotfiles}}/claude/.claude/plugins-snapshot.json)
+    exit "$fail"
 
 # Verify a deployed machine.
 doctor:
@@ -123,12 +125,13 @@ doctor:
       [ -L "$f" ] || [ -f "$f" ] && ok "$f" || bad "$f missing"
     done
     echo "Secrets:"
-    [ -f "$HOME/.config/sops/age/keys.txt" ] && ok "age key present" || bad "age key missing"
-    if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
-      SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt" \
-        sops -d {{dotfiles}}/secrets/env.sops.yaml >/dev/null 2>&1 \
-        && ok "secrets decrypt" || bad "secrets decrypt failed"
-    fi
+    SOPS_AGE_KEY_CMD="op read {{op_age_ref}}" \
+      sops -d {{dotfiles}}/secrets/env.sops.yaml >/dev/null 2>&1 \
+      && ok "secrets decrypt (keyless via 1Password)" \
+      || bad "secrets decrypt failed (op authenticated? sops >= 3.10?)"
+    [ -f "$HOME/.config/sops/age/keys.txt" ] \
+      && bad "legacy key file on disk — remove with: rm ~/.config/sops/age/keys.txt" \
+      || ok "no age key on disk"
     [ -f "$HOME/.config/secrets/env.sh" ] && ok "env.sh generated" || bad "env.sh missing (run 'just secrets')"
     echo "1Password:"
     if command -v op >/dev/null 2>&1; then
