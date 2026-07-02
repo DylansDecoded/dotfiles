@@ -53,9 +53,20 @@ _op-check:
 # Decrypt sops secrets into ~/.config/secrets/env.sh (sourced by .zprofile).
 # Keyless: sops (>=3.10) fetches the age key live from 1Password via SOPS_AGE_KEY_CMD;
 # the private key never touches disk.
-secrets: _op-check
+secrets:
     #!/usr/bin/env bash
     set -euo pipefail
+    if ! command -v op >/dev/null 2>&1; then
+      echo "op CLI not found — run 'just brew' (installs 1password-cli) first." >&2
+      exit 1
+    fi
+    if ! op whoami >/dev/null 2>&1; then
+      echo "1Password CLI not authenticated — attempting 'op signin'..." >&2
+      eval "$(op signin)" || {
+        echo "Sign-in failed. Enable 1Password app → Settings → Developer → 'Integrate with 1Password CLI'." >&2
+        exit 1
+      }
+    fi
     export SOPS_AGE_KEY_CMD="op read {{op_age_ref}}"
     umask 077
     mkdir -p "$HOME/.config/secrets"

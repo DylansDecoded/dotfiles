@@ -7,7 +7,7 @@
     "allow": [
       "Bash",
       "Bash(git push:*)",
-      "mcp__*pull_request_read",
+      "mcp__pull_request_read",
       "mcp__github__actions_*",
       "mcp__github__add_comment_to_pending_review",
       "mcp__github__add_issue_comment",
@@ -122,14 +122,13 @@
     "compound-engineering@compound-engineering-plugin": true,
     "context7@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "superwhisper@superwhisper": true,
-    "serena@claude-plugins-official": true,
     "terraform@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "cloudflare@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
@@ -146,6 +145,6 @@
     }
   },
   "effortLevel": "high",
-  "skipAutoPermissionPrompt": true,
-  "model": "sonnet"
+  "skipWorkflowUsageWarning": true,
+  "skipAutoPermissionPrompt": true
 }
