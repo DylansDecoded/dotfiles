@@ -18,6 +18,11 @@ curl -fsSL https://raw.githubusercontent.com/DylansDecoded/dotfiles/main/bootstr
 toolchain (`just stow age sops jq 1password-cli`), clones this repo to
 `~/dotfiles`, then runs `just install`.
 
+This repo is intended to be a full, idempotent restore path for a new machine:
+after cloning via `bootstrap.sh` or running `just install`, the tracked agent
+toolchain, configs, shared skills, and MCP wiring should be re-deployed without
+manual repo edits.
+
 If you already have the repo checked out:
 
 ```sh
@@ -73,6 +78,17 @@ They are consumed by the MCP servers in Claude Code, Codex, opencode, and Gemini
 which inherit them from the login-shell environment. **This repo is public** — the
 internal SearxNG URL and all tokens stay only in the encrypted file, never in the
 plaintext tool configs.
+
+## Shared agent instructions and skills
+
+Shared agent instructions live in `agents/.agents/AGENTS.md`.
+
+- `claude/.claude/CLAUDE.md`, `codex/.codex/AGENTS.MD`, and `opencode/.config/opencode/AGENTS.md` forward to that file.
+- Shared reusable skills live in `agents/.agents/skills/`.
+- When a tool requires a tool-local skills directory, point it at the shared skill directory with repo-internal symlinks instead of copying the files.
+- GNU Stow handles deployment from the repo into `$HOME`; the repo-internal symlinks handle shared ownership between LLM packages.
+- Agent-specific-only skills stay in the tool's own config tree.
+- Newly onboarded LLMs should follow the same pattern so `bootstrap.sh` and `just install` remain the only repo-side deployment steps.
 
 ## Manual post-install steps
 

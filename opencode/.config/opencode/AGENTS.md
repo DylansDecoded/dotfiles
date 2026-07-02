@@ -1,1 +1,1 @@
-@../../../codex/.codex/AGENTS.MD
+@../../../agents/.agents/AGENTS.md
