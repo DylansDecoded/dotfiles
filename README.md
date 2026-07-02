@@ -39,6 +39,9 @@ cd ~/dotfiles && just install
 | `just stow` | Symlinks every package into `$HOME`. Dry-runs first. |
 | `just macos` | Runs `macos/defaults` (Dock, Finder, trackpad, screenshots, etc.). |
 | `just claude-cli` | Installs the Claude Code CLI if missing. |
+| `just codex-cli` | Installs the Codex CLI if missing. |
+| `just grok-cli` | Installs the Grok CLI if missing. |
+| `just opencode-cli` | Installs the OpenCode CLI if missing. |
 | `just claude-plugins` | Restores the 13 user-scope plugins from `claude/.claude/plugins-snapshot.json`. |
 | `just age-key` | Pulls the sops age private key from 1Password into `~/.config/sops/age/keys.txt`. |
 | `just secrets` | Runs `age-key`, then decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` (sourced by `.zprofile`). |

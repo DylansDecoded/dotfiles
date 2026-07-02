@@ -7,10 +7,14 @@ All orchestration goes through `just` (a `make` alternative). All recipes are id
 
 | Command | Purpose |
 |---|---|
-| `just install` | Full deploy: brew → stow → macos → claude-cli → claude-plugins → secrets |
+| `just install` | Full deploy: brew → stow → macos → claude-cli → codex-cli → grok-cli → opencode-cli → claude-plugins → secrets |
 | `just brew` | `brew bundle` from `macos/Brewfile` |
 | `just stow` | (Re-)apply GNU Stow symlinks from repo into `$HOME` |
 | `just doctor` | Verify tooling, symlinks, secrets, 1Password, plugins |
+| `just claude-cli` | Install the Claude Code CLI if missing |
+| `just codex-cli` | Install the Codex CLI if missing |
+| `just grok-cli` | Install the Grok CLI if missing |
+| `just opencode-cli` | Install the OpenCode CLI if missing |
 | `just secrets` | Decrypt `secrets/env.sops.yaml` → `~/.config/secrets/env.sh` (keyless, via 1Password) |
 | `sops secrets/env.sops.yaml` | Edit encrypted secrets in-place |
 | `brew bundle dump --force --file=macos/Brewfile` | Update Brewfile from current machine state |

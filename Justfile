@@ -15,7 +15,7 @@ default:
     @just --list
 
 # Full deploy. The op-gated secrets step runs last.
-install: brew stow macos claude-cli claude-plugins secrets
+install: brew stow macos claude-cli codex-cli grok-cli opencode-cli claude-plugins secrets
     # If 1Password CLI integration wasn't enabled yet, the op-gated steps stop with
     # guidance; enable it, then re-run `just install` (every step is idempotent).
     @echo "Done. Open a new login shell, then run 'just doctor' to verify."
@@ -101,6 +101,39 @@ claude-cli:
       curl -fsSL https://claude.ai/install.sh | bash
     fi
 
+# Install the Codex CLI if missing (official installer).
+codex-cli:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v codex >/dev/null 2>&1; then
+      echo "codex already installed: $(codex --version 2>/dev/null || echo present)"
+    else
+      echo "Installing Codex CLI"
+      curl -fsSL https://chatgpt.com/codex/install.sh | sh
+    fi
+
+# Install the Grok CLI if missing (official installer).
+grok-cli:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v grok >/dev/null 2>&1; then
+      echo "grok already installed: $(grok --version 2>/dev/null || grok version 2>/dev/null || echo present)"
+    else
+      echo "Installing Grok CLI"
+      curl -fsSL https://x.ai/cli/install.sh | bash
+    fi
+
+# Install the OpenCode CLI if missing (official Homebrew formula).
+opencode-cli:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v opencode >/dev/null 2>&1; then
+      echo "opencode already installed: $(opencode --version 2>/dev/null || echo present)"
+    else
+      echo "Installing OpenCode CLI"
+      brew install anomalyco/tap/opencode
+    fi
+
 # Restore user-scope Claude plugins from the tracked snapshot.
 # Marketplaces must be registered before plugins can resolve from them.
 claude-plugins:
@@ -129,6 +162,10 @@ doctor:
     bad() { printf '  \033[1;31mXX\033[0m  %s\n' "$1"; }
     echo "Tooling:"
     for t in brew stow sops age just jq; do
+      command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
+    done
+    echo "AI CLIs:"
+    for t in claude codex grok opencode; do
       command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
     done
     echo "Symlinks:"

@@ -24,3 +24,9 @@ plug "zsh-users/zsh-syntax-highlighting"   # must be last
 
 # Added by Windsurf
 export PATH="/Users/dylan/.codeium/windsurf/bin:$PATH"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
