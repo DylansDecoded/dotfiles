@@ -47,6 +47,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "Stop": [
       {
@@ -144,7 +145,7 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true
 }
