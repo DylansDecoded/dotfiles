@@ -1,0 +1,20 @@
+{
+  "skill_name": "skill-auditor",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "audit this skill: claude/.claude/skills/gtasks/SKILL.md",
+      "expected_output": "Metrics table, Guidelines Source line, five scored dimensions summing to a score out of 10, grade band (Excellent/Good/Needs work/Fails), and a Regression Risk section. gtasks is a well-formed skill so expect a Good or Excellent grade with only minor findings."
+    },
+    {
+      "id": 2,
+      "prompt": "review my skill at claude/.claude/skills/clone/SKILL.md — does it follow best practices?",
+      "expected_output": "Audit report with scored dimensions. clone has a weak description (no 'Use when' trigger phrase, few keywords) so expect Dimension 1 and Dimension 5 to score low, overall grade Needs work or Fails best practices. Findings should specifically call out the missing trigger phrase and weak discoverability."
+    },
+    {
+      "id": 3,
+      "prompt": "score my SKILL.md",
+      "expected_output": "The skill cannot determine which SKILL.md to audit from the prompt alone. It should ask the user to provide a file path rather than guessing or defaulting to a random file."
+    }
+  ]
+}

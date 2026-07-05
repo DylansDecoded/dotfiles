@@ -1,0 +1,81 @@
+application,installed_by,mas_support
+1Password,homebrew-cask,N/A — package manager
+AeroSpace,homebrew-cask,N/A — package manager
+Bitwarden,homebrew-cask,N/A — package manager
+Brave Browser,homebrew-cask,N/A — package manager
+Codex,homebrew-cask,N/A — package manager
+Discord,homebrew-cask,N/A — package manager
+Docker,homebrew-cask,N/A — package manager
+Figma,homebrew-cask,N/A — package manager
+Firefox,homebrew-cask,N/A — package manager
+Ghostty,homebrew-cask,N/A — package manager
+Google Chrome,homebrew-cask,N/A — package manager
+LibreWolf,homebrew-cask,N/A — package manager
+Maccy,homebrew-cask,N/A — package manager
+Podman Desktop,homebrew-cask,N/A — package manager
+Raycast,homebrew-cask,N/A — package manager
+Rectangle,homebrew-cask,N/A — package manager
+Shotcut,homebrew-cask,N/A — package manager
+Spotify,homebrew-cask,N/A — package manager
+Tor Browser,homebrew-cask,N/A — package manager
+Visual Studio Code,homebrew-cask,N/A — package manager
+balenaEtcher,homebrew-cask,N/A — package manager
+draw.io,homebrew-cask,N/A — package manager
+Affinity Designer 2,mac-app-store,false
+Affinity Photo 2,mac-app-store,false
+Affinity Publisher 2,mac-app-store,false
+Amphetamine,mac-app-store,true
+Compressor,mac-app-store,true
+CrystalFetch,mac-app-store,true
+Ease Fax,mac-app-store,true
+Final Cut Pro,mac-app-store,true
+Geekbench 5,mac-app-store,false
+Logic Pro,mac-app-store,true
+Motion,mac-app-store,true
+Numbers Creator Studio,mac-app-store,true
+UTM,mac-app-store,true
+WireGuard,mac-app-store,true
+Xcode,mac-app-store,true
+Carbon Copy Cloner,direct-download,false
+ChatGPT,direct-download,false
+Claude,direct-download,false
+HandBrake,direct-download,false
+Helium,direct-download,false
+LockedIn,direct-download,false
+Microsoft Excel,direct-download,true
+Microsoft PowerPoint,direct-download,true
+Microsoft Teams,direct-download,false
+Microsoft Word,direct-download,true
+Mullvad VPN,direct-download,false
+Octo Browser,direct-download,false
+Omni,direct-download,false
+OnVUE,direct-download,false
+Osmind,direct-download,false
+Parallels Desktop,direct-download,true
+Parallels Toolbox,direct-download,false
+Paseo,direct-download,false
+PocketBook,direct-download,false
+Raspberry Pi Imager,direct-download,false
+Safeco Mobile,direct-download,false
+Session,direct-download,false
+Sidus Link,direct-download,false
+Sports Alerts,direct-download,false
+Stremio,direct-download,false
+Telegram,direct-download,true
+Trezor Suite,direct-download,false
+VLC,direct-download,false
+VMware Fusion,direct-download,false
+VirtualBox,direct-download,false
+VoiceInk,direct-download,false
+Windsurf,direct-download,N/A — not installed
+Zed,direct-download,false
+ZoomLauncher,direct-download,false
+daily.dev,direct-download,false
+extFS for Mac,direct-download,false
+iMazing,direct-download,false
+logioptionsplus,direct-download,false
+oMLX,direct-download,false
+pCloud Drive,direct-download,false
+pmodule,direct-download,false
+superwhisper,direct-download,false
+zoom.us,direct-download,false

@@ -47,7 +47,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "claude-fable-5[1m]",
+  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -129,7 +129,8 @@
     "terraform@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "cloudflare@claude-plugins-official": true
+    "cloudflare@claude-plugins-official": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
@@ -143,9 +144,15 @@
         "source": "github",
         "repo": "superultrainc/superwhisper-claude-code"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true
 }

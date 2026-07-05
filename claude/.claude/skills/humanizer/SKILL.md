@@ -1,5 +1,5 @@
 ---
-name: humanize
+name: humanizer
 description: 'Detects and removes AI-generated writing patterns while preserving meaning and facts. Triggers on: "humanize text", "make this sound human", "remove AI patterns", "rewrite to sound natural", "make this less AI", "de-slop this", "not sound like ChatGPT", "human pass".'
 metadata:
   version: 1.0.1

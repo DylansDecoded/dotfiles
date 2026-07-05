@@ -3,7 +3,8 @@
   "plugin": [
     "@superwhisper/opencode",
     "@tarquinen/opencode-dcp@latest",
-    "opencode-openai-codex-auth"
+    "opencode-openai-codex-auth",
+    "opencode-claude-bridge"
   ],
   "mcp": {
     "searxncrawl": {
@@ -13,7 +14,7 @@
       ],
       "enabled": true,
       "environment": {
-        "SEARXNG_URL": "{env:SEARXNG_URL}"
+        "SEARXNG_URL": "10.1.20.93:8080"
       }
     }
   },
