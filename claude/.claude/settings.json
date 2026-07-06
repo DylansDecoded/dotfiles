@@ -47,7 +47,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -119,13 +119,13 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "atlassian@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": false,
     "compound-engineering@compound-engineering-plugin": true,
     "context7@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "superwhisper@superwhisper": true,
+    "superwhisper@superwhisper": false,
     "terraform@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
@@ -152,7 +152,7 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true
 }

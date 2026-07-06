@@ -10,9 +10,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export DISABLE_TELEMETRY=1
 
-# 1Password SSH agent — inherited by git, ssh, scp in any child shell
-export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-
 # mise: https://mise.jdx.dev/dev-tools/shims.html
 # Shims resolve mise-managed tools in non-interactive contexts (IDEs,
 # editor LSPs, cron). Full activation lives in .zshrc.

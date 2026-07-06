@@ -1,6 +1,6 @@
 # Print an optspec for argparse to handle cmd's options that are independent of any subcommand.
 function __fish_grok_global_optspecs
-	string join \n v/version cwd= leader-socket= debug debug-file= always-approve trust allow= deny= p/single= prompt-json= prompt-file= verbatim output-format= json-schema= m/model= reasoning-effort= rules= compaction-mode= compaction-detail= system-prompt-override= r/resume= load= c/continue s/session-id= fork-session w/worktree= worktree-ref= restore-code no-plan chat no-subagents no-ask-user experimental-memory no-memory agent= agents= tools= disallowed-tools= effort= max-turns= permission-mode= disable-web-search check no-wait-for-background background-wait-timeout= best-of-n= sandbox= storage-mode= client-identifier= hunk-tracker-mode= terminal fs-read fs-write no-auto-update todo-gate installer= no-alt-screen log-sampling force-login oauth leader no-leader hub-url= hub-workspace-mode= h/help
+	string join \n v/version cwd= leader-socket= debug debug-file= always-approve trust allow= deny= p/single= prompt-json= prompt-file= verbatim output-format= json-schema= m/model= reasoning-effort= rules= compaction-mode= compaction-detail= system-prompt-override= r/resume= load= c/continue s/session-id= fork-session w/worktree= worktree-ref= restore-code no-plan no-subagents no-ask-user experimental-memory no-memory agent= agents= tools= disallowed-tools= effort= max-turns= permission-mode= disable-web-search check no-wait-for-background background-wait-timeout= best-of-n= sandbox= storage-mode= client-identifier= hunk-tracker-mode= terminal fs-read fs-write no-auto-update todo-gate installer= no-alt-screen minimal log-sampling force-login oauth leader no-leader h/help
 end
 
 function __fish_grok_needs_command
@@ -70,8 +70,6 @@ complete -c grok -n "__fish_grok_needs_command" -l storage-mode -d 'Session stor
 complete -c grok -n "__fish_grok_needs_command" -l client-identifier -d 'Override the client identifier sent to the agent' -r
 complete -c grok -n "__fish_grok_needs_command" -l hunk-tracker-mode -d 'Hunk tracker mode: agent_only, all_dirty, or off ("disabled" is an alias for off, which turns the hunk tracker off entirely)' -r
 complete -c grok -n "__fish_grok_needs_command" -l installer -d 'Set the installer field in config.toml' -r
-complete -c grok -n "__fish_grok_needs_command" -l hub-url -d 'Computer Hub WebSocket URL for tool sharing' -r
-complete -c grok -n "__fish_grok_needs_command" -l hub-workspace-mode -d 'Workspace mode: "local" (default) or "remote=<server-id>"' -r
 complete -c grok -n "__fish_grok_needs_command" -s v -l version -d 'Print version'
 complete -c grok -n "__fish_grok_needs_command" -l debug -d 'Enable debug logging'
 complete -c grok -n "__fish_grok_needs_command" -l always-approve -d 'Auto-approve all tool executions'
@@ -81,7 +79,6 @@ complete -c grok -n "__fish_grok_needs_command" -s c -l continue -d 'Continue th
 complete -c grok -n "__fish_grok_needs_command" -l fork-session -d 'When resuming (`--resume` / `--continue`), create a new session ID instead of reusing the original (optionally set via `--session-id`)'
 complete -c grok -n "__fish_grok_needs_command" -l restore-code -d 'Check out the original session\'s commit when resuming'
 complete -c grok -n "__fish_grok_needs_command" -l no-plan -d 'Disable plan mode'
-complete -c grok -n "__fish_grok_needs_command" -l chat -d 'Open session as gateway light-frontend (`kind: chat`)'
 complete -c grok -n "__fish_grok_needs_command" -l no-subagents -d 'Disable subagent spawning'
 complete -c grok -n "__fish_grok_needs_command" -l no-ask-user -d 'Disable structured question prompts from the agent'
 complete -c grok -n "__fish_grok_needs_command" -l experimental-memory -d 'Enable cross-session memory'
@@ -95,12 +92,13 @@ complete -c grok -n "__fish_grok_needs_command" -l fs-write -d 'Enable client-si
 complete -c grok -n "__fish_grok_needs_command" -l no-auto-update -d 'Disable automatic updates for this session'
 complete -c grok -n "__fish_grok_needs_command" -l todo-gate -d 'Enable the runtime turn-end TodoGate for this session'
 complete -c grok -n "__fish_grok_needs_command" -l no-alt-screen -d 'Run inline instead of using the terminal alternate screen'
+complete -c grok -n "__fish_grok_needs_command" -l minimal -d 'Experimental: scrollback-native rendering. Finalized blocks are printed into the terminal\'s native scrollback (use the terminal\'s own scroll / selection); a small pinned region holds the prompt + running turn'
 complete -c grok -n "__fish_grok_needs_command" -l log-sampling -d 'Write sampling events to ~/.grok/logs/sampling.jsonl'
 complete -c grok -n "__fish_grok_needs_command" -l force-login -d 'Show the login screen even when credentials are already available'
 complete -c grok -n "__fish_grok_needs_command" -l oauth -d 'Use OAuth when the welcome screen starts authentication'
 complete -c grok -n "__fish_grok_needs_command" -l leader -d 'Connect to a shared leader process'
 complete -c grok -n "__fish_grok_needs_command" -l no-leader -d 'Run standalone even when leader mode is configured'
-complete -c grok -n "__fish_grok_needs_command" -s h -l help -d 'Print help (see more with \'--help\')'
+complete -c grok -n "__fish_grok_needs_command" -s h -l help -d 'Print help'
 complete -c grok -n "__fish_grok_needs_command" -a "agent" -d 'Run Grok without the interactive UI'
 complete -c grok -n "__fish_grok_needs_command" -a "import" -d 'Import sessions into Grok'
 complete -c grok -n "__fish_grok_needs_command" -a "inspect" -d 'Show the configuration Grok discovers for this directory'
@@ -128,6 +126,7 @@ complete -c grok -n "__fish_grok_needs_command" -a "help" -d 'Print this message
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -s m -l model -d 'Model ID to use' -r
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l reasoning-effort -d 'Reasoning effort for reasoning models' -r
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l agent-profile -d 'Path to an agent profile file' -r -F
+complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l plugin-dir -d 'Load a plugin from this directory for this process only (repeatable). Highest-priority plugin scope; always trusted — hooks and MCP servers activate without a prompt. Used by the Agent SDKs to inject per-connection plugins' -r -f -a "(__fish_complete_directories)"
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l grok-ws-origin -r
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l grok-ws-url -r
 complete -c grok -n "__fish_grok_using_subcommand agent; and not __fish_seen_subcommand_from stdio headless serve leader help" -l cli-chat-proxy-base-url -d 'Override the CLI chat proxy base URL' -r

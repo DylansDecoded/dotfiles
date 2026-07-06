@@ -17,13 +17,13 @@
             "command": "fff-mcp",
             "args": []
         },
-        "searxncrawl": {
-            "type": "local",
-            "command": [
-                "/Users/dylan/.local/bin/searxncrawl-mcp"
+        "searxng": {
+            "command": "uvx",
+            "args": [
+                "mcp-searxng"
             ],
-            "environment": {
-                "SEARXNG_URL": "${SEARXNG_URL}"
+            "env": {
+                "SEARXNG_URL": "http://localhost:8080"
             }
         }
     }
