@@ -3,7 +3,17 @@
 
 COMPLETION_WAITING_DOTS="true"
 
+# Added by Windsurf
+export PATH="/Users/dylan/.codeium/windsurf/bin:$PATH"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
+
 # mise: https://mise.jdx.dev/
+# Run after other PATH edits so mise-managed tools take precedence.
 eval "$(mise activate zsh)"
 # zoxide: https://zoxide.org/
 eval "$(zoxide init zsh)"
@@ -21,12 +31,3 @@ autoload -Uz compinit && compinit
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-syntax-highlighting"   # must be last
-
-# Added by Windsurf
-export PATH="/Users/dylan/.codeium/windsurf/bin:$PATH"
-
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
-# <<< grok installer <<<

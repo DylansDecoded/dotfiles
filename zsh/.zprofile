@@ -10,10 +10,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export DISABLE_TELEMETRY=1
 
-# mise: https://mise.jdx.dev/dev-tools/shims.html
-# Shims resolve mise-managed tools in non-interactive contexts (IDEs,
-# editor LSPs, cron). Full activation lives in .zshrc.
-source <(mise activate zsh --shims)
 export OPENCODE_ENABLE_EXA=1
 
 # Secrets (sops + age, keyless). The age private key lives only in 1Password;
