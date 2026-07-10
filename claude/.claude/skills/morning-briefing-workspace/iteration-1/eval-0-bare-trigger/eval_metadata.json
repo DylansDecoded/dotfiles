@@ -1,0 +1,14 @@
+{
+  "eval_id": 0,
+  "eval_name": "bare-trigger",
+  "prompt": "morning briefing",
+  "assertions": [
+    "A markdown briefing file exists in the outputs directory with a title containing today's date",
+    "Contains a Tech & AI news section with 5-8 items, each with a source link",
+    "Contains a crypto table covering the top 25 cryptos by market cap with prices and 24h change",
+    "Contains a blue-chip stocks table with prices/changes",
+    "Crypto prices are real (within ~10% of CoinGecko values at grading time), not fabricated",
+    "Includes crypto and stock breaking-news items with source links",
+    "Notes that email delivery was skipped (test mode) rather than claiming it was sent"
+  ]
+}

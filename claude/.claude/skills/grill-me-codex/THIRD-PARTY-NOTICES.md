@@ -1,9 +1,11 @@
 # Third-Party Notices
 
-## grill-me (Act 1)
+## grill-me and grill-with-docs (Act 1, + CONTEXT-FORMAT.md, ADR-FORMAT.md)
 
-Act 1 of this skill ("GRILL") is adapted from the **grill-me** skill by **Matt Pocock**,
-from https://github.com/mattpocock/skills, used under the MIT License.
+Act 1 of this skill ("GRILL", including its docs-aware mode) and the companion files
+`CONTEXT-FORMAT.md` and `ADR-FORMAT.md` are adapted from the **grill-me** and
+**grill-with-docs** skills by **Matt Pocock**, from https://github.com/mattpocock/skills,
+used under the MIT License.
 
 Act 2 ("REVIEW" — the Codex adversarial loop) is original work added on top.
 

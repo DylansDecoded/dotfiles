@@ -9,7 +9,6 @@ export PATH="/Users/dylan/.codeium/windsurf/bin:$PATH"
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
 
 # mise: https://mise.jdx.dev/
@@ -26,8 +25,15 @@ eval "$(starship init zsh)"
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] \
   && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
 
-autoload -Uz compinit && compinit
-
 plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-syntax-highlighting"   # must be last
+
+# Docker Desktop owns these completion links. If the app was removed or moved,
+# Homebrew leaves dangling links behind and compinit errors while scanning them.
+for completion in /opt/homebrew/share/zsh/site-functions/_docker\
+                 /opt/homebrew/share/zsh/site-functions/_docker-compose; do
+  [[ -L "$completion" && ! -e "$completion" ]] && rm -f "$completion"
+done
+
+autoload -Uz compinit && compinit

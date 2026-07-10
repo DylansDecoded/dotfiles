@@ -1,0 +1,35 @@
+{
+  "skill_name": "morning-briefing",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "morning briefing",
+      "expected_output": "A dated markdown briefing file with a Tech & AI news section (Databricks / AI space / data+AI consulting, 5-8 sourced items) and a Markets section (top-25 crypto table with 24h moves, risers, crypto news, blue-chip stock table, stock news), written to the output directory; email noted as skipped.",
+      "files": [],
+      "assertions": [
+        "A markdown briefing file exists in the outputs directory with a title containing today's date",
+        "Contains a Tech & AI news section with 5-8 items, each with a source link",
+        "Contains a crypto table covering the top 25 cryptos by market cap with prices and 24h change",
+        "Contains a blue-chip stocks table with prices/changes",
+        "Crypto prices are real (within ~10% of CoinGecko values at grading time), not fabricated",
+        "Includes crypto and stock breaking-news items with source links",
+        "Notes that email delivery was skipped (test mode) rather than claiming it was sent"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "catch me up on what happened overnight in tech and the markets",
+      "expected_output": "Same briefing structure as eval 0, triggered by casual phrasing rather than the exact skill name.",
+      "files": [],
+      "assertions": [
+        "A markdown briefing file exists in the outputs directory with a title containing today's date",
+        "Contains a Tech & AI news section with 5-8 items, each with a source link",
+        "Contains a crypto table covering the top 25 cryptos by market cap with prices and 24h change",
+        "Contains a blue-chip stocks table with prices/changes",
+        "Crypto prices are real (within ~10% of CoinGecko values at grading time), not fabricated",
+        "Includes crypto and stock breaking-news items with source links",
+        "Notes that email delivery was skipped (test mode) rather than claiming it was sent"
+      ]
+    }
+  ]
+}

@@ -70,7 +70,7 @@ Once all searches return (and the yt-pipeline agent completes), synthesize every
 
 Write the research brief to the vault's `raw/` directory:
 
-**Path:** `YOUR_VAULT_PATH/raw/YYYY-MM-DD-[topic-slug]-deep-research.md`
+**Path:** `~/Documents/second-brain/output/YYYY-MM-DD-[topic-slug]-deep-research.md` (create `output/` if missing)
 
 Use today's date. Convert the topic to a URL-friendly slug (lowercase, hyphens, no special chars).
 

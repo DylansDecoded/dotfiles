@@ -28,12 +28,15 @@
       "mcp__searxncrawl__crawl",
       "mcp__searxncrawl__crawl_site",
       "mcp__searxncrawl__search",
+      "mcp__searxng__search",
       "mcp__github__sub_issue_write",
       "mcp__github__update_pull_request_branch",
       "mcp__github__update_pull_request",
       "Read"
     ],
-    "deny": [],
+    "deny": [
+      "WebSearch"
+    ],
     "ask": [
       "Bash(curl*)",
       "Bash(gh * delete *)",
@@ -152,7 +155,7 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true
 }

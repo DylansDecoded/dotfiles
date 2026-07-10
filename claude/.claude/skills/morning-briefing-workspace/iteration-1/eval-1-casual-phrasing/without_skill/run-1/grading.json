@@ -1,0 +1,45 @@
+{
+  "expectations": [
+    {
+      "text": "A markdown briefing file exists in the outputs directory with a title containing today's date",
+      "passed": true,
+      "evidence": "overnight-briefing-2026-07-07.md exists, titled 'Overnight Briefing \u2014 Tuesday, 7 July 2026'"
+    },
+    {
+      "text": "Contains a Tech & AI news section with 5-8 items, each with a source link",
+      "passed": false,
+      "evidence": "Only 4 Tech & AI items (Beijing curbs, agentic ransomware, Washington vs labs, Databricks); well-sourced but below the 5-item floor"
+    },
+    {
+      "text": "Contains a crypto table covering the top 25 cryptos by market cap with prices and 24h change",
+      "passed": false,
+      "evidence": "No table; only BTC/ETH/XRP bullets"
+    },
+    {
+      "text": "Contains a blue-chip stocks table with prices/changes",
+      "passed": false,
+      "evidence": "No quote table; only index levels and two narrative blue-chip notes (Apple foldable, WDC/STX)"
+    },
+    {
+      "text": "Crypto prices are real (within ~10% of CoinGecko values at grading time), not fabricated",
+      "passed": true,
+      "evidence": "BTC ~$64.0k open vs live $63,594; ETH ~$1,770 vs $1,781.80"
+    },
+    {
+      "text": "Includes crypto and stock breaking-news items with source links",
+      "passed": true,
+      "evidence": "CoinDesk, Reuters, CNBC, Yahoo items all linked inline"
+    },
+    {
+      "text": "Notes that email delivery was skipped (test mode) rather than claiming it was sent",
+      "passed": false,
+      "evidence": "No mention of email or delivery"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 4,
+    "total": 7,
+    "pass_rate": 0.42857142857142855
+  }
+}

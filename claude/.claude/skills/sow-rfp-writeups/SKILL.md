@@ -1,18 +1,16 @@
 ---
 name: sow-rfp-writeups
 description: >-
-  Orchestrates research-backed enterprise writeups for Statements of Work (SOW), RFP and tender
-  responses, and data engineering / Data & AI proposals and technical documents. Spawns parallel
-  research sub-agents (technology stack, industry and sector context, sizing and benchmarks), runs a
-  reviewer sub-agent that gates the findings with a move-on-or-redo loop, then hands the approved
-  findings to writing sub-agents that produce a separate C-suite executive brief and technical-depth
-  document, each in a cited version and a stripped practitioner-voice version. Use this whenever the
-  user is responding to or drafting an RFP, RFQ, SOW, tender, capability statement, solution approach,
-  engagement approach, t-shirt sizing or effort estimate, or any data, AI, or data-engineering writeup
-  that should be backed by external research and read like an experienced practitioner wrote it, even
-  if they do not say "skill" or name the pipeline. Trigger on requests to draft, write, refine, or add
-  recommended content to proposals, scopes of work, approach sections, sizing tables, or enterprise
-  technical documentation.
+  Use when the user is drafting or responding to an RFP, RFQ, SOW, tender,
+  capability statement, solution approach, engagement approach, or t-shirt
+  sizing / effort estimate, or asks to draft, refine, or add recommended content
+  to a proposal, scope of work, approach section, or sizing table. Produces
+  research-backed client-facing enterprise writeups: parallel research
+  sub-agents (tech stack, sector context, sizing benchmarks), a reviewer
+  sub-agent that gates findings before writing, then a C-suite executive brief
+  and a technical-depth document, each in a cited and a practitioner-voice
+  version. NOT for internal engineering docs, implementation plans, READMEs, or
+  code documentation.
 ---
 
 # SOW / RFP / Data & AI Writeups

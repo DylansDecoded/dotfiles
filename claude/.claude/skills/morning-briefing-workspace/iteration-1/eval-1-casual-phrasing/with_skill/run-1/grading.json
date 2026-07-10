@@ -1,0 +1,45 @@
+{
+  "expectations": [
+    {
+      "text": "A markdown briefing file exists in the outputs directory with a title containing today's date",
+      "passed": true,
+      "evidence": "2026-07-07-briefing.md exists, titled 'Morning Briefing \u2014 Tuesday, July 7, 2026'"
+    },
+    {
+      "text": "Contains a Tech & AI news section with 5-8 items, each with a source link",
+      "passed": true,
+      "evidence": "5 items (Samsung chip rout, Databricks Free Edition, Info-Tech analyst note, White House framework, Microsoft $2.5B), all with source URLs"
+    },
+    {
+      "text": "Contains a crypto table covering the top 25 cryptos by market cap with prices and 24h change",
+      "passed": true,
+      "evidence": "25-row table with rank, price, 24h % columns"
+    },
+    {
+      "text": "Contains a blue-chip stocks table with prices/changes",
+      "passed": true,
+      "evidence": "12-ticker table (AAPL through WMT) with price and change"
+    },
+    {
+      "text": "Crypto prices are real (within ~10% of CoinGecko values at grading time), not fabricated",
+      "passed": true,
+      "evidence": "BTC $63,506 vs live $63,594; table matches CoinGecko rank order exactly"
+    },
+    {
+      "text": "Includes crypto and stock breaking-news items with source links",
+      "passed": true,
+      "evidence": "2 crypto news items (Yahoo, CoinDesk) and 3 stock news items (Reuters, CNBC, WSJ), all linked"
+    },
+    {
+      "text": "Notes that email delivery was skipped (test mode) rather than claiming it was sent",
+      "passed": true,
+      "evidence": "Blockquote at top: 'Test mode: email delivery skipped'"
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  }
+}

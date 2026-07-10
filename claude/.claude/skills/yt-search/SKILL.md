@@ -19,6 +19,7 @@ python "~/.claude/skills/yt-search/scripts/search.py" <query> [--count N] [--mon
 - `<query>` — search terms (required)
 - `--count N` — number of results to return (default: 20)
 - `--months N` — only show videos from the last N months (default: 6)
+- `--days N` — only show videos from the last N days (overrides `--months`)
 - `--no-date-filter` — include videos of any age
 
 ### Examples

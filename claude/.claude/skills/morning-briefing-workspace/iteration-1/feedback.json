@@ -1,0 +1,20 @@
+{
+  "reviews": [
+    {
+      "run_id": "eval-0-bare-trigger-with_skill-run-1",
+      "feedback": "This looks great, is there a way to render this as HTML ? ",
+      "timestamp": "2026-07-07T19:35:31.268Z"
+    },
+    {
+      "run_id": "eval-0-bare-trigger-without_skill-run-1",
+      "feedback": "No go for this one, email not delivered and incorrect crypto market break down.",
+      "timestamp": "2026-07-07T19:35:31.268Z"
+    },
+    {
+      "run_id": "eval-1-casual-phrasing-with_skill-run-1",
+      "feedback": "This is the best one in my opinion and I love the red across the board apart from privacy coins",
+      "timestamp": "2026-07-07T19:35:31.268Z"
+    }
+  ],
+  "status": "in_progress"
+}

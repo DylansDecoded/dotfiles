@@ -1,6 +1,6 @@
 ---
 name: grill-me-codex
-description: Two-act plan hardening. ACT 1 (you ↔ Claude) — Claude interviews you relentlessly about a plan or design, one question at a time, recommending an answer for each and exploring the codebase when it can answer itself, until every branch of the decision tree is resolved. ACT 2 (Claude ↔ Codex) — Claude writes the locked plan to PLAN.md and OpenAI Codex adversarially reviews it in a read-only sandbox (VERDICT:APPROVED/REVISE), Claude revises and re-submits to the SAME Codex session until APPROVED or a MAX_ROUNDS cap, then you sign off before any code. Use when the user says "/grill-me-codex", "grill me then have codex review", "grill me and stress-test the plan", "interview me about this plan then get a second model on it", or is about to build something high-stakes (auth, schema, concurrency, migrations, payments) and wants both alignment AND a cross-model sanity check before implementation. Builds on Matt Pocock's grill-me (MIT). For the docs-aware variant use /grill-with-docs-codex; if you already have a plan and want only the Codex review use /codex-review. NOT for reviewing already-written code (use /codex:review) and NOT for trivial changes.
+description: Use when the user says "/grill-me-codex", "grill me then have codex review", "grill me and stress-test the plan", "grill me against the docs", "stress-test this against our domain model", "interview me about this plan then get a second model on it", or is about to build something high-stakes (auth, schema, concurrency, migrations, payments) and wants both alignment AND a cross-model sanity check before implementation. Two acts — ACT 1: Claude interviews you relentlessly, one question at a time, until every branch of the decision tree is resolved; in projects with CONTEXT.md/ADRs it also challenges terms against the glossary and updates the docs inline. ACT 2: the locked plan goes to PLAN.md and OpenAI Codex adversarially reviews it read-only (VERDICT:APPROVED/REVISE) in the same session until approval or MAX_ROUNDS, then you sign off before code. If you already have a plan use /codex-review. NOT for reviewing written code (/codex:review) and NOT for trivial changes.
 ---
 
 # Grill-Me-Codex — Get Grilled, Then Get Reviewed
@@ -22,7 +22,21 @@ You enter at two points only: answering the grill, and signing off the converged
 >
 > If a question can be answered by exploring the codebase, explore the codebase instead.
 
-When the decision tree is resolved and we're aligned, **write the agreed plan to `PLAN.md`** in this structure, then move to Act 2:
+### Docs-aware mode (automatic when the project has living docs)
+
+While exploring, check for `CONTEXT.md` (or `CONTEXT-MAP.md` pointing at per-context `CONTEXT.md` files) and `docs/adr/`. If any exist — or the user asks to be grilled "against the docs" — layer these behaviors onto the grill (adapted from Matt Pocock's `grill-with-docs`, MIT):
+
+- **Challenge against the glossary.** If the user's wording conflicts with `CONTEXT.md`, call it out: "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"
+- **Sharpen fuzzy terms.** Propose a precise canonical term when the user says something overloaded ("account" — Customer or User?).
+- **Stress-test with concrete scenarios** that probe the boundaries between domain concepts.
+- **Cross-reference with code.** If the code contradicts what the user just said, surface it.
+- **Update `CONTEXT.md` inline** as each term is resolved — don't batch. Format per [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md). `CONTEXT.md` is a glossary and nothing else: no implementation details, no spec, no scratch pad.
+- **Offer ADRs sparingly** — only when a decision is (1) hard to reverse, (2) surprising without context, AND (3) a real trade-off. All three or skip it. Format per [ADR-FORMAT.md](./ADR-FORMAT.md).
+- **Create files lazily.** No `CONTEXT.md`? Create it when the first term is resolved. No `docs/adr/`? Create it when the first ADR is warranted. Don't scaffold empty docs in a project that has none and didn't ask.
+
+If the project has no such docs and the user didn't ask for them, grill normally — don't introduce a docs layer uninvited.
+
+When the decision tree is resolved (and any glossary/ADR updates are written), **write the agreed plan to `PLAN.md`** in this structure — using the canonical terms from `CONTEXT.md` when docs-aware mode was active — then move to Act 2:
 
 ```markdown
 # Plan: <task>
@@ -71,7 +85,7 @@ Now hand the locked plan to Codex for adversarial review. Same engine, mechanics
 If invoked with e.g. `rounds=3`, use that for `MAX_ROUNDS`. Echo resolved values before starting.
 
 ### The review prompt (sent each round)
-> You are an adversarial reviewer for an implementation plan. Be skeptical and specific — your job is to find what breaks, not to be agreeable. Read the plan at `PLAN.md` and any repo files you need (you are read-only). Identify concrete flaws: security holes, race conditions, missing edge cases, schema conflicts, wrong assumptions, observability gaps, simpler alternatives. For each, give a one-line fix. Do NOT modify any files. End your reply with EXACTLY one line: `VERDICT: APPROVED` if the plan is sound enough to implement, or `VERDICT: REVISE` if it still has material problems.
+> You are an adversarial reviewer for an implementation plan. Be skeptical and specific — your job is to find what breaks, not to be agreeable. Read the plan at `PLAN.md` (and `CONTEXT.md`/ADRs for the domain language, if present) and any repo files you need (you are read-only). Identify concrete flaws: security holes, race conditions, missing edge cases, schema conflicts, domain-language mismatches, wrong assumptions, observability gaps, simpler alternatives. For each, give a one-line fix. Do NOT modify any files. End your reply with EXACTLY one line: `VERDICT: APPROVED` if the plan is sound enough to implement, or `VERDICT: REVISE` if it still has material problems.
 
 ### Round 1 — fresh session (capture `thread_id`)
 ```bash

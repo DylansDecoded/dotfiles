@@ -22,9 +22,9 @@ A fast daily radar scan across YouTube, web, X/Twitter, and GitHub for the AI/Cl
 
 ### Step 1: Fire all searches in a single message
 
-Run ALL of these in one message so they execute in parallel. No subagents — run WebSearch and Bash directly so permissions work.
+Run ALL of these in one message so they execute in parallel. No subagents — run WebSearch and Bash directly so permissions work. In every query below, replace `{current_year}` with the current year from the environment's date.
 
-**YouTube (via yt-search script — fast metadata, no NotebookLM):**
+**YouTube (via yt-search script — fast metadata, no NotebookLM; `--days 1` restricts to the last 24h):**
 ```bash
 python "~/.claude/skills/yt-search/scripts/search.py" "Claude Code" --count 10 --days 1
 ```
@@ -54,16 +54,24 @@ Key things to surface:
 - **Breaking news** — only things from the last 24 hours. If a story is older than 24 hours, skip it entirely — it's stale.
 - **Trending content** — videos/posts getting unusual traction, posted in the last 24 hours only
 - **Sentiment shifts** — is the community excited, frustrated, or debating something?
-- **Your content opportunities** — gaps where your brand could make a video. Be specific about what angle and why it would work.
+- **Content opportunities** — gaps where a new video or post would land. Be specific about the angle and why it would work.
 - **Competitor moves** — what are other AI/Claude Code creators posting?
 
-**IMPORTANT:** Aggressively filter out anything older than 24 hours. If a web result, tweet, or video is from 2+ days ago, do NOT include it. The whole point of a morning report is what happened since the last one. If nothing new happened in a category, say "Nothing new in the last 24 hours" and move on.
+**Freshness rules — apply strictly:**
+- Include only items from the last 24 hours. Anything older is stale: drop it.
+- A result with no visible date counts as stale, unless another source confirms it's from the last 24 hours.
+- If nothing new happened in a category, write "Nothing new in the last 24 hours" and move on. If *every* section is empty (weekends are often quiet), say so up front in Headlines rather than stretching thin material.
+- The same story often appears on web, X, and GitHub at once. Report it once in Headlines and reference it briefly in the source sections — don't repeat the same summary four times.
+
+**Fallbacks:**
+- If a `--days 1` YouTube search returns zero videos, rerun once with `--days 3`, mark those rows' Posted dates clearly, and exclude them from Headlines.
+- If the `site:x.com` searches return nothing usable (common — search engines index X poorly), write "X coverage thin today" in that section instead of guessing at sentiment.
 
 ### Step 3: Save the briefing
 
-**Path:** `YOUR_VAULT_PATH/raw/YYYY-MM-DD-morning-report.md`
+**Path:** `~/Documents/second-brain/output/YYYY-MM-DD-morning-report.md`
 
-Use today's date. If a morning report already exists for today, append `-2` (e.g., `2026-04-07-morning-report-2.md`).
+Use today's date. Create the `output/` directory if it doesn't exist. If a morning report already exists for today, append `-2` (then `-3`, etc.) — never overwrite an earlier report.
 
 ## Output template
 
@@ -82,7 +90,6 @@ Use today's date. If a morning report already exists for today, append `-2` (e.g
 | [Title] | Creator | views | date |
 
 - **Hot topics:** [what creators are making videos about right now]
-- **Your recent performance:** [any your brand videos in the results + how they're doing]
 - **Gaps:** [topics trending elsewhere but no YouTube coverage yet]
 
 ## Web — News & Articles
@@ -117,4 +124,4 @@ The default scan covers AI/Claude Code/agents. If the user wants to adjust the s
 - Don't run searches via subagents — they can't get WebSearch permission approval.
 - Don't write walls of text — this is a morning scan, not a research paper. Tables and bullet points only.
 - Don't skip Content Opportunities — that's the most actionable section for the user.
-- Don't rehash old news — ONLY include things from the last 24 hours. If a result is older than 24 hours, drop it. If nothing is new in a section, write "Nothing new in the last 24 hours" and move on. The morning report should never contain yesterday's news.
+- Don't rehash old news — the freshness rules in Step 2 are the contract. The morning report should never contain yesterday's news.

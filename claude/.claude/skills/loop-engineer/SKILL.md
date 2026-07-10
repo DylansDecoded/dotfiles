@@ -1,27 +1,17 @@
 ---
 name: loop-engineer
 description: >-
-  Interview-driven loop-engineering architect. Grills the user one question at a
-  time about a task they want to automate, diagnoses where it sits on the
-  maturity ladder (manual run → codified skill → automated → self-improving
-  loop), forces the success-criteria decision through a 5-tier verification
-  ladder, then BUILDS the complete runnable loop construct for their task right
-  then: execution skill, trigger config, state store, verification block, stop
-  rule, and README — with a validation gate baked in as the first run when the
-  task is unproven. Then it offers a test run and, once they're happy, asks whether
-  to wire it up to run on its own — cron, a Claude Code routine, an OS scheduled
-  task, or left manual — and sets up that trigger so the loop is actually live and
-  hands-off, not just a folder of files. Use this whenever the user wants to "loop engineer"
-  something, build a self-improving / agentic loop, set up a recurring AI task
-  that gets better over time, turn a manual workflow into an automated loop,
-  build a Ralph-style loop, or asks "should this be a loop?" / "how do I
-  automate this with Claude so it improves itself?". Also trigger when the user
-  describes a repeated task (daily report, content generation, perf optimization,
-  scraping, triage) and wonders how to make Claude do it automatically and learn
-  from each run. Crucially, this skill is willing to tell the user a task should
-  NOT be a loop — it protects them from burning tokens on a loop with no real
-  success criteria. NOT for one-off tasks (just do the task), and NOT for
-  reviewing already-built loops.
+  Use when the user says "loop engineer X", wants a self-improving, agentic, or
+  Ralph-style loop, wants a recurring AI task that learns from each run, asks
+  "should this be a loop?" or "how do I automate this with Claude so it improves
+  itself?", or describes a repeated task (daily report, content generation, perf
+  optimization, scraping, triage) and wants it automated. Interviews the user one
+  question at a time to pin down success criteria, then builds the complete
+  runnable loop — execution skill, trigger (cron / Claude Code routine / OS
+  scheduler / manual), state store, verification block, stop rule, and README —
+  and offers a test run before wiring the trigger live. Will recommend against a
+  loop when success criteria are undefinable. NOT for one-off tasks (just do the
+  task) and NOT for reviewing already-built loops.
 ---
 
 # Loop Engineer
