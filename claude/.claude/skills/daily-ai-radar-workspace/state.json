@@ -1,3 +1,77 @@
 {
-  "runs": []
+ "runs": [
+  {
+   "date": "2026-08-07",
+   "briefing_path": "/Users/dylan/Projects/personal/obsidian/Inbox/2026-08-07-ai-radar.md",
+   "headlines_covered": [
+    "openai-huggingface-breach-blackhat",
+    "agent-safety-evals-attacked-real-companies",
+    "bytedance-10t-model-pretraining",
+    "amd-acquires-taalas",
+    "gpt-5.6-sol-chatgpt-update-free-tier",
+    "meta-567m-youth-harms-fund",
+    "open-weight-frontier-gap-minimax-m3"
+   ],
+   "repos_featured": {
+    "daily": [
+     "PrimeIntellect-ai/prime-agent",
+     "addyosmani/agent-skills",
+     "cloudflare/computer",
+     "mattpocock/skills",
+     "obra/superpowers",
+     "goauthentik/authentik",
+     "semantica-agi/semantica",
+     "666ghj/MiroFish",
+     "chenyme/grok2api",
+     "jdx/mise"
+    ],
+    "weekly": [
+     "zhaoxuya520/reverse-skill",
+     "microsoft/AI-For-Beginners",
+     "TencentCloud/TencentDB-Agent-Memory",
+     "usekaneo/kaneo",
+     "lyogavin/airllm",
+     "esengine/DeepSeek-Reasonix",
+     "virgiliojr94/book-to-skill",
+     "block/buzz",
+     "paperswithbacktest/awesome-systematic-trading",
+     "different-ai/openwork"
+    ],
+    "monthly": [
+     "permissionlesstech/bitchat",
+     "diegosouzapw/OmniRoute",
+     "stablyai/orca",
+     "koala73/worldmonitor",
+     "emilkowalski/skills",
+     "Nutlope/hallmark",
+     "tt-a1i/archify",
+     "1jehuang/jcode",
+     "huggingface/speech-to-speech",
+     "HKUDS/DeepTutor"
+    ]
+   },
+   "structural_pass": true,
+   "structural_note": "First run; all sections and 3x10 tables present. Discord skipped: no webhook configured.",
+   "judge": {
+    "score": 3,
+    "strengths": [
+     "Tightly written; honest that no frontier model launched",
+     "All three tables complete with cross-table synthesis attempt",
+     "Noise Filter shows real editorial judgment"
+    ],
+    "problems": [
+     "Top Signal overlap (two agent-security items) and peripheral Meta ruling; aggregator/indirect links",
+     "ChatGPT free-tier framing possibly reversed vs primary announcement",
+     "GitHub totals not independently verified; skill-pack count in commentary was wrong (3, not 5)",
+     "Benchmark section cites aggregators as news with no named eval delta"
+    ],
+    "instructions_for_tomorrow": [
+     "Verify GitHub totals/deltas against GitHub before publishing; programmatically validate 10 unique repos per table",
+     "Top Signal: distinct developments with primary links only; merge overlapping security stories; link the specific article, never a homepage",
+     "Models/benchmarks: state exact before/after change or named eval delta, checked against the primary announcement"
+    ]
+   },
+   "user_feedback": []
+  }
+ ]
 }

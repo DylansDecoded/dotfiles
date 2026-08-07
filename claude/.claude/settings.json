@@ -146,7 +146,7 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
   "skipAutoPermissionPrompt": true,
