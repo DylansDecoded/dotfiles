@@ -35,12 +35,13 @@ log "Installing bootstrap toolchain (just stow age sops jq 1password-cli + 1Pass
 brew install just stow age sops jq 1password-cli
 brew install --cask 1password
 
-# 4. Clone (or update) the repo.
+# 4. Clone (or update) the repo, including submodules (e.g. advisor-strategy skill).
 if [ ! -d "$DOTFILES_DIR/.git" ]; then
   log "Cloning $REPO_URL -> $DOTFILES_DIR"
-  git clone "$REPO_URL" "$DOTFILES_DIR"
+  git clone --recurse-submodules "$REPO_URL" "$DOTFILES_DIR"
 else
   log "Repo already present at $DOTFILES_DIR"
+  git -C "$DOTFILES_DIR" submodule update --init --recursive
 fi
 
 # 5. Hand off to the Justfile.

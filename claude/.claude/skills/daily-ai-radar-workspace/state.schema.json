@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "daily-ai-radar state",
+  "type": "object",
+  "required": ["runs"],
+  "properties": {
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "briefing_path", "headlines_covered", "repos_featured", "structural_pass"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "briefing_path": { "type": "string" },
+          "headlines_covered": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Short story keys, e.g. 'anthropic-fable-5-launch' — used for 7-day dedupe"
+          },
+          "repos_featured": {
+            "type": "object",
+            "properties": {
+              "daily": { "type": "array", "items": { "type": "string" } },
+              "weekly": { "type": "array", "items": { "type": "string" } },
+              "monthly": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "structural_pass": { "type": "boolean" },
+          "structural_note": { "type": "string" },
+          "judge": {
+            "type": ["object", "null"],
+            "properties": {
+              "score": { "type": "number", "minimum": 1, "maximum": 10 },
+              "strengths": { "type": "array", "items": { "type": "string" } },
+              "problems": { "type": "array", "items": { "type": "string" } },
+              "instructions_for_tomorrow": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "user_feedback": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

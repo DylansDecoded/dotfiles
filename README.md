@@ -76,7 +76,7 @@ sops secrets/env.sops.yaml      # opens decrypted in $EDITOR, re-encrypts on sav
 just secrets                    # regenerate ~/.config/secrets/env.sh
 ```
 
-Keys captured: `SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`.
+Keys captured: `SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`.
 They are consumed by the MCP servers in Claude Code, Codex, opencode, and Gemini,
 which inherit them from the login-shell environment. **This repo is public** — the
 internal SearxNG URL and all tokens stay only in the encrypted file, never in the

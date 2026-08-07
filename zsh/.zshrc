@@ -41,7 +41,6 @@ autoload -Uz compinit && compinit
 # kimi-code
 export PATH="/Users/dylan/.kimi-code/bin:$PATH"
 export PODMAN_COMPOSE_PROVIDER=/opt/homebrew/bin/podman-compose
-export CAMOFOX_API_KEY="372895aa371155d1a9e284fc4fd49311d7c670b63af52c9afc74210e5cfeab96"
 
 # adding bin to path
 export PATH="$HOME/.local/bin:$PATH"

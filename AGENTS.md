@@ -39,7 +39,7 @@ secrets/env.sops.yaml  (ciphertext, committed)
     ↓                 to fetch the age key live from 1Password (key never touches disk)
 ~/.config/secrets/env.sh  (plaintext, gitignored)
     ↓  sourced in .zprofile at login
-SEARXNG_URL, CONTEXT7_API_KEY, GITHUB_TOKEN, GITHUB_TOOLSETS
+SEARXNG_URL, CONTEXT7_API_KEY, GITHUB_TOKEN, GITHUB_TOOLSETS, CAMOFOX_API_KEY
 ```
 
 The sops age private key lives only in 1Password (`op://Private/sops/SOPS_PRIVATE_KEY`) — it is never committed and never written to disk. `SOPS_AGE_KEY_CMD` is exported in `.zprofile`, so manual `sops secrets/env.sops.yaml` edits also work keylessly (override the ref per-machine with `OP_AGE_REF`). Before `just secrets` will work on a fresh machine, 1Password CLI integration must be enabled in the app: **Settings → Developer → "Integrate with 1Password CLI"**.
@@ -53,7 +53,7 @@ The intended outcome is a repeatable fresh-machine restore: on a new Mac, `boots
 ### Multi-LLM Setup
 
 Four AI tools are configured here — Claude Code, Codex, opencode, and Gemini — and they share infrastructure:
-- All consume the same secrets (`SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`)
+- All consume the same secrets (`SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`)
 - All use the same MCP server (crawler, run via `uv` from `~/Projects/personal/mcps/searxNcrawl`) pointing at an internal SearxNG instance
 - `agents/.agents/AGENTS.md` is the canonical shared instruction file; Claude, Codex, and opencode point to it
 - `agents/.agents/skills/` is the source of truth for shared skills; LLM-specific skill directories should reference these skills with symlinks instead of duplicating files
@@ -75,6 +75,7 @@ For any LLM configured in this repo, follow this pattern:
 All Claude Code config lives in `claude/.claude/`. Key locations:
 
 - **Skills**: `claude/.claude/skills/<name>/skill.md` — agent-specific workflows live here; shared skills are symlinked from `agents/.agents/skills/`
+- **Submodules**: `claude/.claude/skills/advisor-strategy` is a git submodule (third-party skill); bootstrap clones with `--recurse-submodules`
 - **Rules**: `claude/.claude/rules/anti-ai-writing-style.md` — 50+ banned AI writing phrases; enforced globally
 - **Hooks**: plan-executive-brief (HTML brief on ExitPlanMode)
 - **MCP servers**: `claude/.claude/.mcp.json` — context7, sequential-thinking, qmd, fff, crawler
