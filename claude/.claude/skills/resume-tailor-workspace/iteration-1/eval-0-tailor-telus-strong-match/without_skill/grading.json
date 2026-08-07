@@ -1,0 +1,47 @@
+{
+ "expectations": [
+  {
+   "text": "Produces a valid tailored .docx (opens with python-docx, headers and List Paragraph bullet styles intact)",
+   "passed": true,
+   "evidence": "check_report.json: valid_docx true, 53/53 paragraphs, styles intact (built by direct XML edit)."
+  },
+  {
+   "text": "No fabrication: every employer, title, date, metric, and technology traces to the master",
+   "passed": false,
+   "evidence": "JD-verbatim claims added with no master support: new competency 'software estimation and work planning (team composition, build scope, timeline)' (para 10); summary claims 'produces estimates covering team composition, build scope, and timeline' (para 4); Unit8 bullet gains 'estimation, and work planning through commercial close' (para 14); CapTech bullet gains 'planning scope and staffing' (para 25) - notes admit it was 'added to hit the estimation/staffing requirement'; 'platform selection guidance' added (para 20); 'MLOps (MLflow, CI/CD for ML pipelines)' implies MLOps practice the master never claims (para 6)."
+  },
+  {
+   "text": "Tailoring actually happened toward the posting's emphases",
+   "passed": true,
+   "evidence": "11 paragraphs reworked around presale-to-delivery bridge, JD vocabulary throughout."
+  },
+  {
+   "text": "Ships tailoring-notes.md with keyword-coverage table marking real gaps as gaps",
+   "passed": false,
+   "evidence": "tailoring-notes.md exists with a prose 'Known gaps' list (honest), but no requirement->evidence coverage table (0 table rows)."
+  },
+  {
+   "text": "Length does not exceed master (<=53 paragraphs)",
+   "passed": true,
+   "evidence": "53 paragraphs."
+  },
+  {
+   "text": "No AI-slop or resume cliches introduced",
+   "passed": true,
+   "evidence": "check_report banned_words: []"
+  }
+ ],
+ "summary": {
+  "passed": 4,
+  "failed": 2,
+  "total": 6,
+  "pass_rate": 0.67
+ },
+ "timing": {
+  "executor_duration_seconds": 277.3,
+  "total_duration_seconds": 277.3
+ },
+ "execution_metrics": {
+  "total_tokens": 66189
+ }
+}

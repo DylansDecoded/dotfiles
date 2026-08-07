@@ -1,0 +1,3 @@
+[submodule "advisor-strategy"]
+	path = claude/.claude/skills/advisor-strategy
+	url = https://github.com/aivsomkar/advisor-strategy-skill.git

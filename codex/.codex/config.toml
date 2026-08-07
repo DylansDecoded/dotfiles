@@ -239,18 +239,19 @@ approval_mode = "approve"
 # sops-encrypted secrets in ~/.config/secrets/env.sh). TOML does not expand env
 # vars, so it is intentionally not set here — keep the internal URL out of this
 # public repo. See README "Secrets" and `just secrets`.
-[mcp_servers.searxncrawl]
-command = "/Users/dylan/.local/bin/searxncrawl-mcp"
+[mcp_servers.crawler]
+command = "uv"
+args = ["run", "--directory", "/Users/dylan/Projects/personal/mcps/searxNcrawl", "python", "-m", "crawler.mcp_server"]
 startup_timeout_sec = 30
 tool_timeout_sec = 120
 
-[mcp_servers.searxncrawl.tools.crawl]
+[mcp_servers.crawler.tools.crawl]
 approval_mode = "approve"
 
-[mcp_servers.searxncrawl.tools.crawl_site]
+[mcp_servers.crawler.tools.crawl_site]
 approval_mode = "approve"
 
-[mcp_servers.searxncrawl.tools.search]
+[mcp_servers.crawler.tools.search]
 approval_mode = "approve"
 
 # https://github.com/openai/plugins/tree/main/plugins/cloudflare

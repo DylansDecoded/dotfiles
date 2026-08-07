@@ -1,0 +1,56 @@
+Split: 12 train, 8 test (holdout=0.4)
+
+============================================================
+Iteration 1/5
+Description: Tailor Dylan's resume to a job posting, polish work-experience entries, and log application outcomes so the skill improves over time. Use whenever the user mentions tailoring, updating, or adapting his resume or CV for a job, company, or posting; pastes a job description or JD link; asks to make his experience or a specific role "more polished" or "come off better"; reports an application outcome ("applied to X", "got a callback", "rejected by Y"); or asks what resume version went to a company. Trigger even if he doesn't say the word "resume" but is clearly preparing application materials.
+============================================================
+Train: 18/36 correct, precision=100% recall=0% accuracy=50% (60.2s)
+  [FAIL] rate=0/3 expected=True: welp, rejected by databricks. update whatever you track abou
+  [FAIL] rate=0/3 expected=True: which version of my resume did we send to Circle?
+  [FAIL] rate=0/3 expected=True: the professional summary on my CV reads kind of flat, can yo
+  [FAIL] rate=0/3 expected=True: heres the JD for a principal ai architect at deloitte, make 
+  [FAIL] rate=0/3 expected=True: can you tailor my resume for this posting? https://jobs.leve
+  [FAIL] rate=0/3 expected=True: Update my work experience for Unit8 to come off more polishe
+  [PASS] rate=0/3 expected=False: review this separation agreement my employer sent me before 
+  [PASS] rate=0/3 expected=False: extract the text from resume.docx in my downloads and conver
+  [PASS] rate=0/3 expected=False: write a cover letter for the TELUS solutions architecture jo
+  [PASS] rate=0/3 expected=False: help me prep answers for the behavioral interview round at T
+  [PASS] rate=0/3 expected=False: whats the job market looking like for data architects right 
+  [PASS] rate=0/3 expected=False: my boss asked me to write up a job posting for a senior data
+Test : 12/24 correct, precision=100% recall=0% accuracy=50% (0.0s)
+  [FAIL] rate=0/3 expected=True: i applied to the veryon director job yesterday, make sure th
+  [FAIL] rate=0/3 expected=True: my EY bullets feel weak compared to the rest, tighten them u
+  [FAIL] rate=0/3 expected=True: just got a callback from TELUS for that solutions architectu
+  [FAIL] rate=0/3 expected=True: I'm applying for a director of data engineering position at 
+  [PASS] rate=0/3 expected=False: polish this blog post draft so it comes off more professiona
+  [PASS] rate=0/3 expected=False: one of our Workable candidates sent an updated CV — can you 
+  [PASS] rate=0/3 expected=False: draft the solution approach section for the RFP response we'
+  [PASS] rate=0/3 expected=False: update my linkedin headline and about section to match my cu
+
+Improving description...
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/dylan/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/run_loop.py", line 328, in <module>
+    main()
+    ~~~~^^
+  File "/Users/dylan/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/run_loop.py", line 293, in main
+    output = run_loop(
+        eval_set=eval_set,
+    ...<11 lines>...
+        log_dir=log_dir,
+    )
+  File "/Users/dylan/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/run_loop.py", line 199, in run_loop
+    new_description = improve_description(
+        skill_name=name,
+    ...<6 lines>...
+        iteration=iteration,
+    )
+  File "/Users/dylan/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/improve_description.py", line 144, in improve_description
+    text = _call_claude(prompt, model)
+  File "/Users/dylan/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/improve_description.py", line 44, in _call_claude
+    raise RuntimeError(
+        f"claude -p exited {result.returncode}\nstderr: {result.stderr}"
+    )
+RuntimeError: claude -p exited 1
+stderr: 

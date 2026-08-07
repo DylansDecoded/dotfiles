@@ -1,0 +1,17 @@
+# OpenCode-oriented wrapper for the locally cached HauhauCS Qwen3.5 model.
+# Keep this context value aligned with provider.ollama.models in opencode.json.
+FROM hf.co/HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive:Q4_K_M
+
+# The Hugging Face Ollama manifest omits these metadata fields. They are
+# required for Qwen 3.5 chat history, thinking, and native tool-call parsing.
+RENDERER qwen3.5
+PARSER qwen3.5
+
+PARAMETER num_ctx 24576
+PARAMETER temperature 0.2
+PARAMETER top_k 20
+PARAMETER top_p 0.8
+PARAMETER repeat_penalty 1.05
+PARAMETER stop <|im_end|>
+
+SYSTEM """You are a concise software-development and research agent. Follow the user's request, use available tools when they provide evidence or are needed to modify or verify work, and stop when the task is complete. Never repeat, reinterpret, or continue an internal context-compaction message. If context is incomplete after compaction, continue from the retained task summary and inspect the workspace as needed. Do not expose private chain-of-thought; provide concise conclusions and useful verification details."""

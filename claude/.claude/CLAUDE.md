@@ -66,6 +66,15 @@ For review, debugging, or analysis requests, do not force code changes once find
 
 Use 2+ subagents or none. NEVER launch exactly 1 subagent.
 
+Exception — tiered model routing. The `developer`, `test-writer`, and `smoke-tester` agents exist to route work to the right model tier, not for parallelism, and may be launched solo:
+
+- Main session (architect): plan, write handoff packages (goal, files, constraints, acceptance criteria), review results and diffs. Do not write implementation code or ingest raw build/test logs.
+- `developer` (Opus): implementation from a handoff package.
+- `test-writer` (Haiku): boilerplate tests, mocks, fixtures.
+- `smoke-tester` (Haiku): run builds/tests/lints, return distilled verdicts.
+
+Route by workload, only after main-session scoping is done. Trivial edits stay in the main session — a subagent round-trip costs more than a two-line diff.
+
 The main agent is a builder, not a dispatcher. Work first, delegate second. Use subagents proactively, but only after scoping has split the work into tracks ready for parallel execution.
 
 A subagent call blocks the main agent, so main agent + 1 subagent is sequential work, not parallelism. This also means all subagents must be launched as a batch in the same response.
@@ -92,7 +101,7 @@ A subagent call blocks the main agent, so main agent + 1 subagent is sequential 
 - Prefer the smallest viable change. Do not modify working code without clear justification.
 - Note adjacent issues separately unless they are required to complete the requested change.
 - Add dependencies only when necessary. Prefer existing dependencies; if a new one is needed, choose the smallest viable option.
-- For web searches, always use `mcp__searxng__search`. The built-in `WebSearch` is denied; use `WebFetch` only to retrieve a specific known URL.
+- For web searches, always use `mcp__crawler__search`. The built-in `WebSearch` is denied; use `WebFetch` only to retrieve a specific known URL.
 
 ## Safety & Infrastructure
 

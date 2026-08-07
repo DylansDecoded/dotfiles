@@ -1,0 +1,50 @@
+{
+  "skill_name": "resume-tailor",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "tailor-telus-strong-match",
+      "prompt": "Tailor my resume for this TELUS Digital posting — Senior Manager, Solutions Architecture - Data & AI (Remote, US). The full posting text is in the attached file. My master resume is the attached docx.",
+      "expected_output": "A tailored .docx (styling intact) that reorders/rewords toward pre-sales solutioning, Databricks/Snowflake depth, MLOps/agentic AI, and estimation/scoping experience — using only facts from the master — plus a tailoring-notes.md with an honest keyword-coverage table.",
+      "files": ["fixtures/posting-telus.txt", "fixtures/DylanRobson_CV_2026.docx"],
+      "assertions": [
+        "Produces a valid tailored .docx in the output directory (opens with python-docx, section headers and List Paragraph bullet styles intact)",
+        "No fabrication: every employer, title, date, metric, percentage, and named technology in the tailored resume traces to the master resume (rewording OK, new facts not)",
+        "Tailoring actually happened: summary and/or competencies reordered or reworded toward the posting's emphases (pre-sales scoping/estimation, Databricks/Snowflake lakehouse, MLOps/agentic AI) rather than a near-copy of the master",
+        "Ships a tailoring-notes.md with a keyword-coverage table mapping posting requirements to where the resume answers them, marking real gaps as gaps (e.g. Kubernetes/Docker depth, NLP)",
+        "Tailored resume length does not exceed the master (paragraph count <= master's 53)",
+        "No AI-slop or resume cliches introduced (leverage, robust, comprehensive, seamless, results-driven, proven track record, 'responsible for' as bullet opener)"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "tailor-veryon-domain-gap",
+      "prompt": "I found this Director of Engineering (AI Adoption) role at Veryon, an aviation software company. Tailor my resume for it. The posting text and my master resume are attached.",
+      "expected_output": "A tailored .docx emphasizing AI/GenAI leadership and enterprise AI enablement, which does NOT invent aviation experience — the aviation requirement must be surfaced as a gap (question to the user / flagged in tailoring-notes.md), not papered over.",
+      "files": ["fixtures/posting-veryon.txt", "fixtures/DylanRobson_CV_2026.docx"],
+      "assertions": [
+        "Produces a valid tailored .docx in the output directory (opens with python-docx, section headers and List Paragraph bullet styles intact)",
+        "Aviation gap handled honestly: the resume claims NO aviation industry experience anywhere — the Allen Lund logistics internship is not reframed as aviation, and no aviation/aerospace terms are attached to Dylan's experience",
+        "The aviation requirement (and NLP depth, which the master also lacks) is explicitly flagged as a gap — as a recorded question to the user and/or marked 'gap' in tailoring-notes.md — not silently papered over",
+        "No fabrication: every employer, title, date, metric, percentage, and named technology in the tailored resume traces to the master resume",
+        "Tailoring emphasizes the real matches: GenAI/LLM delivery, agentic systems, AI enablement and team leadership, executive stakeholder influence",
+        "Ships a tailoring-notes.md with a keyword-coverage table marking real gaps as gaps"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "polish-captech-section",
+      "prompt": "Update my work experience for CapTech to come off more polished.",
+      "expected_output": "Before/after for each CapTech bullet with identical facts (no new metrics/tools/claims), a backup of the master created before any edit, and the polished docx with styling intact.",
+      "files": ["fixtures/DylanRobson_CV_2026.docx"],
+      "assertions": [
+        "A backup copy of the master resume is created in the outputs before any edit",
+        "A before/after document shows each proposed CapTech bullet change side by side",
+        "Facts are identical across the rewrite: no new metrics, team sizes, timelines, technologies, or client names ('top-5 QSR' stays anonymous, '6-month timeline' unchanged, no invented percentages)",
+        "Only the CapTech section changes: every non-CapTech paragraph in the polished .docx is text-identical to the master",
+        "Polished bullets read cleaner: outcome-led phrasing, no cliches (results-driven, proven track record, 'responsible for' openers) and no banned AI-slop words (leverage, robust, comprehensive, seamless, spearheaded more than once)",
+        "Polished .docx is valid with styles intact (opens with python-docx, bullets still List Paragraph)"
+      ]
+    }
+  ]
+}

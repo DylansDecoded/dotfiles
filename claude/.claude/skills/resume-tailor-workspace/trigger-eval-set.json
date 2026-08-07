@@ -1,0 +1,82 @@
+[
+  {
+    "query": "can you tailor my resume for this posting? https://jobs.lever.co/confluent/8a2b-staff-data-platform-architect — it's a staff data platform architect role, remote",
+    "should_trigger": true
+  },
+  {
+    "query": "Update my work experience for Unit8 to come off more polished",
+    "should_trigger": true
+  },
+  {
+    "query": "just got a callback from TELUS for that solutions architecture role!",
+    "should_trigger": true
+  },
+  {
+    "query": "i applied to the veryon director job yesterday, make sure that's logged",
+    "should_trigger": true
+  },
+  {
+    "query": "heres the JD for a principal ai architect at deloitte, make my cv fit it:\n\nWe are seeking a Principal AI Architect to lead GenAI delivery for Fortune 500 clients... 10+ years experience, Databricks, AWS, LLM orchestration frameworks...",
+    "should_trigger": true
+  },
+  {
+    "query": "which version of my resume did we send to Circle?",
+    "should_trigger": true
+  },
+  {
+    "query": "welp, rejected by databricks. update whatever you track about my applications",
+    "should_trigger": true
+  },
+  {
+    "query": "my EY bullets feel weak compared to the rest, tighten them up",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm applying for a director of data engineering position at a regional bank, salary looks great. Get my resume ready for it — posting is in ~/Downloads/bank-jd.pdf",
+    "should_trigger": true
+  },
+  {
+    "query": "the professional summary on my CV reads kind of flat, can you make it punchier without overselling",
+    "should_trigger": true
+  },
+  {
+    "query": "write a cover letter for the TELUS solutions architecture job",
+    "should_trigger": false
+  },
+  {
+    "query": "review this separation agreement my employer sent me before I sign anything",
+    "should_trigger": false
+  },
+  {
+    "query": "one of our Workable candidates sent an updated CV — can you look at it and tell me if she's a fit for our senior data engineer opening at Unit8?",
+    "should_trigger": false
+  },
+  {
+    "query": "update my linkedin headline and about section to match my current role",
+    "should_trigger": false
+  },
+  {
+    "query": "draft the solution approach section for the RFP response we're doing for the QSR client",
+    "should_trigger": false
+  },
+  {
+    "query": "polish this blog post draft so it comes off more professional",
+    "should_trigger": false
+  },
+  {
+    "query": "whats the job market looking like for data architects right now? are comp bands up or down",
+    "should_trigger": false
+  },
+  {
+    "query": "help me prep answers for the behavioral interview round at TELUS next week",
+    "should_trigger": false
+  },
+  {
+    "query": "extract the text from resume.docx in my downloads and convert it to markdown",
+    "should_trigger": false
+  },
+  {
+    "query": "my boss asked me to write up a job posting for a senior data engineer we're hiring onto my team",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "polish-captech-section",
+  "prompt": "Update my work experience for CapTech to come off more polished.",
+  "assertions": [
+    "A backup copy of the master resume is created in the outputs before any edit",
+    "A before/after document shows each proposed CapTech bullet change side by side",
+    "Facts are identical across the rewrite: no new metrics, team sizes, timelines, technologies, or client names ('top-5 QSR' stays anonymous, '6-month timeline' unchanged, no invented percentages)",
+    "Only the CapTech section changes: every non-CapTech paragraph in the polished .docx is text-identical to the master",
+    "Polished bullets read cleaner: outcome-led phrasing, no cliches (results-driven, proven track record, 'responsible for' openers) and no banned AI-slop words (leverage, robust, comprehensive, seamless, spearheaded more than once)",
+    "Polished .docx is valid with styles intact (opens with python-docx, bullets still List Paragraph)"
+  ]
+}

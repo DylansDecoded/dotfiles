@@ -1,0 +1,58 @@
+{
+ "valid_docx": true,
+ "para_count": {
+  "master": 53,
+  "output": 53
+ },
+ "styles_output": [
+  "List Paragraph",
+  "Normal"
+ ],
+ "numbers_audit": [
+  {
+   "index": 25,
+   "new_numbers": [
+    "6"
+   ],
+   "text": "Delivered an on-prem to AWS cloud migration for a top client in 6 months, managing the onshore/offsh"
+  }
+ ],
+ "banned_words": [],
+ "changed_paras": [
+  {
+   "index": 20,
+   "style": "List Paragraph",
+   "text": "Led the firm's Databricks practice as internal Data Engineering Lead, owning technical standards, in"
+  },
+  {
+   "index": 21,
+   "style": "List Paragraph",
+   "text": "Cut migration delivery time by building an LLM-assisted framework that automated schema translation "
+  },
+  {
+   "index": 22,
+   "style": "List Paragraph",
+   "text": "Led data architecture for a top-5 QSR supply chain engagement: designed a medallion architecture on "
+  },
+  {
+   "index": 23,
+   "style": "List Paragraph",
+   "text": "Lead Architect for a Fortune 500 financial-sector client: defined the implementation strategy for in"
+  },
+  {
+   "index": 24,
+   "style": "List Paragraph",
+   "text": "Built a reusable Infrastructure-as-Code accelerator (Terraform and Bicep) that deploys end-to-end la"
+  },
+  {
+   "index": 25,
+   "style": "List Paragraph",
+   "text": "Delivered an on-prem to AWS cloud migration for a top client in 6 months, managing the onshore/offsh"
+  },
+  {
+   "index": 26,
+   "style": "List Paragraph",
+   "text": "Ran internal technical workshops and supported pre-sales solutioning with architecture artifacts, de"
+  }
+ ]
+}

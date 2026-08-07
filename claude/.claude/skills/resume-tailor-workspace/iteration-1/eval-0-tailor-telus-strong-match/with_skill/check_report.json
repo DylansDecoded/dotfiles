@@ -1,0 +1,55 @@
+{
+ "valid_docx": true,
+ "para_count": {
+  "master": 53,
+  "output": 53
+ },
+ "styles_output": [
+  "List Paragraph",
+  "Normal"
+ ],
+ "numbers_audit": [],
+ "banned_words": [],
+ "changed_paras": [
+  {
+   "index": 2,
+   "style": "Normal",
+   "text": "Data & AI Solutions Architecture  •  Pre-Sales & Delivery Leadership  •  GenAI & Agentic AI Systems"
+  },
+  {
+   "index": 4,
+   "style": "Normal",
+   "text": "Data and AI solutions architect with 7+ years scoping and delivering production data platforms and A"
+  },
+  {
+   "index": 14,
+   "style": "List Paragraph",
+   "text": "Co-led pre-sales scoping and technical design that closed a 7-figure strategic data platform engagem"
+  },
+  {
+   "index": 15,
+   "style": "List Paragraph",
+   "text": "Authored the US market expansion business case for Swiss C-suite leadership; partnered with the inte"
+  },
+  {
+   "index": 22,
+   "style": "List Paragraph",
+   "text": "Contributed to pre-sales solutioning with architecture artifacts, demos, and SOW scope validation, a"
+  },
+  {
+   "index": 23,
+   "style": "List Paragraph",
+   "text": "Led data architecture for a top-5 QSR supply chain engagement: designed a greenfield lakehouse (meda"
+  },
+  {
+   "index": 24,
+   "style": "List Paragraph",
+   "text": "Lead architect for a Fortune 500 financial services client: defined the implementation strategy and "
+  },
+  {
+   "index": 26,
+   "style": "List Paragraph",
+   "text": "Built a reusable Infrastructure as Code deployment accelerator (Terraform and Bicep) for end-to-end "
+  }
+ ]
+}

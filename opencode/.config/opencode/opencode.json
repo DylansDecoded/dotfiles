@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "openrouter/z-ai/glm-5-turbo",
   "plugin": [
     "@superwhisper/opencode",
     "@tarquinen/opencode-dcp@latest",
@@ -9,19 +10,21 @@
   "compaction": {
     "auto": true,
     "prune": true,
-    "reserved": 4096
+    "reserved": 8192
   },
   "mcp": {
-    "searxng": {
+    "crawler": {
       "type": "local",
       "command": [
-        "uvx",
-        "mcp-searxng"
+        "uv",
+        "run",
+        "--directory",
+        "/Users/dylan/Projects/personal/mcps/searxNcrawl",
+        "python",
+        "-m",
+        "crawler.mcp_server"
       ],
-      "enabled": true,
-      "environment": {
-        "SEARXNG_URL": "http://10.1.20.93:8080"
-      }
+      "enabled": true
     }
   },
   "provider": {
@@ -29,13 +32,14 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://localhost:11434/v1"
+        "baseURL": "http://[::1]:11434/v1",
+        "timeout": 600000
       },
       "models": {
-        "hf.co/HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive:Q4_K_M": {
-          "name": "Qwen3.5 9B Uncensored HauhauCS Aggressive (Q4_K_M)",
+        "qwen3.5-9b-opencode": {
+          "name": "Qwen3.5 9B Uncensored (OpenCode, 24K)",
           "limit": {
-            "context": 16384,
+            "context": 24576,
             "output": 4096
           }
         }

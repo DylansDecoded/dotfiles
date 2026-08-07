@@ -1,0 +1,25 @@
+{
+  "reviews": [
+    {
+      "run_id": "eval-0-tailor-telus-strong-match-with_skill",
+      "feedback": "This looks great",
+      "timestamp": "2026-07-11T17:54:37.350Z"
+    },
+    {
+      "run_id": "eval-0-tailor-telus-strong-match-without_skill",
+      "feedback": "This is fabricated and incorrect",
+      "timestamp": "2026-07-11T17:54:37.350Z"
+    },
+    {
+      "run_id": "eval-1-tailor-veryon-domain-gap-with_skill",
+      "feedback": "Looks good",
+      "timestamp": "2026-07-11T17:54:37.350Z"
+    },
+    {
+      "run_id": "eval-1-tailor-veryon-domain-gap-without_skill",
+      "feedback": "not good",
+      "timestamp": "2026-07-11T17:54:37.350Z"
+    }
+  ],
+  "status": "in_progress"
+}

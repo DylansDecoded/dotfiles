@@ -1,0 +1,72 @@
+Director of Engineering (AI Adoption) | Veryon | Fully Remote — Canada or USA
+Job Type: Full-time
+
+ABOUT VERYON
+Veryon is the leading global provider of aviation software and information services, trusted by over 5000+ customers, 75,000 maintenance professionals, and 100+ OEMs across nearly 150 countries. Our mission is to deliver smarter, predictive technology solutions, including our AI platform, Veryon AIRE, that maximizes aircraft uptime and operational efficiency for the world's most demanding aviation organizations.
+
+At Veryon, we are an AI-forward company focused on driving innovation and efficiency through emerging technologies. We prioritize hiring individuals who embrace AI, think creatively about its application, and are excited to continuously evolve alongside it.
+
+ABOUT THE ROLE
+Veryon is seeking a Director of Engineering (AI Adoption) to lead the strategy, development, and adoption of artificial intelligence initiatives both externally in our products and internally across the organization.
+
+Externally this role will drive the evolution of Veryon's product portfolio specifically focusing on initiatives involving Veryon AIRE. This includes the full lifecycle through analysis, design, software development, sales & support enablement, market launches, and most importantly supporting top tier service to large enterprise customers as they roll out Veryon AIRE solutions across their maintenance operations.
+
+Internally this role will be responsible for running AI initiatives across all departments ensuring that we are embedding AI into the daily lives and processes of our teams in a way that drives business value. This role must partner closely with the Executive Leadership Team (ELT), Senior Leadership Team (SLT) and Security and Compliance leaders to define and execute function-specific AI roadmaps that adhere to the strict AI usage policies at Veryon.
+
+This role requires a combination of strategic vision, technical depth, and the ability to lead cross-functional transformation within a complex aviation environment.
+
+KEY RESPONSIBILITIES
+
+Enterprise AI Enablement
+- Define and execute a company-wide AI strategy aligned with Veryon's business objectives
+- Partner with ELT and SLT to identify, prioritize, and roadmap AI initiatives across all departments
+- Partner with Security and Compliance teams to grow and ensure adherence of Veryon's AI governance, best practices, and responsible AI usage
+- Drive organization-wide AI adoption, including training and change management initiatives
+- Identify and deliver measurable business value through AI-driven efficiencies and insights
+
+Product AI Strategy & Innovation
+- Lead the integration of AI capabilities across Veryon's product suite
+- Define and execute the roadmap for evolving products into agentic, decision-capable systems
+- Collaborate with Product and Engineering teams to prioritize and deliver AI-driven features
+- Ensure scalable & reliable deployment of AI/ML models in production environments
+- Evaluate and incorporate emerging AI technologies into the product strategy
+
+Leadership & Execution
+- Build, lead, and mentor high-performing AI/ML engineering teams
+- Drive cross-functional collaboration across all departments of Veryon including technology, product, sales, marketing, customer support, customer success, people operations and finance
+- Oversee the full lifecycle of AI solutions (design, development, deployment, optimization)
+- Establish KPIs to measure AI impact, adoption, and ROI
+- Manage partnerships with external vendors and AI technology providers
+- Build lasting relationships with large enterprise customers such as commercial aviation operators and OEMs
+
+Aviation Domain Expertise
+- Apply aviation expertise to ensure AI solutions are operationally relevant and compliant
+- Identify opportunities to enhance maintenance, diagnostics, and operational performance
+- Align AI initiatives with aviation standards, safety, and regulatory requirements
+
+REQUIREMENTS
+- Bachelor's or Master's degree in Computer Science, Engineering, Data Science, or related field
+- Engineering leadership experience with a strong focus on AI/ML initiatives
+- Proven track record of implementing AI solutions across multiple business functions
+- Deep expertise in Generative AI, Natural Language Processing (NLP), and Machine Learning
+- Experience building and scaling AI-enabled products in production environments
+- Strong understanding of data platforms, architectures, and MLOps practices
+- Demonstrated ability to influence executive stakeholders and lead organizational change
+- Aviation industry experience or strong domain knowledge
+
+PREFERRED SKILLS
+- Experience building aviation maintenance software solutions and familiarity with industry leading aviation maintenance technology ecosystems
+- Experience designing or implementing agentic systems or autonomous workflows
+- Experience with cloud platforms such as AWS, Azure, or Google Cloud
+- Strong business acumen with the ability to connect AI initiatives to measurable outcomes
+- Excellent communication skills, including translating complex AI concepts to non-technical stakeholders
+
+AI COMPETENCY EXPECTATIONS
+- Strategic Leadership: Ability to define and operationalize an enterprise AI vision aligned with business goals
+- Generative AI Expertise: Hands-on understanding of large language models (LLMs), prompt engineering, fine-tuning, and agentic frameworks
+- NLP Proficiency: Ability to design and deploy NLP solutions for real-world business use cases
+- Machine Learning Depth: Strong grasp of model development, evaluation, and deployment at scale
+- Agentic Systems Thinking: Understanding of autonomous systems, orchestration, and human-in-the-loop design patterns
+- AI Enablement Mindset: Ability to democratize AI usage across business functions through tooling, education, and frameworks
+- Execution at Scale: Experience operationalizing AI solutions with measurable impact across large or complex organizations
+- Responsible AI: Knowledge of AI governance, model risk management, data classification and acceptable use, bias mitigation, and ethical AI practices

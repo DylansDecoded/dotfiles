@@ -112,9 +112,9 @@ Not automated (interactive, secret, or external):
   need re-authentication. Google Tasks: follow `claude/.claude/skills/gtasks/SETUP.md`.
 - **Apps outside Homebrew**: see `macos/applications.csv`. `mac-app-store` apps reinstall
   from the App Store; `direct-download` apps must be fetched from their vendors.
-- **searxncrawl MCP**: the `~/.local/bin/searxncrawl-mcp` binary is an external build,
-  not tracked here. Rebuild/reinstall it separately, or the searxncrawl MCP server will
-  fail to start.
+- **crawler MCP**: runs via `uv` from `~/Projects/personal/mcps/searxNcrawl`, which is
+  an external repo not tracked here. Clone it separately (and have `uv` installed), or
+  the crawler MCP server will fail to start.
 
 Not tracked (set up separately if wanted): Neovim, tmux, VS Code `settings.json`.
 

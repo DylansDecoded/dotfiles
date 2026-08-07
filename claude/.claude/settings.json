@@ -25,10 +25,9 @@
       "mcp__github__pull_request_read",
       "mcp__github__pull_request_review_write",
       "mcp__github__search_*",
-      "mcp__searxncrawl__crawl",
-      "mcp__searxncrawl__crawl_site",
-      "mcp__searxncrawl__search",
-      "mcp__searxng__search",
+      "mcp__crawler__crawl",
+      "mcp__crawler__crawl_site",
+      "mcp__crawler__search",
       "mcp__github__sub_issue_write",
       "mcp__github__update_pull_request_branch",
       "mcp__github__update_pull_request",
@@ -50,59 +49,8 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "fable",
+  "model": "claude-fable-5[1m]",
   "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "AskUserQuestion",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_HOOK:-/Applications/superwhisper.app/Contents/Resources/claude-hook}"
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
         "matcher": "ExitPlanMode",
@@ -113,9 +61,52 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/dylan/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gh-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "chrome-devtools-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lavish-axi",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "worktree": {},
+  "enableWorkflows": true,
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh",
@@ -123,17 +114,17 @@
   },
   "enabledPlugins": {
     "atlassian@claude-plugins-official": false,
+    "claude-md-management@claude-plugins-official": true,
+    "cloudflare@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
     "context7@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "superwhisper@superwhisper": false,
-    "terraform@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
+    "done@done": true,
+    "ponytail@ponytail": true,
     "skill-creator@claude-plugins-official": true,
-    "cloudflare@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "superpowers@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "terraform@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
@@ -142,10 +133,10 @@
         "repo": "EveryInc/compound-engineering-plugin"
       }
     },
-    "superwhisper": {
+    "done": {
       "source": {
         "source": "github",
-        "repo": "superultrainc/superwhisper-claude-code"
+        "repo": "handgemacht-ai/done"
       }
     },
     "ponytail": {
@@ -157,5 +148,7 @@
   },
   "effortLevel": "high",
   "skipWorkflowUsageWarning": true,
-  "skipAutoPermissionPrompt": true
+  "editorMode": "normal",
+  "skipAutoPermissionPrompt": true,
+  "useAutoModeDuringPlan": true
 }

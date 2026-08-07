@@ -1,0 +1,9 @@
+[
+  {"op": "replace", "index": 20, "text": "Led the firm's Databricks practice as internal Data Engineering Lead, owning technical standards, internal enablement, and POC architecture."},
+  {"op": "replace", "index": 21, "text": "Cut migration delivery time by building an LLM-assisted framework that automated schema translation and pipeline conversion from Snowflake, Teradata, and SQL Server to a modern lakehouse."},
+  {"op": "replace", "index": 22, "text": "Led data architecture for a top-5 QSR supply chain engagement: designed a medallion architecture on AWS, implemented dbt as the orchestration and semantic layer, and established data governance from a greenfield start."},
+  {"op": "replace", "index": 23, "text": "Lead Architect for a Fortune 500 financial-sector client: defined the implementation strategy for integrating a newly acquired entity's data, ensuring historical and new data integrated efficiently."},
+  {"op": "replace", "index": 24, "text": "Built a reusable Infrastructure-as-Code accelerator (Terraform and Bicep) that deploys end-to-end lakehouse platforms on AWS and Azure with governance and DataOps pipelines built in."},
+  {"op": "replace", "index": 25, "text": "Delivered an on-prem to AWS cloud migration for a top client in 6 months, managing the onshore/offshore delivery team."},
+  {"op": "replace", "index": 26, "text": "Ran internal technical workshops and supported pre-sales solutioning with architecture artifacts, demos, and SOW scope validation."}
+]

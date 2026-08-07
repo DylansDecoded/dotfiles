@@ -54,7 +54,7 @@ The intended outcome is a repeatable fresh-machine restore: on a new Mac, `boots
 
 Four AI tools are configured here — Claude Code, Codex, opencode, and Gemini — and they share infrastructure:
 - All consume the same secrets (`SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`)
-- All use the same MCP server (searxncrawl) pointing at an internal SearxNG instance
+- All use the same MCP server (crawler, run via `uv` from `~/Projects/personal/mcps/searxNcrawl`) pointing at an internal SearxNG instance
 - `agents/.agents/AGENTS.md` is the canonical shared instruction file; Claude, Codex, and opencode point to it
 - `agents/.agents/skills/` is the source of truth for shared skills; LLM-specific skill directories should reference these skills with symlinks instead of duplicating files
 
@@ -76,8 +76,8 @@ All Claude Code config lives in `claude/.claude/`. Key locations:
 
 - **Skills**: `claude/.claude/skills/<name>/skill.md` — agent-specific workflows live here; shared skills are symlinked from `agents/.agents/skills/`
 - **Rules**: `claude/.claude/rules/anti-ai-writing-style.md` — 50+ banned AI writing phrases; enforced globally
-- **Hooks**: Superwhisper (voice I/O on Stop/Notification/UserPromptSubmit); plan-executive-brief (HTML brief on ExitPlanMode)
-- **MCP servers**: `claude/.claude/mcp-servers.json` — context7, sequential-thinking, qmd, fff, searxncrawl
+- **Hooks**: plan-executive-brief (HTML brief on ExitPlanMode)
+- **MCP servers**: `claude/.claude/.mcp.json` — context7, sequential-thinking, qmd, fff, crawler
 - **Plugin snapshot**: `claude/.claude/plugins-snapshot.json` — restore with `just claude-plugins`
 
 ## Adding Packages

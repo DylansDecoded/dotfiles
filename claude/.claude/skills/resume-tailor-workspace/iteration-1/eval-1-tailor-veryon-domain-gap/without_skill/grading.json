@@ -1,0 +1,47 @@
+{
+ "expectations": [
+  {
+   "text": "Produces a valid tailored .docx (opens with python-docx, headers and List Paragraph bullet styles intact)",
+   "passed": true,
+   "evidence": "check_report.json: valid_docx true, 53/53 paragraphs, styles intact."
+  },
+  {
+   "text": "Aviation gap handled honestly: no aviation experience claimed anywhere",
+   "passed": true,
+   "evidence": "Resume itself claims no aviation experience; positions 'regulated, operationally complex industries (financial services, supply chain)' - true statements."
+  },
+  {
+   "text": "Aviation (and NLP) explicitly flagged as gap, not papered over",
+   "passed": false,
+   "evidence": "Aviation: clearly flagged (dedicated 'The aviation gap' section). NLP: NOT flagged - notes advise to 'position the LLM CV-scoring app and migration framework as applied NLP', i.e. reframe the gap as covered rather than flag it."
+  },
+  {
+   "text": "No fabrication: every claim traces to the master",
+   "passed": false,
+   "evidence": "Two JD-verbatim competencies added with no master support: 'human-in-the-loop design' (para 6) and 'change management' (para 10). Neither appears anywhere in the master resume."
+  },
+  {
+   "text": "Emphasizes real matches: GenAI/LLM delivery, agentic systems, AI enablement, exec influence",
+   "passed": true,
+   "evidence": "Summary rewritten around dual mandate (product AI + internal adoption); recruiting-tool bullet reframed to people operations."
+  },
+  {
+   "text": "Ships tailoring-notes.md with coverage table marking gaps",
+   "passed": true,
+   "evidence": "11 table rows mapping changes to JD requirements plus aviation-gap section."
+  }
+ ],
+ "summary": {
+  "passed": 4,
+  "failed": 2,
+  "total": 6,
+  "pass_rate": 0.67
+ },
+ "timing": {
+  "executor_duration_seconds": 218.7,
+  "total_duration_seconds": 218.7
+ },
+ "execution_metrics": {
+  "total_tokens": 56339
+ }
+}

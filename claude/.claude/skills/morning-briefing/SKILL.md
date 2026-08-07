@@ -18,7 +18,7 @@ Produce one markdown briefing with two sections, save it to the vault, and email
 
 ### 1. Gather news (searches can run in parallel)
 
-Search for stories from the last ~24 hours across the three interest areas. Use `mcp__searxng__search` (fall back to WebSearch only if unavailable). Suggested queries, adjusted to today's date:
+Search for stories from the last ~24 hours across the three interest areas. Use `mcp__crawler__search` (fall back to WebSearch only if unavailable). Suggested queries, adjusted to today's date:
 
 - `Databricks news`
 - `AI industry news today` / `enterprise AI adoption announcement`
