@@ -1,8 +1,0 @@
-{
-  "name": "budget-checkin-scripts",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@actual-app/api": "^25.7.0"
-  }
-}

@@ -1,4 +1,0 @@
-{
-  "discord_webhook_url": "",
-  "_note": "Paste your Discord webhook URL above. Create one in Discord: channel → Settings → Integrations → Webhooks → New Webhook → Copy URL. Until set, the loop skips the Discord ping and still writes the Obsidian briefing."
-}

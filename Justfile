@@ -4,7 +4,7 @@
 dotfiles := justfile_directory()
 
 # Stow packages that map into $HOME. macos/ and secrets/ are intentionally excluded.
-packages := "aerospace claude codex direnv fish gemini ghostty git mise opencode ssh starship zellij zsh"
+packages := "aerospace direnv fish ghostty git mise starship zellij zsh"
 
 # 1Password reference for the sops age private key. Override per-machine via env if your
 # vault/item/field names differ, e.g. OP_AGE_REF="op://Work/sops/SOPS_PRIVATE_KEY".
@@ -15,7 +15,7 @@ default:
     @just --list
 
 # Full deploy. The op-gated secrets step runs last.
-install: brew stow macos claude-cli codex-cli grok-cli opencode-cli claude-plugins secrets
+install: brew stow macos claude-cli codex-cli grok-cli opencode-cli pi-cli secrets
     # If 1Password CLI integration wasn't enabled yet, the op-gated steps stop with
     # guidance; enable it, then re-run `just install` (every step is idempotent).
     @echo "Done. Open a new login shell, then run 'just doctor' to verify."
@@ -77,9 +77,9 @@ secrets:
 
 # Symlink dotfiles into $HOME via GNU Stow.
 stow:
-    # Pre-create fold targets so runtime dirs (~/.claude/projects, ~/.ssh/known_hosts, etc.)
-    # stay real and out of the repo instead of being folded into a package symlink.
-    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.ssh
+    # Pre-create fold targets so runtime dirs such as ~/.ssh/known_hosts stay real
+    # and out of the repo instead of being folded into a package symlink.
+    mkdir -p ~/.config ~/.ssh
     chmod 700 ~/.ssh
     @echo "--- dry run ---"
     cd {{dotfiles}} && stow -n -v -t ~ {{packages}}
@@ -134,25 +134,23 @@ opencode-cli:
       brew install anomalyco/tap/opencode
     fi
 
-# Restore user-scope Claude plugins from the tracked snapshot.
-# Marketplaces must be registered before plugins can resolve from them.
-claude-plugins:
+# Install the Pi coding-agent CLI if missing.
+pi-cli:
     #!/usr/bin/env bash
     set -euo pipefail
-    if ! command -v claude >/dev/null 2>&1; then
-      echo "claude CLI not found — run 'just claude-cli' first. Skipping."
-      exit 0
+    if ! command -v brew >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+      echo "Pi requires Homebrew Node/npm — run 'just brew' first." >&2
+      exit 1
     fi
-    claude plugin marketplace add anthropics/claude-plugins-official
-    claude plugin marketplace add EveryInc/compound-engineering-plugin
-    claude plugin marketplace add superultrainc/superwhisper-claude-code
-    fail=0
-    while read -r p; do
-      [ -z "$p" ] && continue
-      echo "Installing plugin: $p"
-      claude plugin install "$p" || { echo "  FAILED: $p"; fail=1; }
-    done < <(jq -r '.plugins[]' {{dotfiles}}/claude/.claude/plugins-snapshot.json)
-    exit "$fail"
+    brew_prefix="$(brew --prefix)"
+    pi_runtime="$brew_prefix/bin/pi"
+    if npm ls -g --prefix "$brew_prefix" --depth=0 @earendil-works/pi-coding-agent >/dev/null 2>&1 \
+      && [ -x "$pi_runtime" ]; then
+      echo "pi already installed: $($pi_runtime --version 2>/dev/null || echo present)"
+    else
+      echo "Installing Pi coding agent"
+      npm install -g --prefix "$brew_prefix" --ignore-scripts @earendil-works/pi-coding-agent
+    fi
 
 # Verify a deployed machine.
 doctor:
@@ -165,11 +163,11 @@ doctor:
       command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
     done
     echo "AI CLIs:"
-    for t in claude codex grok opencode; do
+    for t in claude codex grok opencode pi; do
       command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
     done
     echo "Symlinks:"
-    for f in ~/.zshrc ~/.config/ghostty/config ~/.config/starship.toml ~/.codex/config.toml; do
+    for f in ~/.zshrc ~/.config/ghostty/config ~/.config/starship.toml; do
       [ -L "$f" ] || [ -f "$f" ] && ok "$f" || bad "$f missing"
     done
     echo "Secrets:"
@@ -188,11 +186,3 @@ doctor:
       bad "op CLI missing"
     fi
     [ -f "$HOME/.ssh/config" ] && ok "~/.ssh/config present" || bad "~/.ssh/config missing (run 'just stow')"
-    echo "Claude plugins:"
-    if command -v claude >/dev/null 2>&1; then
-      want=$(jq '.plugins | length' {{dotfiles}}/claude/.claude/plugins-snapshot.json)
-      have=$(claude plugin list 2>/dev/null | grep -c . || echo 0)
-      ok "claude present; snapshot lists $want plugins (installed list rows: $have)"
-    else
-      bad "claude CLI missing"
-    fi

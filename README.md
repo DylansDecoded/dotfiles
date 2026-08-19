@@ -1,7 +1,7 @@
 # dotfiles
 
 Personal macOS developer environment: shell, terminal, editors, window manager,
-git, and the LLM/agent toolchain (Claude Code, Codex, opencode, Gemini). Managed
+git, and base AI applications/CLIs. Managed
 with [GNU Stow](https://www.gnu.org/software/stow/), orchestrated with
 [`just`](https://github.com/casey/just), secrets encrypted with
 [sops](https://github.com/getsops/sops) + [age](https://github.com/FiloSottile/age).
@@ -18,10 +18,9 @@ curl -fsSL https://raw.githubusercontent.com/DylansDecoded/dotfiles/main/bootstr
 toolchain (`just stow age sops jq 1password-cli`), clones this repo to
 `~/dotfiles`, then runs `just install`.
 
-This repo is intended to be a full, idempotent restore path for a new machine:
-after cloning via `bootstrap.sh` or running `just install`, the tracked agent
-toolchain, configs, shared skills, and MCP wiring should be re-deployed without
-manual repo edits.
+This repo is intended to be a full, idempotent restore path for a new machine.
+AI tools are installed without repository-owned configuration so they start from
+their vendor defaults.
 
 If you already have the repo checked out:
 
@@ -42,24 +41,28 @@ cd ~/dotfiles && just install
 | `just codex-cli` | Installs the Codex CLI if missing. |
 | `just grok-cli` | Installs the Grok CLI if missing. |
 | `just opencode-cli` | Installs the OpenCode CLI if missing. |
-| `just claude-plugins` | Restores the 13 user-scope plugins from `claude/.claude/plugins-snapshot.json`. |
-| `just age-key` | Pulls the sops age private key from 1Password into `~/.config/sops/age/keys.txt`. |
-| `just secrets` | Runs `age-key`, then decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` (sourced by `.zprofile`). |
-| `just doctor` | Verifies a deployed machine (tooling, symlinks, secrets, 1Password, plugins). |
+| `just pi-cli` | Installs the Pi coding-agent CLI if missing. |
+| `just secrets` | Decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` (sourced by `.zprofile`). Keyless — sops fetches the age key live from 1Password via `SOPS_AGE_KEY_CMD`. |
+| `just doctor` | Verifies a deployed machine (tooling, symlinks, secrets, 1Password, and installed CLIs). |
 
-The op-gated steps (`age-key`, `secrets`) run last in `install` so an un-ready 1Password
+Every recipe also exists as a **mise task** (`mise.toml` at the repo root) during the
+migration to mise-based orchestration: `mise run install`, `mise run stow`,
+`mise run secrets`, `mise run doctor`, etc. Run `mise tasks` to list them. Both runners
+work; `just` remains the canonical path until the migration completes.
+
+The op-gated `secrets` step runs last in `install` so an un-ready 1Password
 doesn't block the rest. Enable 1Password CLI integration, then re-run `just install`.
 
 ## Secrets (sops + age)
 
 Encrypted values live in `secrets/env.sops.yaml` (committed as ciphertext). The
-age **private key never enters this repo** — it's escrowed in 1Password and lands at
-`~/.config/sops/age/keys.txt` on each machine.
+age **private key never enters this repo and never touches disk** — sops (>= 3.10)
+fetches it live from 1Password via `SOPS_AGE_KEY_CMD` (exported in `.zprofile`).
 
 On a new machine, one interactive setup step that can't be scripted: open the 1Password
 app, sign in, and enable **Settings → Developer → "Integrate with 1Password CLI"**. After
-that, `just secrets` (run automatically by `just install`) calls `op read` to restore the
-key — the first call prompts Touch ID — then decrypts the secrets. No manual `op` commands.
+that, `just secrets` (run automatically by `just install`) decrypts the secrets — the
+first `op` call prompts Touch ID. No manual `op` commands.
 
 The 1Password reference is configurable; the default assumes the `Private` vault:
 
@@ -77,21 +80,15 @@ just secrets                    # regenerate ~/.config/secrets/env.sh
 ```
 
 Keys captured: `SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`.
-They are consumed by the MCP servers in Claude Code, Codex, opencode, and Gemini,
-which inherit them from the login-shell environment. **This repo is public** — the
-internal SearxNG URL and all tokens stay only in the encrypted file, never in the
-plaintext tool configs.
+They are exported to the login-shell environment. **This repo is public** — the
+internal SearxNG URL and all tokens stay only in the encrypted file.
 
-## Shared agent instructions and skills
+## AI tools
 
-Shared agent instructions live in `agents/.agents/AGENTS.md`.
-
-- `claude/.claude/CLAUDE.md`, `codex/.codex/AGENTS.MD`, and `opencode/.config/opencode/AGENTS.md` forward to that file.
-- Shared reusable skills live in `agents/.agents/skills/`.
-- When a tool requires a tool-local skills directory, point it at the shared skill directory with repo-internal symlinks instead of copying the files.
-- GNU Stow handles deployment from the repo into `$HOME`; the repo-internal symlinks handle shared ownership between LLM packages.
-- Agent-specific-only skills stay in the tool's own config tree.
-- Newly onboarded LLMs should follow the same pattern so `bootstrap.sh` and `just install` remain the only repo-side deployment steps.
+`just install` installs the supported AI CLIs, but this repository intentionally
+tracks none of their configuration. There are no shared instructions, skills,
+plugins, hooks, MCP definitions, themes, model settings, or custom launchers.
+Each tool creates its own default local state on first launch.
 
 ## Manual post-install steps
 
@@ -108,31 +105,21 @@ Not automated (interactive, secret, or external):
   has already written `~/.ssh/1Password/config`, `just stow` reports a conflict — remove the
   live file first, then re-stow. Expect the app to rewrite it afterward (occasional git
   churn on `ssh/.ssh/1Password/`).
-- **OAuth re-auth**: Gmail, Google Calendar, Vercel, and Google Tasks MCP integrations
-  need re-authentication. Google Tasks: follow `claude/.claude/skills/gtasks/SETUP.md`.
 - **Apps outside Homebrew**: see `macos/applications.csv`. `mac-app-store` apps reinstall
   from the App Store; `direct-download` apps must be fetched from their vendors.
-- **crawler MCP**: runs via `uv` from `~/Projects/personal/mcps/searxNcrawl`, which is
-  an external repo not tracked here. Clone it separately (and have `uv` installed), or
-  the crawler MCP server will fail to start.
 
 Not tracked (set up separately if wanted): Neovim, tmux, VS Code `settings.json`.
 
 ## Keeping snapshots current
 
 ```sh
-# Brewfile — after installing/removing brews, casks, or extensions:
 brew bundle dump --force --file=macos/Brewfile
-
-# Claude plugin list:
-jq '{plugins: (.plugins | keys)}' ~/.claude/plugins/installed_plugins.json \
-  > claude/.claude/plugins-snapshot.json   # then re-add the _comment field
 ```
 
 ## Notes
 
-- Packages stowed: `aerospace claude codex direnv fish gemini ghostty git mise
-  opencode ssh starship zellij zsh`. `macos/` and `secrets/` are not stow packages.
+- Packages stowed: `aerospace direnv fish ghostty git mise starship zellij zsh`.
+  `macos/` and `secrets/` are not stow packages.
 - On a machine that already has real (non-symlink) config files, `just stow` will
   report conflicts instead of clobbering them. Remove the pre-existing file, or
   reconcile manually, then re-run.

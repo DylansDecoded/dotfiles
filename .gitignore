@@ -18,3 +18,4 @@ keys.txt
 *.dec
 secrets/*.env
 secrets/env.sh
+.zcompdump
