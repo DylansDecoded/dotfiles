@@ -4,7 +4,7 @@
 dotfiles := justfile_directory()
 
 # Stow packages that map into $HOME. macos/ and secrets/ are intentionally excluded.
-packages := "aerospace claude codex direnv fish gemini ghostty git mise opencode ssh starship zellij zsh"
+packages := "aerospace claude codex direnv fish ghostty git mise opencode ssh starship zellij zsh"
 
 # 1Password reference for the sops age private key. Override per-machine via env if your
 # vault/item/field names differ, e.g. OP_AGE_REF="op://Work/sops/SOPS_PRIVATE_KEY".

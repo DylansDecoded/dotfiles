@@ -44,3 +44,4 @@ export PODMAN_COMPOSE_PROVIDER=/opt/homebrew/bin/podman-compose
 
 # adding bin to path
 export PATH="$HOME/.local/bin:$PATH"
+export ORCAROUTER_API_KEY=sk-orca-w8jcAclvgGpyxo8cQqw1UoLk0PYewiliTM5Ge4JGe1o
