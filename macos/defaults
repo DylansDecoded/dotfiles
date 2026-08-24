@@ -60,7 +60,7 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 # Set background to dark-grey color
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Stone.png"'
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "${HOME}/dotfiles/macos/assets/wallpaper.jpg"'
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -80,8 +80,12 @@ defaults write NSGlobalDomain ContextMenuGesture -int 1
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate, and make it happen more quickly.
+# Both values are in 15ms ticks and apply to every key including delete — macOS
+# has no separate backspace repeat setting. 15 (225ms) and 1 (15ms) sit at/below
+# the System Settings slider floors of 15 and 2. Don't drop KeyRepeat to 0: that
+# means "no delay" and repeats uncontrollably.
 # (The KeyRepeat option requires logging out and back in to take effect.)
-defaults write NSGlobalDomain InitialKeyRepeat -int 20
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain KeyRepeat -int 1
 
 # Disable auto-correct
@@ -105,10 +109,9 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # Finder                                                                      #
 ###############################################################################
 
-# Set Desktop as the default location for new Finder windows
-# For other paths, use `PfLo` and `file:///full/path/here/`
-defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+# Set ${HOME} as the default location for new Finder windows
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -178,6 +181,8 @@ chflags nohidden ~/Library
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
+# Minimize windows into their application’s icon
+defaults write com.apple.dock minimize-to-application -bool true
 
 # Set the icon size of Dock items
 defaults write com.apple.dock tilesize -int 30
@@ -236,8 +241,55 @@ defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 # Spotlight                                                                   #
 ###############################################################################
 
-# TODO: 
-# Disable spotlight and use raycast or alfred etc
+# Free up ⌘Space (and ⌥⌘Space) for Raycast by disabling the Spotlight hotkeys.
+# The `parameters` array is [ASCII character, key code, modifier mask] and has to
+# match the shortcut being replaced or macOS ignores the entry:
+#   32 = space, 49 = space key code, 1048576 = ⌘, 1572864 = ⌥⌘
+# Spotlight search
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "
+  <dict>
+    <key>enabled</key><false/>
+    <key>value</key><dict>
+      <key>type</key><string>standard</string>
+      <key>parameters</key>
+      <array>
+        <integer>32</integer>
+        <integer>49</integer>
+        <integer>1048576</integer>
+      </array>
+    </dict>
+  </dict>
+"
+# Spotlight window (Finder search)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "
+  <dict>
+    <key>enabled</key><false/>
+    <key>value</key><dict>
+      <key>type</key><string>standard</string>
+      <key>parameters</key>
+      <array>
+        <integer>32</integer>
+        <integer>49</integer>
+        <integer>1572864</integer>
+      </array>
+    </dict>
+  </dict>
+"
+
+# Reload the hotkey table so the shortcuts are released without a logout.
+if [[ -x /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings ]]; then
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+fi
+
+# Hide the Spotlight magnifying glass from the menu bar
+defaults write com.apple.Spotlight "NSStatusItem VisibleCC Item-0" -bool false
+
+# Metadata indexing is deliberately left ON: Raycast/Alfred file search and
+# `mdfind` query the Spotlight index, so turning it off breaks the replacement
+# launcher too. Uncomment to disable indexing on every volume (needs sudo).
+# if [[ "$RUN_AS_ROOT" = true ]]; then
+#   mdutil -a -i off
+# fi
 
 ###############################################################################
 # Activity Monitor                                                            #
@@ -272,7 +324,7 @@ defaults write com.apple.appstore InAppReviewEnabled -int 0
 
 # Restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "Mail" "SystemUIServer" "Terminal"; do
+  for app in "cfprefsd" "Dock" "Finder" "Mail" "Spotlight" "SystemUIServer" "Terminal"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi

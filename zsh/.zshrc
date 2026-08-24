@@ -38,10 +38,11 @@ done
 
 autoload -Uz compinit && compinit
 
-# kimi-code
-export PATH="/Users/dylan/.kimi-code/bin:$PATH"
+# Podman Compose Provider
 export PODMAN_COMPOSE_PROVIDER=/opt/homebrew/bin/podman-compose
 
-# adding bin to path
+# Local Bin
 export PATH="$HOME/.local/bin:$PATH"
+
+# Orca Router API Key
 export ORCAROUTER_API_KEY=sk-orca-w8jcAclvgGpyxo8cQqw1UoLk0PYewiliTM5Ge4JGe1o
