@@ -27,7 +27,9 @@ Every top-level directory (except `macos/` and `secrets/`) is a stow package. `j
 
 **Always edit config files in the repo directory, not directly in `~/.config/`.**
 
-Stow packages: `aerospace`, `claude`, `codex`, `direnv`, `fish`, `gemini`, `ghostty`, `git`, `mise`, `opencode`, `ssh`, `starship`, `zellij`, `zsh`
+Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `gemini`, `ghostty`, `git`, `mise`, `opencode`, `ssh`, `starship`, `zellij`, `zsh`
+
+`agents` deploys `agents/.agents/` into `~/.agents/`. That is how Pi finds the shared skills: Pi discovers `~/.agents/skills/` automatically and needs no configuration. `just stow` pre-creates `~/.agents/skills` so each shared skill links per entry and skills installed outside the repo can live beside the tracked ones.
 
 `macos/` is applied via `just macos` (150+ macOS system defaults). `secrets/` is managed via `just secrets`. Neither is stowed.
 
@@ -66,6 +68,8 @@ For any LLM configured in this repo, follow this pattern:
 - `agents/.agents/skills/` is the source of truth for shared skills
 - LLM-specific skill directories should symlink back to `agents/.agents/skills/`
 - The repo-internal symlinks express shared ownership; GNU Stow then deploys the consumer package into `$HOME`
+- A shared skill must exist as exactly one real `SKILL.md`. Pi de-duplicates by canonical path, so a symlinked consumer copy loads once, but a second real copy with the same `name` becomes a name collision and one of the two is dropped. Copy a shared skill and you break Pi discovery for it.
+- Pi needs no configuration for shared skills. It discovers `~/.agents/skills/` on its own, so the `agents` stow package is what makes a shared skill reach a Pi session.
 - Agent-specific instructions or skills may live in the tool's own config directory only when they are not part of the shared set
 - New onboarded LLMs should follow the same pattern rather than introducing copied instruction or skill trees
 - New machine setup should require only `bootstrap.sh` or `just install`, plus unavoidable external authentication steps such as 1Password or OAuth re-auth
