@@ -4,7 +4,7 @@
 dotfiles := justfile_directory()
 
 # Stow packages that map into $HOME. macos/ and secrets/ are intentionally excluded.
-packages := "aerospace claude codex direnv fish ghostty git mise opencode ssh starship zellij zsh"
+packages := "aerospace agents claude codex direnv fish ghostty git mise opencode ssh starship zellij zsh"
 
 # 1Password reference for the sops age private key. Override per-machine via env if your
 # vault/item/field names differ, e.g. OP_AGE_REF="op://Work/sops/SOPS_PRIVATE_KEY".
@@ -79,7 +79,10 @@ secrets:
 stow:
     # Pre-create fold targets so runtime dirs (~/.claude/projects, ~/.ssh/known_hosts, etc.)
     # stay real and out of the repo instead of being folded into a package symlink.
-    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.ssh
+    # ~/.agents/skills must stay a real directory so stow links each shared skill
+    # per entry. If it folded into a package symlink, skills installed outside the
+    # repo could not live beside the tracked ones.
+    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.ssh ~/.agents/skills
     chmod 700 ~/.ssh
     @echo "--- dry run ---"
     cd {{dotfiles}} && stow -n -v -t ~ {{packages}}

@@ -84,22 +84,20 @@ Immediately after showing results, auto-select the best videos. **Do not wait fo
    ```bash
    notebooklm create "YT Research: <topic>" --json
    ```
-   Parse the notebook ID from the JSON output.
+   Parse the notebook ID from the JSON output and pass `-n <notebook_id>` on every
+   later command. Do not run `notebooklm use` and do not pass `--use`: the machine
+   has one shared NotebookLM profile, so the global current-notebook context is
+   shared state and two concurrent pipelines would overwrite each other's notebook.
 
-2. Set context:
+2. Add each selected video as a source:
    ```bash
-   notebooklm use <notebook_id>
-   ```
-
-3. Add each selected video as a source:
-   ```bash
-   notebooklm source add "<youtube_url>" --json
+   notebooklm source add -n <notebook_id> "<youtube_url>" --json
    ```
    Collect source IDs from the JSON output.
 
-4. Wait for all sources to process:
+3. Wait for all sources to process:
    ```bash
-   notebooklm source wait <source_id>
+   notebooklm source wait -n <notebook_id> <source_id>
    ```
    Run these sequentially. Each takes 10-60 seconds.
 
@@ -110,7 +108,7 @@ Immediately after showing results, auto-select the best videos. **Do not wait fo
 
 ### Step 5 — Analysis
 
-Run analytical questions via `notebooklm ask "..."` tailored to the user's goal.
+Run analytical questions via `notebooklm ask -n <notebook_id> "..."` tailored to the user's goal. Every command in this step and the next one needs `-n <notebook_id>`, for the reason given in Step 4.
 
 **If user specified an analysis goal**, tailor all questions to that angle. Example goals and matching questions:
 - "what's the consensus" → "Where do these creators agree? Where do they disagree?"
@@ -118,9 +116,9 @@ Run analytical questions via `notebooklm ask "..."` tailored to the user's goal.
 - "how to" → "What are the step-by-step approaches described? What tools/methods are recommended?"
 
 **Default questions (no specific goal):**
-1. `notebooklm ask "What are the key themes and main points across these videos?" --new`
-2. `notebooklm ask "Where do the creators agree and where do they have different perspectives?"`
-3. `notebooklm ask "What are the most actionable takeaways someone could apply immediately?"`
+1. `notebooklm ask -n <notebook_id> "What are the key themes and main points across these videos?" --new`
+2. `notebooklm ask -n <notebook_id> "Where do the creators agree and where do they have different perspectives?"`
+3. `notebooklm ask -n <notebook_id> "What are the most actionable takeaways someone could apply immediately?"`
 
 Use `--new` on the first question to start a fresh conversation. Subsequent questions are follow-ups in the same conversation thread (no `--new` flag).
 
@@ -136,15 +134,15 @@ Only if the user asked for a specific deliverable (podcast, report, quiz, study 
 
 | User says | Command |
 |-----------|---------|
-| "podcast" / "audio" | `notebooklm generate audio "Focus on [goal]" --json` |
-| "video" | `notebooklm generate video "Focus on [goal]" --json` |
-| "report" / "summary" / "write-up" | `notebooklm generate report --format briefing-doc` |
-| "study guide" | `notebooklm generate report --format study-guide` |
-| "quiz" | `notebooklm generate quiz --json` |
-| "flashcards" | `notebooklm generate flashcards --json` |
-| "mind map" | `notebooklm generate mind-map` |
-| "slide deck" / "slides" | `notebooklm generate slide-deck --json` |
-| "infographic" | `notebooklm generate infographic --json` |
+| "podcast" / "audio" | `notebooklm generate audio -n <notebook_id> "Focus on [goal]" --json` |
+| "video" | `notebooklm generate video -n <notebook_id> "Focus on [goal]" --json` |
+| "report" / "summary" / "write-up" | `notebooklm generate report -n <notebook_id> --format briefing-doc` |
+| "study guide" | `notebooklm generate report -n <notebook_id> --format study-guide` |
+| "quiz" | `notebooklm generate quiz -n <notebook_id> --json` |
+| "flashcards" | `notebooklm generate flashcards -n <notebook_id> --json` |
+| "mind map" | `notebooklm generate mind-map -n <notebook_id>` |
+| "slide deck" / "slides" | `notebooklm generate slide-deck -n <notebook_id> --json` |
+| "infographic" | `notebooklm generate infographic -n <notebook_id> --json` |
 
 **Important:** When the user explicitly asked for a deliverable (e.g. "make a podcast"), that counts as consent — proceed with generation without asking for additional confirmation. The notebooklm skill's "ask before generating" rule is satisfied by the user's original request.
 
