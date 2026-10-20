@@ -60,7 +60,7 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 # Set background to dark-grey color
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "${HOME}/dotfiles/macos/assets/wallpaper.jpg"'
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"${HOME}/dotfiles/macos/assets/wallpaper.jpg\""
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #

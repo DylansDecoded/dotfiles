@@ -4,7 +4,7 @@
 dotfiles := justfile_directory()
 
 # Stow packages that map into $HOME. macos/ and secrets/ are intentionally excluded.
-packages := "aerospace agents claude codex direnv fish ghostty git mise opencode ssh starship zellij zsh"
+packages := "aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode starship zellij zsh"
 
 # 1Password reference for the sops age private key. Override per-machine via env if your
 # vault/item/field names differ, e.g. OP_AGE_REF="op://Work/sops/SOPS_PRIVATE_KEY".
@@ -15,7 +15,7 @@ default:
     @just --list
 
 # Full deploy. The op-gated secrets step runs last.
-install: brew stow macos claude-cli codex-cli grok-cli opencode-cli claude-plugins secrets
+install: brew stow macos claude-cli codex-cli grok-cli opencode-cli herdr-cli claude-plugins secrets
     # If 1Password CLI integration wasn't enabled yet, the op-gated steps stop with
     # guidance; enable it, then re-run `just install` (every step is idempotent).
     @echo "Done. Open a new login shell, then run 'just doctor' to verify."
@@ -77,13 +77,12 @@ secrets:
 
 # Symlink dotfiles into $HOME via GNU Stow.
 stow:
-    # Pre-create fold targets so runtime dirs (~/.claude/projects, ~/.ssh/known_hosts, etc.)
+    # Pre-create fold targets so runtime dirs (~/.claude/projects, ~/.config/herdr/*.log, etc.)
     # stay real and out of the repo instead of being folded into a package symlink.
     # ~/.agents/skills must stay a real directory so stow links each shared skill
     # per entry. If it folded into a package symlink, skills installed outside the
     # repo could not live beside the tracked ones.
-    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.ssh ~/.agents/skills
-    chmod 700 ~/.ssh
+    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.grok ~/.agents/skills ~/.config/herdr ~/.config/moshi
     @echo "--- dry run ---"
     cd {{dotfiles}} && stow -n -v -t ~ {{packages}}
     @echo "--- applying ---"
@@ -137,6 +136,17 @@ opencode-cli:
       brew install anomalyco/tap/opencode
     fi
 
+# Install the Herdr CLI if missing (official installer; self-updates via `herdr update`).
+herdr-cli:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v herdr >/dev/null 2>&1; then
+      echo "herdr already installed: $(herdr --version 2>/dev/null || echo present)"
+    else
+      echo "Installing Herdr CLI"
+      curl -fsSL https://herdr.dev/install.sh | sh
+    fi
+
 # Restore user-scope Claude plugins from the tracked snapshot.
 # Marketplaces must be registered before plugins can resolve from them.
 claude-plugins:
@@ -168,7 +178,7 @@ doctor:
       command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
     done
     echo "AI CLIs:"
-    for t in claude codex grok opencode; do
+    for t in claude codex grok opencode herdr moshi; do
       command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
     done
     echo "Symlinks:"
@@ -190,7 +200,6 @@ doctor:
     else
       bad "op CLI missing"
     fi
-    [ -f "$HOME/.ssh/config" ] && ok "~/.ssh/config present" || bad "~/.ssh/config missing (run 'just stow')"
     echo "Claude plugins:"
     if command -v claude >/dev/null 2>&1; then
       want=$(jq '.plugins | length' {{dotfiles}}/claude/.claude/plugins-snapshot.json)

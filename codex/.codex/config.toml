@@ -1,7 +1,8 @@
-model = "gpt-5.5"
+model = "gpt-6-luna"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "workspace-write"
+approvals_reviewer = "user"
 
 [analytics]
 enabled = false
@@ -35,7 +36,11 @@ default_tools_approval_mode = "approve"
 approval_mode = "prompt"
 
 [features]
+hooks = true
 prevent_idle_sleep = true
+
+[notice]
+hide_rate_limit_model_nudge = true
 
 [notice.model_migrations]
 
@@ -91,10 +96,10 @@ approval_mode = "approve"
 [mcp_servers.github.tools.get_dependabot_alert]
 approval_mode = "approve"
 
-[mcp_servers.github.tools.get_discussion_comments]
+[mcp_servers.github.tools.get_discussion]
 approval_mode = "approve"
 
-[mcp_servers.github.tools.get_discussion]
+[mcp_servers.github.tools.get_discussion_comments]
 approval_mode = "approve"
 
 [mcp_servers.github.tools.get_file_contents]
@@ -160,9 +165,6 @@ approval_mode = "approve"
 [mcp_servers.github.tools.list_global_security_advisories]
 approval_mode = "approve"
 
-[mcp_servers.github.tools.list_org_repository_security_advisories]
-approval_mode = "approve"
-
 [mcp_servers.github.tools.list_issue_types]
 approval_mode = "approve"
 
@@ -170,6 +172,9 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [mcp_servers.github.tools.list_label]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_org_repository_security_advisories]
 approval_mode = "approve"
 
 [mcp_servers.github.tools.list_pull_requests]
@@ -217,10 +222,10 @@ approval_mode = "approve"
 [mcp_servers.github.tools.update_gist]
 approval_mode = "approve"
 
-[mcp_servers.github.tools.update_pull_request_branch]
+[mcp_servers.github.tools.update_pull_request]
 approval_mode = "approve"
 
-[mcp_servers.github.tools.update_pull_request]
+[mcp_servers.github.tools.update_pull_request_branch]
 approval_mode = "approve"
 
 [mcp_servers.openai_developer_docs]
@@ -235,15 +240,11 @@ approval_mode = "approve"
 [mcp_servers.openai_developer_docs.tools.search_openai_docs]
 approval_mode = "approve"
 
-# SEARXNG_URL is inherited from the login-shell environment (sourced from the
-# sops-encrypted secrets in ~/.config/secrets/env.sh). TOML does not expand env
-# vars, so it is intentionally not set here — keep the internal URL out of this
-# public repo. See README "Secrets" and `just secrets`.
 [mcp_servers.crawler]
 command = "uv"
 args = ["run", "--directory", "/Users/dylan/Projects/personal/mcps/searxNcrawl", "python", "-m", "crawler.mcp_server"]
-startup_timeout_sec = 30
-tool_timeout_sec = 120
+startup_timeout_sec = 30.0
+tool_timeout_sec = 120.0
 
 [mcp_servers.crawler.tools.crawl]
 approval_mode = "approve"
@@ -279,6 +280,78 @@ trust_level = "trusted"
 [projects."/Users/dylan/Projects"]
 trust_level = "trusted"
 
+[projects."/Users/dylan/Projects/datacloudeazy 2"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/aws-toyota-engagement/di-toybox-data-agent-main"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/firstmate/projects/di-toybox-data-agent-main"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/toyota/di-toybox-data-agent"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/firstmate/projects/di-toybox-data-agent"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/firstmate"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/DataCloudEazy"]
+trust_level = "trusted"
+
+[projects."/Users/dylan"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.pi/agent"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/scratch"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/rnp-ai-cost-reporter"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M2RJX3RXGNVGTM3G83XDHJ3X"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M2RKGEPPT5Z4H7QWG85G4ZHT"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/c7ca197743b1/01M2VYTVM99GJW7MDR6VP9D52Z"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/stowed"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/firstmate/projects/homeassistant-config"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/ce2236eb2a94/01M2ZQPS0NQJ5ATK9Y0KRKRRCX"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/38e3369f0bd1/01M2ZSQ0B5BT2J3DP4K5EBJYWC"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/38e3369f0bd1/01M2ZVHSDRYY117T3NYN6146WC"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/scratch-work"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.ssh"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M3MCDHX9ZEC686XPN3KG9813"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M3MDJ51MNAEXTZQNCZ7S0GB1"]
+trust_level = "trusted"
+
 # writable_roots are parsed as a list of AbsolutePathBuf, so tilde expansion can be used.
 # https://github.com/openai/codex/blob/main/codex-rs/utils/absolute-path/src/lib.rs
 # https://github.com/openai/codex/blob/f628824/codex-rs/core/src/config/types.rs#L797
@@ -291,3 +364,42 @@ inherit = "core"
 
 [tui]
 theme = "dracula"
+status_line = ["model-with-reasoning", "current-dir", "weekly-limit"]
+status_line_use_colors = true
+pet = "stacky"
+screen_reader_detection_done = true
+
+[tui.model_availability_nux]
+gpt-6-astra = 4
+
+[hooks.state]
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:93fbfa14717a31d18c62d1ba6141b6d7dd89551c24972ca793fadfd6f74baa7f"
+
+[hooks.state."/Users/dylan/Projects/firstmate/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a920c3e99340de2feaf624585635e43b8541c9fdd5aeb5c0d9dd2479ef05b411"
+
+[hooks.state."/Users/dylan/Projects/firstmate/.codex/hooks.json:pre_tool_use:0:1"]
+trusted_hash = "sha256:224d6e3538b2957b83e5fd2de2701e9fc09362c01e2a01cb9dbf5755fd9a88fc"
+
+[hooks.state."/Users/dylan/Projects/firstmate/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:bd1d74568c7a9e7aa86174b6c1a06d0d9cd8e891ac66159743cf518085cc5c38"
+
+[hooks.state."/Users/dylan/Projects/firstmate/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:6874d92dd2befa3254ab2c99d3559399f98d3c155f533ce19c9872115504946b"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:7fb54ca43d7113964f96d0d498701a354bf72e7f56f94448d0c156cc57edee3d"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:permission_request:0:0"]
+trusted_hash = "sha256:1b7624ea48936b8f3258affd1669804316f5b45cff6d2326b7732916469eb48a"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:282ef4f786ed6c3cd4d9639e029d006c516c39638b258d2f1da498b82c616a2e"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:523d693b2584fd65e5910e1dd8df3b23c76fb2451655a4c1ac2e46c5fce70171"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:fcbc53cb686f3694a40d2ec3621098c55069c901a0e0d4b1f30a54e1263ce2be"

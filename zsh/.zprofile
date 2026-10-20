@@ -12,6 +12,9 @@ export DISABLE_TELEMETRY=1
 
 export OPENCODE_ENABLE_EXA=1
 
+# mise-managed Python 3.13 binaries
+export PATH="$HOME/.local/share/mise/installs/python/3.13.13/bin:$PATH"
+
 # Secrets (sops + age, keyless). The age private key lives only in 1Password;
 # sops (>=3.10) fetches it on demand via SOPS_AGE_KEY_CMD, so it never touches
 # disk. `just secrets` decrypts secrets/env.sops.yaml into the cached file

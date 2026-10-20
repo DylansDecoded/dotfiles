@@ -42,6 +42,7 @@ cd ~/dotfiles && just install
 | `just codex-cli` | Installs the Codex CLI if missing. |
 | `just grok-cli` | Installs the Grok CLI if missing. |
 | `just opencode-cli` | Installs the OpenCode CLI if missing. |
+| `just herdr-cli` | Installs the Herdr CLI if missing (`curl https://herdr.dev/install.sh`). |
 | `just claude-plugins` | Restores the 13 user-scope plugins from `claude/.claude/plugins-snapshot.json`. |
 | `just age-key` | Pulls the sops age private key from 1Password into `~/.config/sops/age/keys.txt`. |
 | `just secrets` | Runs `age-key`, then decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` (sourced by `.zprofile`). |
@@ -101,13 +102,8 @@ Not automated (interactive, secret, or external):
   1Password SSH agent backs all git/ssh auth (`SSH_AUTH_SOCK` is set in `.zprofile`);
   private keys live there, not on disk. The age key is restored from 1Password by
   `just secrets` once integration is enabled.
-- **SSH config**: `~/.ssh/config` is a stowed package (`ssh/.ssh/config`) — host aliases
-  only (`github.com`, `github-work` for the `git/config-work` URL rewrite, MyNymBox), no
-  private key material; the 1Password agent serves the actual keys. The `1Password/config`
-  include is also tracked, but the 1Password app **regenerates it per machine**: if the app
-  has already written `~/.ssh/1Password/config`, `just stow` reports a conflict — remove the
-  live file first, then re-stow. Expect the app to rewrite it afterward (occasional git
-  churn on `ssh/.ssh/1Password/`).
+- **SSH config**: `~/.ssh/config` is intentionally not tracked (removed in a11d944). Host
+  aliases stay machine-local; the 1Password agent serves the keys.
 - **OAuth re-auth**: Gmail, Google Calendar, Vercel, and Google Tasks MCP integrations
   need re-authentication. Google Tasks: follow `claude/.claude/skills/gtasks/SETUP.md`.
 - **Apps outside Homebrew**: see `macos/applications.csv`. `mac-app-store` apps reinstall
@@ -131,8 +127,7 @@ jq '{plugins: (.plugins | keys)}' ~/.claude/plugins/installed_plugins.json \
 
 ## Notes
 
-- Packages stowed: `aerospace claude codex direnv fish gemini ghostty git mise
-  opencode ssh starship zellij zsh`. `macos/` and `secrets/` are not stow packages.
+- Packages stowed: `aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode starship zellij zsh`. `macos/` and `secrets/` are not stow packages.
 - On a machine that already has real (non-symlink) config files, `just stow` will
   report conflicts instead of clobbering them. Remove the pre-existing file, or
   reconcile manually, then re-run.

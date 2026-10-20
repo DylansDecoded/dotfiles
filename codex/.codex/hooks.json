@@ -1,0 +1,63 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "lavish-axi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/dylan/.codex/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

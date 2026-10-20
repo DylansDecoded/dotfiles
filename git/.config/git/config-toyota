@@ -1,0 +1,14 @@
+# Toyota engagement — active for ~/Projects/work/toyota/ via includeIf.
+# Clone with: git clone git@github-toyota:<org>/<repo>.git
+[user]
+    name = Dylan Robson
+    email = dylan.robson@toyota.com
+    signingkey = ~/.ssh/id_ed25519_github_work_toyota.pub
+# Toyota GitHub requires verified signatures; sign with the Toyota SSH key
+# (register the .pub as a GitHub *Signing key* on the Toyota account).
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers_toyota

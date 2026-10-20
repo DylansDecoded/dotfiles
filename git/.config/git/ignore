@@ -2,3 +2,12 @@
 **/.claude/settings.local.json
 
 .DS_STORE
+
+# openspec init output (repos that don't allow it)
+openspec/
+.agents/skills/.openspec-target
+.agents/skills/openspec-*/
+.cursor/skills/openspec-*/
+.cursor/commands/opsx-*.md
+.kilocode/skills/openspec-*/
+.kilocode/workflows/opsx-*.md

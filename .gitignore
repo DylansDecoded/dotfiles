@@ -18,3 +18,7 @@ keys.txt
 *.dec
 secrets/*.env
 secrets/env.sh
+
+# Tool artifacts and editor backups
+.lavish/
+*.bak

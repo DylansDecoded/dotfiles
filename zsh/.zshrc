@@ -44,5 +44,8 @@ export PODMAN_COMPOSE_PROVIDER=/opt/homebrew/bin/podman-compose
 # Local Bin
 export PATH="$HOME/.local/bin:$PATH"
 
-# Orca Router API Key
-export ORCAROUTER_API_KEY=sk-orca-w8jcAclvgGpyxo8cQqw1UoLk0PYewiliTM5Ge4JGe1o
+# quota-axi only reads ~/.grok/auth.json; any grok CLI call renews the token first.
+alias quota-axi='grok models >/dev/null 2>&1; command quota-axi'
+
+# kimi-code
+export PATH="/Users/dylan/.kimi-code/bin:$PATH"

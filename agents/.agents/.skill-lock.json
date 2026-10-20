@@ -19,6 +19,15 @@
       "skillFolderHash": "eb6a23305aea6e340d14b9de3766e721f9f4861b",
       "installedAt": "2026-07-02T16:13:13.529Z",
       "updatedAt": "2026-07-02T16:13:13.529Z"
+    },
+    "nextgen-slides": {
+      "source": "MadsNyl/nextgen-slides",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/MadsNyl/nextgen-slides.git",
+      "skillPath": "skills/nextgen-slides/SKILL.md",
+      "skillFolderHash": "4c885e91f17c124755dc422d9f9994792230df6b",
+      "installedAt": "2026-09-24T19:17:58.479Z",
+      "updatedAt": "2026-09-24T19:17:58.479Z"
     }
   },
   "dismissed": {
@@ -26,18 +35,16 @@
   },
   "lastSelectedAgents": [
     "amp",
-    "antigravity",
-    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
-    "deepagents",
+    "droid",
     "gemini-cli",
     "github-copilot",
+    "kilo",
     "kimi-code-cli",
     "opencode",
     "warp",
-    "zed",
-    "claude-code"
+    "zed"
   ]
 }

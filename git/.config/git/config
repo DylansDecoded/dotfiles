@@ -26,6 +26,15 @@ rebase = true
 prune = true
 pruneTags = true
 
+[user]
+  signingkey = 0398512E56790EC3A1A82812A487D2CC5F93DC36
+
+[gpg]
+  format = openpgp
+
+[commit]
+  gpgsign = true
+
 [color]
   branch = auto
   diff = auto
@@ -49,6 +58,45 @@ path = ~/.config/git/config-personal
 [includeIf "gitdir:~/Projects/personal/"]
 path = ~/.config/git/config-personal
 
-# Work repos
+# Work repos — Robots & Pencils (default for ~/Projects/work/)
 [includeIf "gitdir:~/Projects/work/"]
 path = ~/.config/git/config-work
+
+# Toyota client engagement — must come after the work include so it wins
+[includeIf "gitdir:~/Projects/work/toyota/"]
+path = ~/.config/git/config-toyota
+
+# Toyota copies managed by firstmate (project clones, treehouse worktrees,
+# no-mistakes pipeline worktrees) — all currently Toyota engagement work
+[includeIf "gitdir:~/Projects/firstmate/projects/di-toybox-data-agent/"]
+path = ~/.config/git/config-toyota
+
+# Firstmate fleet clones — Robots & Pencils repos
+[includeIf "gitdir:~/Projects/firstmate/projects/connector-forge/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/roboworks-cockpit/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/rnp-ai-cost-reporter/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/rnp-claude-chat-collector/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/rnp-claude-code-langfuse-proxy/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/rnp-cowork-otel-collector/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/Projects/firstmate/projects/rnp-cursor-langfuse-proxy/"]
+path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/.no-mistakes/"]
+path = ~/.config/git/config-toyota
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

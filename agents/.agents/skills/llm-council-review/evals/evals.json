@@ -1,0 +1,23 @@
+{
+  "skill_name": "llm-council-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/llm-council-review I want to add passwordless magic-link login to our Rails app alongside the existing Devise password flow. Grill me, then get whatever other models are on this box to tear the plan apart.",
+      "expected_output": "Host asks one question at a time until decisions are locked; writes PLAN.md and PLAN-REVIEW-LOG.md; runs council-discover.sh excluding itself; runs every reviewer read-only per round via council-run.sh; logs critiques and its own responses; stops at convergence or MAX_ROUNDS; asks the user before writing code.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "council review this: we're moving the orders table from a single Postgres to a sharded setup keyed by customer_id. reviewers=codex,grok rounds=2",
+      "expected_output": "Tunables echoed as codex,grok / MAX_ROUNDS=2; only those two reviewers run; loop stops after round 2 with a deadlock report if not both APPROVED.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "grill me then get the council on it — I'm adding a Stripe webhook handler that marks invoices paid. Note: I have a bunch of uncommitted work in this repo.",
+      "expected_output": "Before Act 2 the host warns that kimi has no sandbox and offers to drop it; snapshots git status; halts and reports if the repo changes after any round.",
+      "files": []
+    }
+  ]
+}

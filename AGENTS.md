@@ -7,7 +7,7 @@ All orchestration goes through `just` (a `make` alternative). All recipes are id
 
 | Command | Purpose |
 |---|---|
-| `just install` | Full deploy: brew → stow → macos → claude-cli → codex-cli → grok-cli → opencode-cli → claude-plugins → secrets |
+| `just install` | Full deploy: brew → stow → macos → claude-cli → codex-cli → grok-cli → opencode-cli → herdr-cli → claude-plugins → secrets |
 | `just brew` | `brew bundle` from `macos/Brewfile` |
 | `just stow` | (Re-)apply GNU Stow symlinks from repo into `$HOME` |
 | `just doctor` | Verify tooling, symlinks, secrets, 1Password, plugins |
@@ -15,6 +15,7 @@ All orchestration goes through `just` (a `make` alternative). All recipes are id
 | `just codex-cli` | Install the Codex CLI if missing |
 | `just grok-cli` | Install the Grok CLI if missing |
 | `just opencode-cli` | Install the OpenCode CLI if missing |
+| `just herdr-cli` | Install the Herdr CLI if missing |
 | `just secrets` | Decrypt `secrets/env.sops.yaml` → `~/.config/secrets/env.sh` (keyless, via 1Password) |
 | `sops secrets/env.sops.yaml` | Edit encrypted secrets in-place |
 | `brew bundle dump --force --file=macos/Brewfile` | Update Brewfile from current machine state |
@@ -27,7 +28,7 @@ Every top-level directory (except `macos/` and `secrets/`) is a stow package. `j
 
 **Always edit config files in the repo directory, not directly in `~/.config/`.**
 
-Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `gemini`, `ghostty`, `git`, `mise`, `opencode`, `ssh`, `starship`, `zellij`, `zsh`
+Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `ghostty`, `git`, `grok`, `herdr`, `mise`, `moshi`, `opencode`, `starship`, `zellij`, `zsh`
 
 `agents` deploys `agents/.agents/` into `~/.agents/`. That is how Pi finds the shared skills: Pi discovers `~/.agents/skills/` automatically and needs no configuration. `just stow` pre-creates `~/.agents/skills` so each shared skill links per entry and skills installed outside the repo can live beside the tracked ones.
 

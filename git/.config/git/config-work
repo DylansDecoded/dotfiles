@@ -1,12 +1,5 @@
-# ~/.config/git/config-work
+# Robots & Pencils — active for ~/Projects/work/ (except toyota/) via includeIf.
+# Clone R&P repos with: git clone git@github-rnp:<org>/<repo>.git
 [user]
     name = Dylan Robson
-    email = dylan.robson@unit8.co
-
-# Route work repos through the github-work SSH host alias so the work key is used.
-# Active for any repo under ~/Projects/work/ via includeIf in ~/.config/git/config.
-[url "git@github-work:"]
-    insteadOf = git@github.com:
-
-[url "git@github-work:"]
-    insteadOf = https://github.com/
+    email = dylan.robson@robotsandpencils.com

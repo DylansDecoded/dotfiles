@@ -1,0 +1,1 @@
+{"hooks":{"Stop":[{"hooks":[{"type":"command","command":"bash '/Users/dylan/.grok/hooks/fm-turn-end.sh'"}]}]}}
