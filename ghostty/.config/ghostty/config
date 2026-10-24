@@ -1,21 +1,25 @@
-# Theme config
-theme = Night Owl
+# Rose Pine Moon palette with the reference's blue-grey glass tint.
+theme = Rose Pine Moon
+background = #2b2b3f
+background-opacity = 0.80
+background-blur = 50
 
 # Fonts
-font-family = FiraCode Nerd Font
-font-size = 14
-font-thicken = true
+font-family = Hack Nerd Font Mono
+font-size = 15
+font-thicken = false
 
 # macOS specific
+macos-option-as-alt = true
 macos-auto-secure-input = true
 macos-secure-input-indication = true
-# window-show-tab-bar is GTK-only, so a single tab still hides the bar here;
-# this at least keeps the tab strip in the titlebar instead of adding a row.
-macos-titlebar-style = tabs
+# Blend the titlebar into the translucent terminal background.
+macos-titlebar-style = transparent
+window-title-font-family = Hack Nerd Font Mono
 
 window-padding-balance = false
 window-padding-x = 10
-window-padding-y = 10,2
+window-padding-y = 10
 
 # Application settings
 auto-update = download
@@ -24,6 +28,7 @@ clipboard-trim-trailing-spaces = true
 shell-integration = detect
 
 # Window settings
+unfocused-split-opacity = 0.5
 window-height = 45
 window-width = 180
 

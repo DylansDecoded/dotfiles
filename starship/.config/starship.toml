@@ -7,24 +7,16 @@ add_newline = true
 # without timing out on every normal directory scan.
 scan_timeout = 30
 
-format = """\
-  $username\
-  $hostname\
-  $directory\
-  $kubernetes\
-  $git_branch\
-  $git_commit\
-  $git_state\
-  $git_status\
-  $python\
-  $character\
-  """
+# Icons based on https://starship.rs/presets/nerd-font
+# Keep all built-in modules available; each uses its own context detection.
+format = "$username$hostname$directory$all"
 
 right_format = "$cmd_duration"
+palette = "rose_pine_moon"
 
 [character]
-success_symbol = "\n[❯](bold green)"
-error_symbol = "\n[✖](bold red)"
+success_symbol = "[❯](bold foam)"
+error_symbol = "[✖](bold love)"
 
 [cmd_duration]
 min_time = 500
@@ -36,7 +28,7 @@ show_always = false
 [hostname]
 disabled = false
 ssh_only = true
-ssh_symbol = " "
+ssh_symbol = " "
 format = "[$ssh_symbol$hostname]($style) "
 style = "bold yellow"
 
@@ -44,8 +36,9 @@ style = "bold yellow"
 disabled = false
 truncation_length = 8
 truncate_to_repo = true
-read_only = " "
-home_symbol = " "
+read_only = " 󰌾"
+home_symbol = "~"
+style = "bold rose"
 
 [directory.substitutions]
 "~/.dotfiles" = "dotfiles"
@@ -58,12 +51,13 @@ detect_files = ["kustomization.yaml", "Chart.yaml", "helmfile.yaml"]
 detect_folders = ["kubernetes", "k8s"]
 symbol = "󱃾 "
 format = "[\\[$symbol$context \\($namespace\\)\\]]($style) "
-style  = "bold bright-green"
+style = "bold foam"
 
 [python]
 disabled = false
-format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\] '
-symbol = " "
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = "🐍 "
+style = "bold gold"
 
 [git_branch]
 disabled = false
@@ -79,5 +73,366 @@ diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 disabled = false
 commit_hash_length = 8
 only_detached = true
-style = "grey"
+style = "muted"
 tag_symbol = " "
+
+[aws]
+disabled = true
+symbol = "☁️ AWS "
+
+[azure]
+symbol = "☁️ Azure "
+disabled = false
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰂑 "
+empty_symbol = "󰂎 "
+
+[buf]
+symbol = " "
+
+[bun]
+symbol = "🥟 "
+
+[c]
+symbol = " "
+
+[cpp]
+symbol = " "
+disabled = false
+
+[cmake]
+symbol = " "
+
+[cobol]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[container]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[deno]
+symbol = " "
+
+[direnv]
+symbol = " "
+disabled = false
+
+[docker_context]
+symbol = "🐳 "
+
+[dotnet]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[erlang]
+symbol = " "
+
+[fennel]
+symbol = " "
+disabled = false
+
+[fortran]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[gcloud]
+symbol = "☁️ GCP "
+format = 'on [$symbol$project( \($region\))]($style) '
+
+[gleam]
+symbol = " "
+
+[golang]
+symbol = "🐹 "
+
+[gradle]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[helm]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = "☕ "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[maven]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[mojo]
+symbol = "󰈸 "
+
+[nats]
+symbol = " "
+
+[netns]
+symbol = "󰛳 "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[odin]
+symbol = "󰟢 "
+
+[opa]
+symbol = " "
+
+[openstack]
+symbol = " "
+
+[os.symbols]
+AIX = " "
+AlmaLinux = " "
+Alpaquita = " "
+Alpine = " "
+ALTLinux = " "
+Amazon = " "
+Android = " "
+AOSC = " "
+Arch = " "
+Artix = " "
+Bluefin = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Elementary = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = " "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = " "
+InstantOS = " "
+Ios = "󰀷 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = " "
+OpenCloudOS = " "
+openEuler = " "
+openSUSE = " "
+OracleLinux = "󰺡 "
+PikaOS = " "
+Pop = " "
+Raspbian = " "
+Redhat = "󱄛 "
+RedHatEnterprise = "󱄛 "
+Redox = "󰀘 "
+RockyLinux = " "
+Solus = " "
+SUSE = " "
+Ubuntu = " "
+Ultramarine = " "
+Unknown = " "
+Uos = " "
+Void = " "
+Windows = "󰍲 "
+Zorin = " "
+
+[package]
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[pixi]
+symbol = "󰏗 "
+
+[pulumi]
+symbol = " "
+
+[purescript]
+symbol = " "
+
+[raku]
+symbol = "󱖊 "
+
+[red]
+symbol = "󱍼 "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = "💎 "
+
+[rust]
+symbol = "🦀 "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = "󰹍 "
+
+[singularity]
+symbol = " "
+
+[solidity]
+symbol = " "
+
+[spack]
+symbol = " "
+
+[status]
+symbol = " "
+
+[sudo]
+symbol = " "
+
+[swift]
+symbol = "🐦 "
+
+[terraform]
+symbol = " "
+
+[vlang]
+symbol = " "
+
+[typst]
+symbol = " "
+
+[vagrant]
+symbol = " "
+
+[xmake]
+symbol = " "
+
+[zig]
+symbol = " "
+
+[mise]
+disabled = false
+
+# Colors follow Rose Pine Moon, including modules that use standard color names.
+[palettes.rose_pine_moon]
+love = "#eb6f92"
+gold = "#f6c177"
+rose = "#ea9a97"
+pine = "#3e8fb0"
+foam = "#9ccfd8"
+iris = "#c4a7e7"
+text = "#e0def4"
+muted = "#908caa"
+red = "#eb6f92"
+green = "#9ccfd8"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+purple = "#c4a7e7"
+cyan = "#ea9a97"
+white = "#e0def4"
+
+# Project configuration indicators, not running-agent or authentication status.
+# Detection checks the current directory and never launches an agent CLI.
+[custom.agents]
+description = "Shared agent instructions in this project directory"
+detect_files = ["AGENTS.md"]
+require_repo = true
+symbol = "🤖 "
+format = '[${symbol}agents]($style) '
+style = "bold iris"
+
+[custom.claude]
+description = "Claude configuration in this project directory"
+detect_files = ["CLAUDE.md"]
+detect_folders = [".claude"]
+require_repo = true
+symbol = "✳ "
+format = '[${symbol}Claude]($style) '
+style = "bold rose"
+
+[custom.codex]
+description = "Codex configuration in this project directory"
+detect_folders = [".codex"]
+require_repo = true
+symbol = "🤖 "
+format = '[${symbol}Codex]($style) '
+style = "bold foam"
+
+[custom.gemini]
+description = "Gemini configuration in this project directory"
+detect_files = ["GEMINI.md"]
+detect_folders = [".gemini"]
+require_repo = true
+symbol = "✦ "
+format = '[${symbol}Gemini]($style) '
+style = "bold iris"
+
+[custom.opencode]
+description = "OpenCode configuration in this project directory"
+detect_files = ["opencode.json", "opencode.jsonc"]
+detect_folders = [".opencode"]
+require_repo = true
+symbol = "󰚩 "
+format = '[${symbol}OpenCode]($style) '
+style = "bold gold"

@@ -1,4 +1,4 @@
-model = "gpt-6-luna"
+model = "gpt-6-astra"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "workspace-write"
@@ -255,6 +255,9 @@ approval_mode = "approve"
 [mcp_servers.crawler.tools.search]
 approval_mode = "approve"
 
+[mcp_servers.home-assistant]
+url = "http://10.1.20.90:8123/api/webhook/mcp_f5ae89565be8421eecf8641c2e75bfa0"
+
 # https://github.com/openai/plugins/tree/main/plugins/cloudflare
 [plugins."cloudflare@openai-curated"]
 enabled = true
@@ -368,9 +371,11 @@ status_line = ["model-with-reasoning", "current-dir", "weekly-limit"]
 status_line_use_colors = true
 pet = "stacky"
 screen_reader_detection_done = true
+resume_cwd = "session"
 
 [tui.model_availability_nux]
 gpt-6-astra = 4
+"gpt-6.1-sol" = 4
 
 [hooks.state]
 

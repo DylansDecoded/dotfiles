@@ -100,3 +100,5 @@ path = ~/.config/git/config-toyota
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[includeIf "gitdir:~/Projects/second-brain/"]
+	path = /Users/dylan/.config/git/config-personal

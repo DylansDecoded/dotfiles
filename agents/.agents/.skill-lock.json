@@ -28,6 +28,15 @@
       "skillFolderHash": "4c885e91f17c124755dc422d9f9994792230df6b",
       "installedAt": "2026-09-24T19:17:58.479Z",
       "updatedAt": "2026-09-24T19:17:58.479Z"
+    },
+    "jira-axi": {
+      "source": "emilchristensen/atlassian-axi",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/emilchristensen/atlassian-axi.git",
+      "skillPath": "packages/jira-axi/skills/jira-axi/SKILL.md",
+      "skillFolderHash": "f38edca371b6c609fa575a050f8445b93714b5f1",
+      "installedAt": "2026-10-23T00:32:41.378Z",
+      "updatedAt": "2026-10-23T00:32:41.378Z"
     }
   },
   "dismissed": {
@@ -39,11 +48,13 @@
     "codex",
     "cursor",
     "droid",
+    "fx",
     "gemini-cli",
     "github-copilot",
     "kilo",
     "kimi-code-cli",
     "opencode",
+    "pi",
     "warp",
     "zed"
   ]

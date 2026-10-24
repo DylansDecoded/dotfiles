@@ -1,4 +1,5 @@
 onboarding = false
+
 [ui]
 show_agent_labels_on_pane_borders = true
 agent_panel_sort = "priority"
@@ -17,3 +18,23 @@ delivery = "terminal"
 
 [ui.sound]
 enabled = false
+
+[[keys.command]]
+key = "prefix+alt+f"
+type = "plugin_action"
+command = "herdr-file-transfer.open"
+description = "file transfer: drop files here"
+
+# Github plugin commands
+[[keys.command]]
+key = "prefix+alt+g"
+type = "plugin_action"
+command = "herdr-github.open"
+description = "GitHub: pull requests"
+
+# Optional: straight to the pull request of the agent you're in.
+[[keys.command]]
+key = "prefix+alt+p"
+type = "plugin_action"
+command = "herdr-github.pr"
+description = "GitHub: this agent's pull request"
