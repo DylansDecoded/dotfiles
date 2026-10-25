@@ -68,29 +68,29 @@ path = ~/.config/git/config-toyota
 
 # Toyota copies managed by firstmate (project clones, treehouse worktrees,
 # no-mistakes pipeline worktrees) — all currently Toyota engagement work
-[includeIf "gitdir:~/Projects/firstmate/projects/di-toybox-data-agent/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/di-toybox-data-agent/"]
 path = ~/.config/git/config-toyota
 
 # Firstmate fleet clones — Robots & Pencils repos
-[includeIf "gitdir:~/Projects/firstmate/projects/connector-forge/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/connector-forge/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/roboworks-cockpit/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/roboworks-cockpit/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/rnp-ai-cost-reporter/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/rnp-ai-cost-reporter/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/rnp-claude-chat-collector/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/rnp-claude-chat-collector/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/rnp-claude-code-langfuse-proxy/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/rnp-claude-code-langfuse-proxy/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/rnp-cowork-otel-collector/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/rnp-cowork-otel-collector/"]
 path = ~/.config/git/config-work
 
-[includeIf "gitdir:~/Projects/firstmate/projects/rnp-cursor-langfuse-proxy/"]
+[includeIf "gitdir:~/Projects/tools/firstmate/projects/rnp-cursor-langfuse-proxy/"]
 path = ~/.config/git/config-work
 
 [includeIf "gitdir:~/.no-mistakes/"]
@@ -100,5 +100,25 @@ path = ~/.config/git/config-toyota
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[includeIf "gitdir:~/Projects/second-brain/"]
+[includeIf "gitdir:~/Projects/personal/second-brain/"]
 	path = /Users/dylan/.config/git/config-personal
+
+# Preserve personal identities for checkouts relocated from personal/.
+[includeIf "gitdir:~/Projects/tools/pi-coding-agent-setup/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/autoresearch/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/intercept/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/llm-council/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/applenotesmcp/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/searxNcrawl/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/searxng-mcp/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/tools/agentic-project-starter/"]
+	path = ~/.config/git/config-personal
+[includeIf "gitdir:~/Projects/labs/searxng-firecrawl-camofox/"]
+	path = ~/.config/git/config-personal

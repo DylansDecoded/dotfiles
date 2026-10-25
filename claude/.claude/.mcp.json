@@ -19,7 +19,7 @@
         },
         "crawler": {
             "command": "uv",
-            "args": ["run", "--directory", "/Users/dylan/Projects/personal/mcps/searxNcrawl", "python", "-m", "crawler.mcp_server"]
+            "args": ["run", "--directory", "/Users/dylan/Projects/tools/searxNcrawl", "python", "-m", "crawler.mcp_server"]
         }
     }
 }

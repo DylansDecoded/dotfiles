@@ -57,7 +57,7 @@ The intended outcome is a repeatable fresh-machine restore: on a new Mac, `boots
 
 Four AI tools are configured here — Claude Code, Codex, opencode, and Gemini — and they share infrastructure:
 - All consume the same secrets (`SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`)
-- All use the same MCP server (crawler, run via `uv` from `~/Projects/personal/mcps/searxNcrawl`) pointing at an internal SearxNG instance
+- All use the same MCP server (crawler, run via `uv` from `~/Projects/tools/searxNcrawl`) pointing at an internal SearxNG instance
 - `agents/.agents/AGENTS.md` is the canonical shared instruction file; Claude, Codex, and opencode point to it
 - `agents/.agents/skills/` is the source of truth for shared skills; LLM-specific skill directories should reference these skills with symlinks instead of duplicating files
 

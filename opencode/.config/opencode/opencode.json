@@ -18,10 +18,20 @@
         "uv",
         "run",
         "--directory",
-        "/Users/dylan/Projects/personal/mcps/searxNcrawl",
+        "/Users/dylan/Projects/tools/searxNcrawl",
         "python",
         "-m",
         "crawler.mcp_server"
+      ],
+      "enabled": true
+    },
+    "rea": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "rea-agents@6.7.0",
+        "mcp"
       ],
       "enabled": true
     }
