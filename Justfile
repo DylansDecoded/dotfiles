@@ -15,10 +15,11 @@ default:
     @just --list
 
 # Full deploy. The op-gated secrets step runs last.
-install: brew stow macos claude-cli codex-cli grok-cli opencode-cli herdr-cli claude-plugins secrets
+install: brew stow macos claude-cli codex-cli grok-cli opencode-cli herdr-cli pi-cli claude-plugins secrets
     # If 1Password CLI integration wasn't enabled yet, the op-gated steps stop with
     # guidance; enable it, then re-run `just install` (every step is idempotent).
     @echo "Done. Open a new login shell, then run 'just doctor' to verify."
+    @echo "Post-wipe runbook: POST-WIPE.md — then just mcp-repos && just projects-scaffold"
 
 # Install everything in the Brewfile (brews, casks, fonts, VS Code extensions).
 # Third-party taps outside Homebrew's curated allowlist need explicit trust
@@ -147,6 +148,80 @@ herdr-cli:
       curl -fsSL https://herdr.dev/install.sh | sh
     fi
 
+# Install the Pi coding agent CLI if missing (npm global package).
+# Auth is interactive (pi login / provider keys); never commit auth.json.
+pi-cli:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v pi >/dev/null 2>&1; then
+      echo "pi already installed: $(pi --version 2>/dev/null || echo present)"
+    else
+      echo "Installing Pi coding agent CLI (@mariozechner/pi-coding-agent)"
+      if command -v npm >/dev/null 2>&1; then
+        npm install -g @mariozechner/pi-coding-agent
+      else
+        echo "npm not found — install Node (brew/mise), then re-run just pi-cli" >&2
+        exit 1
+      fi
+    fi
+    mkdir -p "$HOME/.local/bin" "$HOME/.pi/agent"
+    # Managed installs often symlink into ~/.local/bin/pi
+    if ! command -v pi >/dev/null 2>&1 && [ -x "$HOME/.local/bin/pi" ]; then
+      echo "pi binary at ~/.local/bin/pi — ensure ~/.local/bin is on PATH"
+    fi
+
+# Clone MCP-related tool repos used by stowed agent configs (idempotent).
+# crawler MCP expects ~/Projects/tools/searxNcrawl (see claude/.claude/.mcp.json).
+mcp-repos:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tools="$HOME/Projects/tools"
+    mkdir -p "$tools"
+    clone_one() {
+      local url=$1 dest=$2
+      if [ -d "$dest/.git" ]; then
+        echo "ok  $dest (exists)"
+        git -C "$dest" fetch --quiet origin 2>/dev/null || true
+        return 0
+      fi
+      if [ -e "$dest" ]; then
+        echo "skip $dest (exists, not a git repo)"
+        return 0
+      fi
+      echo "clone $url -> $dest"
+      git clone "$url" "$dest"
+    }
+    # Prefer HTTPS so gh credential helper works when SSH is a different GitHub user.
+    clone_one "https://github.com/DylansDecoded/searxNcrawl.git" "$tools/searxNcrawl" \
+      || clone_one "git@github.com:DylansDecoded/searxNcrawl.git" "$tools/searxNcrawl" \
+      || echo "WARN: could not clone searxNcrawl — create $tools/searxNcrawl manually"
+    if command -v uv >/dev/null 2>&1 && [ -d "$tools/searxNcrawl" ]; then
+      echo "uv present; crawler MCP can use: uv run --directory $tools/searxNcrawl ..."
+    else
+      echo "note: install uv if crawler MCP fails (https://github.com/astral-sh/uv)"
+    fi
+    echo "MCP repos done. SEARXNG_URL still comes from just secrets / env.sh."
+
+# Create empty Projects bucket directories (does not delete or move existing trees).
+projects-scaffold:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    root="$HOME/Projects"
+    for d in \
+      work/robots-and-pencils \
+      personal/products \
+      personal/home \
+      tools \
+      labs \
+      knowledge \
+      .archive \
+      .runtime
+    do
+      mkdir -p "$root/$d"
+      echo "ok  $root/$d"
+    done
+    echo "Projects scaffold ready. See docs/projects-layout.md for clone targets."
+
 # Restore user-scope Claude plugins from the tracked snapshot.
 # Marketplaces must be registered before plugins can resolve from them.
 claude-plugins:
@@ -173,38 +248,85 @@ doctor:
     set -uo pipefail
     ok() { printf '  \033[1;32mok\033[0m  %s\n' "$1"; }
     bad() { printf '  \033[1;31mXX\033[0m  %s\n' "$1"; }
+    warn() { printf '  \033[1;33m!!\033[0m  %s\n' "$1"; }
+    fail=0
     echo "Tooling:"
     for t in brew stow sops age just jq; do
-      command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
+      if command -v "$t" >/dev/null 2>&1; then ok "$t"; else bad "$t missing"; fail=1; fi
     done
     echo "AI CLIs:"
-    for t in claude codex grok opencode herdr moshi; do
-      command -v "$t" >/dev/null 2>&1 && ok "$t" || bad "$t missing"
+    for t in claude codex opencode herdr pi; do
+      if command -v "$t" >/dev/null 2>&1; then ok "$t"; else bad "$t missing"; fail=1; fi
     done
+    for t in grok moshi; do
+      if command -v "$t" >/dev/null 2>&1; then ok "$t"; else warn "$t missing (optional)"; fi
+    done
+    command -v cursor >/dev/null 2>&1 || command -v cursor-agent >/dev/null 2>&1 \
+      && ok "cursor present" || warn "cursor not on PATH (optional; install app and sign in)"
     echo "Symlinks:"
     for f in ~/.zshrc ~/.config/ghostty/config ~/.config/starship.toml ~/.codex/config.toml; do
-      [ -L "$f" ] || [ -f "$f" ] && ok "$f" || bad "$f missing"
+      if [ -L "$f" ] || [ -f "$f" ]; then ok "$f"; else bad "$f missing"; fail=1; fi
     done
+    [ -L "$HOME/.agents/skills" ] || [ -d "$HOME/.agents/skills" ] \
+      && ok "~/.agents/skills" || warn "~/.agents/skills missing (run just stow)"
     echo "Secrets:"
-    SOPS_AGE_KEY_CMD="op read {{op_age_ref}}" \
-      sops -d {{dotfiles}}/secrets/env.sops.yaml >/dev/null 2>&1 \
-      && ok "secrets decrypt (keyless via 1Password)" \
-      || bad "secrets decrypt failed (op authenticated? sops >= 3.10?)"
-    [ -f "$HOME/.config/sops/age/keys.txt" ] \
-      && bad "legacy key file on disk — remove with: rm ~/.config/sops/age/keys.txt" \
-      || ok "no age key on disk"
-    [ -f "$HOME/.config/secrets/env.sh" ] && ok "env.sh generated" || bad "env.sh missing (run 'just secrets')"
+    if SOPS_AGE_KEY_CMD="op read {{op_age_ref}}" \
+      sops -d {{dotfiles}}/secrets/env.sops.yaml >/dev/null 2>&1; then
+      ok "secrets decrypt (keyless via 1Password)"
+    else
+      bad "secrets decrypt failed (op authenticated? sops >= 3.10?)"
+      fail=1
+    fi
+    if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
+      warn "legacy age key file on disk (optional remove: rm ~/.config/sops/age/keys.txt)"
+    else
+      ok "no age key on disk"
+    fi
+    if [ -f "$HOME/.config/secrets/env.sh" ]; then ok "env.sh generated"; else bad "env.sh missing (run 'just secrets')"; fail=1; fi
     echo "1Password:"
     if command -v op >/dev/null 2>&1; then
-      op whoami >/dev/null 2>&1 && ok "op authenticated" || bad "op not authenticated (enable CLI integration)"
+      if op whoami >/dev/null 2>&1; then ok "op authenticated"; else bad "op not authenticated (enable CLI integration)"; fail=1; fi
     else
-      bad "op CLI missing"
+      bad "op CLI missing"; fail=1
     fi
+    echo "GitHub:"
+    if command -v gh >/dev/null 2>&1; then
+      if gh auth status >/dev/null 2>&1; then ok "gh authenticated"; else warn "gh not logged in (gh auth login)"; fi
+    else
+      bad "gh missing"; fail=1
+    fi
+    echo "MCP / Projects:"
+    if [ -d "$HOME/Projects/tools/searxNcrawl/.git" ] || [ -d "$HOME/Projects/tools/searxNcrawl" ]; then
+      ok "searxNcrawl at ~/Projects/tools/searxNcrawl"
+    else
+      warn "searxNcrawl missing — run just mcp-repos (crawler MCP needs it)"
+    fi
+    command -v uv >/dev/null 2>&1 && ok "uv" || warn "uv missing (crawler MCP)"
+    [ -d "$HOME/Projects" ] && ok "~/Projects" || warn "~/Projects missing — just projects-scaffold"
+    echo "Agent credentials (presence only; never printed):"
+    if [ -f "$HOME/.config/anthropic/credentials/default.json" ]; then
+      if [ -r "$HOME/.config/anthropic/credentials/default.json" ]; then
+        ok "anthropic credentials file readable"
+      else
+        bad "anthropic credentials exist but not readable (ownership/mode)"
+        fail=1
+      fi
+    else
+      warn "no anthropic credentials file (Pi/Kimi may need provider login)"
+    fi
+    [ -f "$HOME/.pi/agent/auth.json" ] && ok "pi auth.json present" || warn "pi auth.json missing (pi login)"
     echo "Claude plugins:"
     if command -v claude >/dev/null 2>&1; then
       want=$(jq '.plugins | length' {{dotfiles}}/claude/.claude/plugins-snapshot.json)
       have=$(claude plugin list 2>/dev/null | grep -c . || echo 0)
       ok "claude present; snapshot lists $want plugins (installed list rows: $have)"
     else
-      bad "claude CLI missing"
+      bad "claude CLI missing"; fail=1
     fi
+    echo "Docs:"
+    [ -f {{dotfiles}}/POST-WIPE.md ] && ok "POST-WIPE.md" || bad "POST-WIPE.md missing"
+    if [ "$fail" -ne 0 ]; then
+      echo "doctor: failures present"
+      exit 1
+    fi
+    echo "doctor: all required checks passed"
