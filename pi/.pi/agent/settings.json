@@ -1,0 +1,89 @@
+{
+  "lastChangelogVersion": "1.5.0",
+  "theme": "dark",
+  "defaultProvider": "xai",
+  "defaultModel": "grok-4.5",
+  "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "xai/grok-4.5",
+    "anthropic/claude-fable-5-1",
+    "openai-codex/gpt-6-astra",
+    "xai/grok-4.6",
+    "kimi-coding/k3",
+    "kimi-coding/k3-256k",
+    "anthropic/claude-opus-5-5",
+    "openai-codex/gpt-6-sol",
+    "openai-codex/gpt-6-luna",
+    "xai/grok-4.7",
+    "anthropic/claude-haiku-5-5",
+    "anthropic/claude-sonnet-5-5",
+    "openai-codex/gpt-6.1-sol",
+    "abliterated/abliterated-model",
+    "abliterated/abliterated-model-large",
+    "abliterated/abliterated-model-large-v2",
+    "abliterated/abliterated-model-large-flash",
+    "deepseek/deepseek-flash",
+    "deepseek/deepseek-v4-pro",
+    "omlx-lan/Qwen3.5-9B-Claude-4.6-HighIQ-INSTRUCT-HERETIC-UNCENSORED",
+    "kimi-coding/k3.1-pro-highspeed",
+    "kimi-coding/kimi-for-coding-highspeed",
+    "cursor/claude-opus-5-5-1m",
+    "cursor/claude-opus-5-1m",
+    "openai-codex/gpt-6.1-terra",
+    "anthropic/claude-sonnet-4-5",
+    "anthropic/claude-sonnet-4-6",
+    "anthropic/claude-sonnet-5",
+    "anthropic/claude-fable-5",
+    "blackbit/zai_glm_5",
+    "blackbit/minimax_m3",
+    "blackbit/zai_glm_5_1",
+    "blackbit/zai_glm_5_2",
+    "blackbit/zai_glm_5_3",
+    "blackbit/deepseek_v4_pro",
+    "blackbit/mistral_large_3",
+    "blackbit/deepseek_v4_flash",
+    "blackbit/moonshotai_kimi_k3",
+    "blackbit/deepseek_v4_1_flash",
+    "blackbit/moonshotai_kimi_k2_6",
+    "blackbit/xiaomi_mimo_v2_6_pro",
+    "blackbit/poolside_laguna_s_2_1",
+    "blackbit/deepseek_v4_flash_0731",
+    "blackbit/xiaomi_mimo_v2_6_flash",
+    "blackbit/moonshotai_kimi_k2_7_code",
+    "blackbit/xiaomi_mimo_v2_6_pro_ultraspeed",
+    "blackbit/orca_orcacyber_zero_1_0",
+    "blackbit/zai_glm_5_turbo",
+    "blackbit/abliteration_abliterated_model_large_v2",
+    "blackbit/abliteration_abliterated_model_large",
+    "blackbit/abliteration_abliterated_model",
+    "blackbit/adverserial_cyberglm",
+    "blackbit/alibaba_qwen3_8_max",
+    "blackbit/alibaba_qwen3_7_max",
+    "blackbit/orca_orcacyber_zero_1_5"
+  ],
+  "steeringMode": "one-at-a-time",
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "quietStartup": true,
+  "enableInstallTelemetry": false,
+  "defaultProjectTrust": "always",
+  "tuiMode": "regular",
+  "packages": [
+    "npm:@pi-stef/cursor",
+    "npm:pi-subagents",
+    "../../.local/share/pi-code-quality/current"
+  ],
+  "fullscreenCopyOnSelect": false,
+  "compaction": {
+    "modelOverrides": {
+      "llamacpp-lan/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q4_K_M": {
+        "reserveTokens": 16384,
+        "keepRecentTokens": 8192
+      }
+    }
+  },
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.86.0"
+  }
+}

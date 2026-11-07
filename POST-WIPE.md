@@ -66,7 +66,8 @@ just projects-scaffold
 
 ### Agent auth notes
 
-- Do not commit `~/.config/anthropic/credentials/` or `~/.pi/agent/auth.json`.
+- Do not commit `~/.config/anthropic/credentials/`, `~/.pi/agent/auth.json`, or `~/.pi/agent/mcp-auth.json`.
+- Pi `models.json` in the repo uses env placeholders (`$DEEPSEEK_API_KEY`, `$BLACKBIT_API_KEY`, etc.). Put real keys in `~/.config/secrets/env.sh` via `just secrets`, not in the stowed file.
 - Those paths must be owned by your user (mode 600). Root-owned or missing files break Pi/Kimi.
 - Re-run provider login if every agent turn fails with credentials ENOENT/EACCES.
 

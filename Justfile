@@ -4,7 +4,7 @@
 dotfiles := justfile_directory()
 
 # Stow packages that map into $HOME. macos/ and secrets/ are intentionally excluded.
-packages := "aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode starship zellij zsh"
+packages := "aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode pi starship zellij zsh"
 
 # 1Password reference for the sops age private key. Override per-machine via env if your
 # vault/item/field names differ, e.g. OP_AGE_REF="op://Work/sops/SOPS_PRIVATE_KEY".
@@ -83,7 +83,8 @@ stow:
     # ~/.agents/skills must stay a real directory so stow links each shared skill
     # per entry. If it folded into a package symlink, skills installed outside the
     # repo could not live beside the tracked ones.
-    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.grok ~/.agents/skills ~/.config/herdr ~/.config/moshi
+    mkdir -p ~/.config ~/.claude ~/.codex ~/.gemini ~/.grok ~/.agents/skills ~/.config/herdr ~/.config/moshi \
+        ~/.pi/agent/extensions ~/.pi/agent/agents ~/.pi/agent/prompts
     @echo "--- dry run ---"
     cd {{dotfiles}} && stow -n -v -t ~ {{packages}}
     @echo "--- applying ---"
@@ -269,6 +270,20 @@ doctor:
     done
     [ -L "$HOME/.agents/skills" ] || [ -d "$HOME/.agents/skills" ] \
       && ok "~/.agents/skills" || warn "~/.agents/skills missing (run just stow)"
+    for f in \
+      "$HOME/.pi/agent/settings.json" \
+      "$HOME/.pi/agent/mcp.json" \
+      "$HOME/.pi/agent/models.json" \
+      "$HOME/.pi/agent/extensions/herdr-agent-state.ts" \
+      "$HOME/.pi/agent/agents/scout.md" \
+      "$HOME/.pi/agent/prompts/deepen.md" \
+      "$HOME/.agents/skills/pi-skills-public/README.md"
+    do
+      if [ -L "$f" ]; then ok "$f (stowed)"
+      elif [ -e "$f" ]; then warn "$f exists but is not a symlink (run just stow after backing up)"
+      else warn "$f missing (run just stow)"
+      fi
+    done
     echo "Secrets:"
     if SOPS_AGE_KEY_CMD="op read {{op_age_ref}}" \
       sops -d {{dotfiles}}/secrets/env.sops.yaml >/dev/null 2>&1; then

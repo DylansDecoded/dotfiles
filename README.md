@@ -93,6 +93,7 @@ Shared agent instructions live in `agents/.agents/AGENTS.md`.
 
 - `claude/.claude/CLAUDE.md`, `codex/.codex/AGENTS.MD`, and `opencode/.config/opencode/AGENTS.md` forward to that file.
 - Shared reusable skills live in `agents/.agents/skills/`.
+- Pi agent config (settings, MCP server defs, model providers with env-based keys, extensions, subagents, prompts) lives in `pi/.pi/agent/`. Auth stays in `~/.pi/agent/auth.json` (not committed).
 - When a tool requires a tool-local skills directory, point it at the shared skill directory with repo-internal symlinks instead of copying the files.
 - GNU Stow handles deployment from the repo into `$HOME`; the repo-internal symlinks handle shared ownership between LLM packages.
 - Agent-specific-only skills stay in the tool's own config tree.
@@ -134,7 +135,7 @@ jq '{plugins: (.plugins | keys)}' ~/.claude/plugins/installed_plugins.json \
 
 ## Notes
 
-- Packages stowed: `aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode starship zellij zsh`. `macos/` and `secrets/` are not stow packages.
+- Packages stowed: `aerospace agents claude codex direnv fish ghostty git grok herdr mise moshi opencode pi starship zellij zsh`. `macos/` and `secrets/` are not stow packages.
 - On a machine that already has real (non-symlink) config files, `just stow` will
   report conflicts instead of clobbering them. Remove the pre-existing file, or
   reconcile manually, then re-run.

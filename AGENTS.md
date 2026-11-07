@@ -28,9 +28,13 @@ Every top-level directory (except `macos/` and `secrets/`) is a stow package. `j
 
 **Always edit config files in the repo directory, not directly in `~/.config/`.**
 
-Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `ghostty`, `git`, `grok`, `herdr`, `mise`, `moshi`, `opencode`, `starship`, `zellij`, `zsh`
+Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `ghostty`, `git`, `grok`, `herdr`, `mise`, `moshi`, `opencode`, `pi`, `starship`, `zellij`, `zsh`
 
 `agents` deploys `agents/.agents/` into `~/.agents/`. That is how Pi finds the shared skills: Pi discovers `~/.agents/skills/` automatically and needs no configuration. `just stow` pre-creates `~/.agents/skills` so each shared skill links per entry and skills installed outside the repo can live beside the tracked ones.
+
+`pi` deploys `pi/.pi/agent/` into `~/.pi/agent/`: `settings.json`, redacted `models.json` (API keys via env vars), `mcp.json` (no auth tokens), `extensions/`, `agents/` (planner/researcher/scout/worker), and `prompts/`. `just stow` pre-creates those directories so runtime state (`sessions/`, `auth.json`, `mcp-auth.json`, caches) stays local and untracked. Never commit `auth.json` or `mcp-auth.json`.
+
+`agents/.agents/skills/pi-skills-public/` is vendored into the shared skills tree (upstream GitHub remote was unavailable at import time).
 
 `macos/` is applied via `just macos` (150+ macOS system defaults). `secrets/` is managed via `just secrets`. Neither is stowed.
 
