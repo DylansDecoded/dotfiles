@@ -8,7 +8,9 @@ with [GNU Stow](https://www.gnu.org/software/stow/), orchestrated with
 
 ## Fresh Mac deploy
 
-One command on a brand-new machine:
+Full post-reinstall order (Projects, Firstmate, logins): **[POST-WIPE.md](POST-WIPE.md)**.
+
+One command on a brand-new machine for the dotfiles layer:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/DylansDecoded/dotfiles/main/bootstrap.sh | bash
@@ -43,10 +45,12 @@ cd ~/dotfiles && just install
 | `just grok-cli` | Installs the Grok CLI if missing. |
 | `just opencode-cli` | Installs the OpenCode CLI if missing. |
 | `just herdr-cli` | Installs the Herdr CLI if missing (`curl https://herdr.dev/install.sh`). |
+| `just pi-cli` | Installs the Pi coding agent CLI if missing (`npm i -g @mariozechner/pi-coding-agent`). |
 | `just claude-plugins` | Restores the 13 user-scope plugins from `claude/.claude/plugins-snapshot.json`. |
-| `just age-key` | Pulls the sops age private key from 1Password into `~/.config/sops/age/keys.txt`. |
-| `just secrets` | Runs `age-key`, then decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` (sourced by `.zprofile`). |
-| `just doctor` | Verifies a deployed machine (tooling, symlinks, secrets, 1Password, plugins). |
+| `just secrets` | Decrypts `secrets/env.sops.yaml` into `~/.config/secrets/env.sh` via 1Password (no age key on disk). |
+| `just mcp-repos` | Clones MCP code deps (searxNcrawl → `~/Projects/tools/searxNcrawl`). |
+| `just projects-scaffold` | Creates empty `~/Projects` buckets (work/personal/tools/labs/…). |
+| `just doctor` | Verifies tooling, agent CLIs (incl. Pi), symlinks, secrets, gh, MCP paths. |
 
 The op-gated steps (`age-key`, `secrets`) run last in `install` so an un-ready 1Password
 doesn't block the rest. Enable 1Password CLI integration, then re-run `just install`.
@@ -108,9 +112,12 @@ Not automated (interactive, secret, or external):
   need re-authentication. Google Tasks: follow `claude/.claude/skills/gtasks/SETUP.md`.
 - **Apps outside Homebrew**: see `macos/applications.csv`. `mac-app-store` apps reinstall
   from the App Store; `direct-download` apps must be fetched from their vendors.
-- **crawler MCP**: runs via `uv` from `~/Projects/personal/mcps/searxNcrawl`, which is
-  an external repo not tracked here. Clone it separately (and have `uv` installed), or
-  the crawler MCP server will fail to start.
+- **crawler MCP**: runs via `uv` from `~/Projects/tools/searxNcrawl` (see
+  `claude/.claude/.mcp.json`). Run `just mcp-repos` after install (needs `uv` and git).
+- **Full wipe restore**: follow [POST-WIPE.md](POST-WIPE.md) (Projects layout, FM_HOME
+  private backup, provider logins, Herdr smoke test).
+- **Pi / Cursor sign-in**: interactive; not stored in this repo.
+- **Firstmate FM_HOME**: private; see [docs/fm-home-backup.md](docs/fm-home-backup.md).
 
 Not tracked (set up separately if wanted): Neovim, tmux, VS Code `settings.json`.
 

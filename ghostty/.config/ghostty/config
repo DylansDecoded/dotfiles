@@ -1,7 +1,7 @@
 # Rose Pine Moon palette with the reference's blue-grey glass tint.
 theme = Rose Pine Moon
 background = #2b2b3f
-background-opacity = 0.80
+background-opacity = 0.85
 background-blur = 50
 
 # Fonts

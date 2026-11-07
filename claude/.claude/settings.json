@@ -37,11 +37,9 @@
       "WebSearch"
     ],
     "ask": [
-      "Bash(curl*)",
       "Bash(gh * delete *)",
       "Bash(gh pr close *)",
       "Bash(git tag *)",
-      "Bash(rm*)",
       "Bash(vercel * delete *)",
       "Bash(vercel remove *)",
       "Bash(vercel rm *)"
@@ -49,7 +47,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "fable",
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -231,7 +229,9 @@
     "skill-creator@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "terraform@claude-plugins-official": true
+    "terraform@claude-plugins-official": true,
+    "composio@composio": true,
+    "slack@anthropic-plugin-directory": true
   },
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
@@ -251,12 +251,18 @@
         "source": "github",
         "repo": "DietrichGebert/ponytail"
       }
+    },
+    "composio": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/ComposioHQ/composio-plugin-cc.git"
+      }
     }
   },
   "effortLevel": "high",
   "modelSettings": {
     "claude-fable-5-1": {
-      "effortLevel": "medium"
+      "effortLevel": "low"
     },
     "claude-opus-5-5": {
       "effortLevel": "high"

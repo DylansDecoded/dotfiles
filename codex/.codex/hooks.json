@@ -24,8 +24,7 @@
       {
         "hooks": [
           {
-            "command": "bash '/Users/dylan/.codex/herdr-agent-state.sh' session",
-            "timeout": 10,
+            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
             "type": "command"
           }
         ]
@@ -33,7 +32,8 @@
       {
         "hooks": [
           {
-            "command": "'/opt/homebrew/opt/moshi-hook/bin/moshi-hook' codex-hook",
+            "command": "bash '/Users/dylan/.codex/herdr-agent-state.sh' session",
+            "timeout": 10,
             "type": "command"
           }
         ]

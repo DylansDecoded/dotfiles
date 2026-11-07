@@ -11,3 +11,4 @@ openspec/
 .cursor/commands/opsx-*.md
 .kilocode/skills/openspec-*/
 .kilocode/workflows/opsx-*.md
+.pantheon
