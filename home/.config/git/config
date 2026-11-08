@@ -26,15 +26,6 @@ rebase = true
 prune = true
 pruneTags = true
 
-[user]
-  signingkey = 0398512E56790EC3A1A82812A487D2CC5F93DC36
-
-[gpg]
-  format = openpgp
-
-[commit]
-  gpgsign = true
-
 [color]
   branch = auto
   diff = auto
