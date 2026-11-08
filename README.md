@@ -78,7 +78,7 @@ mise run secrets                # regenerate ~/.config/secrets/env.sh
 ```
 
 Keys in `secrets/env.sops.yaml`: `CLOUDFLARE_API_TOKEN`, `HA_ACCESS_TOKEN`, `SEARXNG_URL`, `CONTEXT7_API_KEY`,
-`GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`, `ORCAROUTER_API_KEY`, `JIRA_API_TOKEN`, `CURSOR_API_KEY`, `ORCA_KEY`.
+`GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`, `ORCAROUTER_API_KEY`, `JIRA_API_TOKEN`, `ORCA_KEY`.
 The agents' MCP servers inherit them from the login-shell environment. **This repo
 is public**: the internal SearxNG URL and all tokens stay in the encrypted files.
 
