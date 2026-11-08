@@ -20,11 +20,13 @@ secrets/*.env
 secrets/env.sh
 
 # Tool artifacts and editor backups
+.zcompdump*
 .lavish/
 *.bak
 
-# Pi agent secrets / runtime (never commit even if copied into package tree)
-**/.pi/agent/auth.json
-**/.pi/agent/mcp-auth.json
-**/.pi/agent/models-store.json
-**/.pi/agent/sessions/
+# Pi agent secrets / runtime (never commit even if copied into home/.pi)
+home/.pi/agent/auth.json
+home/.pi/agent/mcp-auth.json
+home/.pi/agent/models-store.json
+home/.pi/agent/sessions/
+home/.pi/agent/calm

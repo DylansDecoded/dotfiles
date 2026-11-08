@@ -14,28 +14,27 @@ Related: [docs/projects-layout.md](docs/projects-layout.md),
 2. Install 1Password → sign in → CLI integration
    (Settings → Developer → Integrate with 1Password CLI).
 3. `curl -fsSL https://raw.githubusercontent.com/DylansDecoded/dotfiles/main/bootstrap.sh | bash`
-   (or `git clone git@github.com:DylansDecoded/dotfiles.git ~/dotfiles && cd ~/dotfiles && just install`).
-4. New login shell → `just doctor`.
+   (or `git clone --recurse-submodules git@github.com:DylansDecoded/dotfiles.git ~/dotfiles && ~/dotfiles/bootstrap.sh`).
+4. New login shell → `mise run doctor`.
 5. `gh auth login` (DylansDecoded; add R&P when needed).
-6. Claude / Codex / Pi / Cursor sign-in.
-7. `just mcp-repos` (or clone tools you need).
-8. Restore Projects layout + clone hot repos (`just projects-scaffold`, then clone).
+6. Claude / Codex sign-in.
+7. Verify the crawler repo installed by `mise bootstrap` (retry with `mise run mcp-repos` if needed).
+8. Clone hot repos into the Projects layout created by `mise bootstrap`.
 9. Restore FM_HOME private backup; start firstmate.
 10. Clone/link second-brain; open Obsidian.
-11. Herdr session once; verify one agent turn.
+11. Verify one agent turn.
 
 ## What each step restores
 
 | Step | Restores | Does not restore |
 | --- | --- | --- |
-| 3 `just install` | Brew packages, stow configs, agent CLIs, shared skills, MCP env secrets | OAuth tokens, chat sessions |
+| 3 `bootstrap.sh` | Brew packages, linked configs, agent CLIs, shared skills, MCP env secrets | OAuth tokens, chat sessions |
 | 5 `gh auth` | GitHub API/git HTTPS as that user | Other hosts until you add them |
 | 6 provider sign-in | Model access for each CLI | Prior local credential files |
 | 7 `mcp-repos` | Code deps for local MCP servers (e.g. searxNcrawl) | Running SearxNG service itself |
 | 8 Projects | Empty bucket dirs + your clones | Unpushed WIP unless you backed it up |
 | 9 FM_HOME | Fleet backlog, captain prefs, task data | Live worker panes |
 | 10 second-brain | Vault knowledge | NotebookLM / Google side state |
-| 11 Herdr | One working agent surface | Old pane layout unless recreated |
 
 ## Before you wipe (source machine)
 
@@ -43,19 +42,18 @@ Related: [docs/projects-layout.md](docs/projects-layout.md),
 2. `brew bundle dump --force --file=macos/Brewfile` and commit if changed.
 3. Refresh Claude plugin snapshot (see README).
 4. Confirm `sops secrets/env.sops.yaml` has real values (still ciphertext in git).
-5. `just doctor` green on the source machine.
+5. `mise run doctor` green on the source machine.
 6. Private backup of Firstmate home (`config/` + `data/`; optional selective `state/`).
    See [docs/fm-home-backup.md](docs/fm-home-backup.md).
 7. Confirm product branches and second-brain exist on remotes or the laptop.
 8. Export SSH host aliases if you rely on `~/.ssh/config` (not tracked here).
 
-## After `just install`
+## After `mise bootstrap`
 
 ```sh
-just doctor
-just mcp-repos
-just projects-scaffold
-# then clone hot repos into the buckets (see docs/projects-layout.md)
+mise run doctor
+# Retry mise run mcp-repos or mise run projects-scaffold if bootstrap reported a failure.
+# Clone hot repos into the buckets (see docs/projects-layout.md).
 ```
 
 ### GitHub multi-account
@@ -66,9 +64,7 @@ just projects-scaffold
 
 ### Agent auth notes
 
-- Do not commit `~/.config/anthropic/credentials/`, `~/.pi/agent/auth.json`, or `~/.pi/agent/mcp-auth.json`.
-- Pi `models.json` in the repo uses env placeholders (`$DEEPSEEK_API_KEY`, `$BLACKBIT_API_KEY`, etc.). Put real keys in `~/.config/secrets/env.sh` via `just secrets`, not in the stowed file.
-- Those paths must be owned by your user (mode 600). Root-owned or missing files break Pi/Kimi.
+- Do not commit `~/.config/anthropic/credentials/`.
 - Re-run provider login if every agent turn fails with credentials ENOENT/EACCES.
 
 ### Firstmate FM_HOME
@@ -88,10 +84,8 @@ Open the folder as an Obsidian vault. Do not commit vault content into public do
 ## Verify one agent turn
 
 ```sh
-herdr --version
-pi --version    # or: which pi
 claude --version
-# In Herdr: open a pane, run a one-line prompt, confirm a reply.
+claude -p "reply with ok"   # confirm a reply
 ```
 
-If doctor is green but agents fail, the problem is almost always provider login or MCP path (run `just mcp-repos`).
+If doctor is green but agents fail, the problem is almost always provider login or MCP path (run `mise run mcp-repos`).

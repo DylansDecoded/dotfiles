@@ -1,0 +1,9 @@
+# macOS overlay. Selected by `env = ["macos"]` in ~/.config/mise/miserc.toml.
+# Add mise.<machine>.toml beside it for another host.
+[vars]
+machine = "macos"
+
+[dotfiles]
+# Each overlay links only itself, so a host never loads another machine's overlay.
+"~/.config/mise/mise.macos.toml" = { source = "~/dotfiles/mise.macos.toml", mode = "symlink" }
+"~/.config/aerospace" = { source = "~/dotfiles/home/.config/aerospace", mode = "symlink" }

@@ -1,0 +1,43 @@
+# Shared config for every machine. `mise dot apply` links it to
+# ~/.config/mise/config.toml, so it is also the global mise config.
+# Per-machine overlays live in mise.<machine>.toml and are selected once per
+# host by ~/.config/mise/miserc.toml (untracked), e.g. `env = ["macos"]`.
+min_version = "2026.10.4"
+
+[settings]
+experimental = true
+# Let uv handle virtual environments and packages
+python.uv_venv_auto = true
+
+[tools]
+python = "3.13"
+uv = "latest"
+"pipx:ansible" = "latest"
+"pipx:ansible-lint" = "latest"
+node = "24.19.0"
+
+# home/ mirrors $HOME. Each glob links every top-level item of its home/ dir
+# one by one, so runtime state the tools write beside them (auth, sessions,
+# caches) stays on the machine. New files there deploy on `mise dot apply`.
+[dotfiles]
+"~/.config/mise/config.toml" = { source = "~/dotfiles/mise.toml", mode = "symlink" }
+
+"~/.agents/*" = { source = "~/dotfiles/home/.agents/*", mode = "symlink" }
+"~/.claude/*" = { source = "~/dotfiles/home/.claude/*", mode = "symlink" }
+"~/.codex/*" = { source = "~/dotfiles/home/.codex/*", mode = "symlink" }
+"~/.grok/*" = { source = "~/dotfiles/home/.grok/*", mode = "symlink" }
+"~/.pi/agent/*" = { source = "~/dotfiles/home/.pi/agent/*", mode = "symlink" }
+"~/.local/bin/*" = { source = "~/dotfiles/home/.local/bin/*", mode = "symlink" }
+
+# ~/.config is listed per app: aerospace is macOS-only, and herdr keeps
+# runtime files (logs, sockets, sessions) beside its config.
+"~/.config/ghostty" = { source = "~/dotfiles/home/.config/ghostty", mode = "symlink" }
+"~/.config/git" = { source = "~/dotfiles/home/.config/git", mode = "symlink" }
+"~/.config/opencode" = { source = "~/dotfiles/home/.config/opencode", mode = "symlink" }
+"~/.config/starship.toml" = { source = "~/dotfiles/home/.config/starship.toml", mode = "symlink" }
+"~/.config/herdr/config.toml" = { source = "~/dotfiles/home/.config/herdr/config.toml", mode = "symlink" }
+
+"~/.zshenv" = { source = "~/dotfiles/home/.zshenv", mode = "symlink" }
+"~/.zprofile" = { source = "~/dotfiles/home/.zprofile", mode = "symlink" }
+"~/.zshrc" = { source = "~/dotfiles/home/.zshrc", mode = "symlink" }
+"~/functions" = { source = "~/dotfiles/home/functions", mode = "symlink" }

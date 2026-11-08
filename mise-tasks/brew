@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#MISE description="Install everything in macos/Brewfile"
+# Third-party taps outside Homebrew's curated allowlist need explicit trust
+# (brew >=6) before their formulae/casks can load.
+set -euo pipefail
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+grep -E '^tap "' "$DOTFILES/macos/Brewfile" | sed -E 's/^tap "([^"]+)".*/\1/' | while read -r t; do
+  brew tap "$t"
+  brew trust --tap "$t"
+done
+brew bundle --file="$DOTFILES/macos/Brewfile"

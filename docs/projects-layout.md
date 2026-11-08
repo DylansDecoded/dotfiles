@@ -29,7 +29,7 @@ Dotfiles do not clone every repo; they define buckets and restore helpers.
 
 ## Hot repos (restore shortlist)
 
-Clone what you need after `just projects-scaffold`:
+Clone what you need after `mise run projects-scaffold`:
 
 | Repo | Suggested path |
 | --- | --- |
@@ -44,7 +44,7 @@ Clone what you need after `just projects-scaffold`:
 ## Scaffold
 
 ```sh
-cd ~/dotfiles && just projects-scaffold
+cd ~/dotfiles && mise run projects-scaffold
 ```
 
 Creates empty bucket directories only. It does not delete existing trees.

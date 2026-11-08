@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Install the OpenCode CLI if missing"
+set -euo pipefail
+if command -v opencode >/dev/null 2>&1; then
+  echo "opencode already installed: $(opencode --version 2>/dev/null || echo present)"
+else
+  echo "Installing OpenCode CLI"
+  brew install anomalyco/tap/opencode
+fi

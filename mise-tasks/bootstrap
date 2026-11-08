@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#MISE description="Machine setup: brew, CLIs, plugins, secrets. Run last by `mise bootstrap`."
+# Attempts every step and reports the failed ones, so one broken step does not hide the rest.
+set -uo pipefail
+# A bootstrap process cannot inherit PATH changes made by a new login shell.
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$HOME/.grok/bin:$PATH"
+steps=(shell-plugins claude-cli codex-cli grok-cli opencode-cli projects-scaffold mcp-repos claude-plugins secrets)
+if [ "$(uname -s)" = Darwin ]; then
+  steps=(brew macos "${steps[@]}")
+fi
+failed=()
+for step in "${steps[@]}"; do
+  if ! mise run "$step"; then
+    failed+=("$step")
+  fi
+done
+if [ "${#failed[@]}" -ne 0 ]; then
+  printf 'Setup incomplete. Re-run these tasks after resolving their errors:\n' >&2
+  printf '  mise run %s\n' "${failed[@]}" >&2
+  exit 1
+fi
+echo "Done. Log out and back in for macOS settings, then run 'mise run doctor'."

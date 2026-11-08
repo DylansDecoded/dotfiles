@@ -1,0 +1,44 @@
+#!/bin/bash
+# Select GitHub API credentials per invocation so concurrent shells stay isolated.
+set -euo pipefail
+
+gh_binary=
+IFS=: read -r -a search_path <<< "$PATH"
+for directory in "${search_path[@]}"; do
+  candidate="${directory:-.}/gh"
+  if [[ -x "$candidate" && ! -d "$candidate" && ! "$candidate" -ef "$0" ]]; then
+    gh_binary="$candidate"
+    break
+  fi
+done
+if [[ -z "$gh_binary" ]]; then
+  echo "gh: GitHub CLI not found on PATH; run just brew." >&2
+  exit 127
+fi
+
+case "$(pwd -P)/" in
+  "$HOME/Projects/personal/"*) account=DylansDecoded ;;
+  "$HOME/Projects/work/robots-and-pencils/"*) account=dylan-robson-rp ;;
+  *) exec "$gh_binary" "$@" ;;
+esac
+
+# Keep setup and help available even when the selected account is not logged in.
+case "${1:-}" in
+  auth)
+    if [[ "${2:-}" != status ]]; then
+      exec env -u GH_TOKEN -u GITHUB_TOKEN "$gh_binary" "$@"
+    fi
+    ;;
+  help|--help|-h|--version|version|completion) exec "$gh_binary" "$@" ;;
+esac
+
+# Login-shell secrets can contain a token for a different account. Read the
+# selected saved credential with both overrides removed, then scope it to gh.
+if ! token=$(env -u GH_TOKEN -u GITHUB_TOKEN "$gh_binary" auth token \
+    --hostname github.com --user "$account") || [[ -z "$token" ]]; then
+  echo "gh: No saved token for $account. Run gh auth login --hostname github.com." >&2
+  exit 1
+fi
+unset GITHUB_TOKEN
+export GH_TOKEN="$token"
+exec "$gh_binary" "$@"

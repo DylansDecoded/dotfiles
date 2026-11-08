@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Install Zap and the configured zsh plugins"
+set -euo pipefail
+zap_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zap"
+if [ ! -f "$zap_dir/zap.zsh" ]; then
+  git clone --depth 1 https://github.com/zap-zsh/zap.git "$zap_dir"
+fi
+# Install the configured plugins without sourcing the entire interactive shell.
+zsh -c 'source "$1/zap.zsh" && plug zsh-users/zsh-autosuggestions && plug zap-zsh/supercharge && plug zsh-users/zsh-syntax-highlighting' -- "$zap_dir"

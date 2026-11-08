@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+#MISE description="Verify a deployed machine"
+set -uo pipefail
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+OP_AGE_REF="${OP_AGE_REF:-op://Private/sops/SOPS_PRIVATE_KEY}"
+ok() { printf '  \033[1;32mok\033[0m  %s\n' "$1"; }
+bad() { printf '  \033[1;31mXX\033[0m  %s\n' "$1"; }
+warn() { printf '  \033[1;33m!!\033[0m  %s\n' "$1"; }
+fail=0
+echo "Tooling:"
+for t in brew sops age jq mise uv; do
+  if command -v "$t" >/dev/null 2>&1; then ok "$t"; else bad "$t missing"; fail=1; fi
+done
+echo "Shell and runtimes:"
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ]; then
+  ok "Zap"
+else
+  bad "Zap missing (run mise run shell-plugins)"; fail=1
+fi
+if missing=$(mise ls --missing --json) && printf '%s' "$missing" | jq -e 'length == 0' >/dev/null; then
+  ok "mise runtimes installed"
+else
+  bad "mise runtimes missing (run mise install)"; fail=1
+fi
+echo "AI CLIs:"
+for t in claude codex opencode; do
+  if command -v "$t" >/dev/null 2>&1; then ok "$t"; else bad "$t missing"; fail=1; fi
+done
+command -v grok >/dev/null 2>&1 && ok "grok" || warn "grok missing (optional)"
+command -v cursor >/dev/null 2>&1 || command -v cursor-agent >/dev/null 2>&1 \
+  && ok "cursor present" || warn "cursor not on PATH (optional; install app and sign in)"
+echo "Dotfiles:"
+if mise -C "$DOTFILES" dot status --missing >/dev/null 2>&1; then
+  ok "every [dotfiles] entry applied"
+else
+  bad "dotfiles drift (see mise dot status, then mise dot apply)"; fail=1
+fi
+echo "Secrets:"
+for encrypted in "$DOTFILES"/secrets/*.sops.yaml; do
+  if SOPS_AGE_KEY_CMD="op read $OP_AGE_REF" sops -d "$encrypted" >/dev/null 2>&1; then
+    ok "${encrypted##*/} decrypts (keyless via 1Password)"
+  else
+    bad "${encrypted##*/} decrypt failed (op authenticated? sops >= 3.10?)"; fail=1
+  fi
+done
+if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
+  warn "legacy age key file on disk (optional remove: rm ~/.config/sops/age/keys.txt)"
+else
+  ok "no age key on disk"
+fi
+if [ -s "$HOME/.config/secrets/env.sh" ] && bash -n "$HOME/.config/secrets/env.sh"; then
+  ok "env.sh generated"
+else
+  bad "env.sh missing, empty, or invalid (run mise run secrets)"; fail=1
+fi
+echo "GitHub:"
+if command -v gh >/dev/null 2>&1; then
+  if gh auth status >/dev/null 2>&1; then ok "gh authenticated"; else warn "gh not logged in (gh auth login)"; fi
+else
+  bad "gh missing"; fail=1
+fi
+echo "MCP / Projects:"
+if [ -e "$HOME/Projects/tools/searxNcrawl/.git" ]; then
+  ok "searxNcrawl at ~/Projects/tools/searxNcrawl"
+else
+  bad "searxNcrawl missing - run mise run mcp-repos (crawler MCP needs it)"; fail=1
+fi
+[ -d "$HOME/Projects" ] && ok "~/Projects" || warn "~/Projects missing - mise run projects-scaffold"
+echo "Agent credentials (presence only; never printed):"
+echo "Claude plugins:"
+if command -v claude >/dev/null 2>&1 && installed=$(claude plugin list --json); then
+  while read -r p; do
+    if printf '%s' "$installed" | jq -e --arg id "$p" 'any(.[]; .id == $id and .scope == "user" and .enabled)' >/dev/null; then
+      ok "$p"
+    else
+      bad "$p missing or disabled (run mise run claude-plugins)"; fail=1
+    fi
+  done < <(jq -r '.plugins[]' "$DOTFILES/home/.claude/plugins-snapshot.json")
+else
+  bad "could not inspect Claude plugins"; fail=1
+fi
+if [ "$fail" -ne 0 ]; then
+  echo "doctor: failures present"
+  exit 1
+fi
+echo "doctor: all required checks passed"

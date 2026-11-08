@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#MISE description="Clone MCP tool repos used by the agent configs"
+# crawler MCP expects ~/Projects/tools/searxNcrawl (see home/.claude/.mcp.json).
+set -euo pipefail
+tools="$HOME/Projects/tools"
+mkdir -p "$tools"
+clone_one() {
+  local url=$1 dest=$2
+  if [ -e "$dest/.git" ]; then
+    echo "ok  $dest (exists)"
+    return 0
+  fi
+  if [ -e "$dest" ]; then
+    echo "Cannot clone into $dest: path exists but is not a git repo." >&2
+    return 1
+  fi
+  echo "clone $url -> $dest"
+  git clone "$url" "$dest"
+}
+# Prefer HTTPS so gh credential helper works when SSH is a different GitHub user.
+source_url="${CRAWLER_REPO_URL:-https://github.com/DylansDecoded/searxNcrawl.git}"
+if ! GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never clone_one "$source_url" "$tools/searxNcrawl"; then
+  echo "Crawler clone failed. Authenticate with GitHub or set CRAWLER_REPO_URL to its current clone URL, then run 'mise run mcp-repos'." >&2
+  exit 1
+fi
+if command -v uv >/dev/null 2>&1 && [ -d "$tools/searxNcrawl" ]; then
+  echo "uv present; crawler MCP can use: uv run --directory $tools/searxNcrawl ..."
+else
+  echo "note: install uv if crawler MCP fails (https://github.com/astral-sh/uv)"
+fi
+echo "MCP repos done. SEARXNG_URL still comes from 'mise run secrets' / env.sh."

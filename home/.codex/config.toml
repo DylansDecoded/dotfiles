@@ -1,0 +1,458 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+personality = "pragmatic"
+sandbox_mode = "workspace-write"
+approvals_reviewer = "user"
+
+[analytics]
+enabled = false
+
+# GitHub plugin
+# https://github.com/openai/plugins/tree/main/plugins/github
+[apps.connector_76869538009648d5b282a4bb21c3d157]
+default_tools_approval_mode = "approve"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_create_repository]
+approval_mode = "prompt"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_label_write]
+approval_mode = "prompt"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_mark_all_notifications_read]
+approval_mode = "prompt"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_merge_pull_request]
+approval_mode = "prompt"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_unstar_repository]
+approval_mode = "prompt"
+
+# Vercel plugin
+# https://github.com/openai/plugins/tree/main/plugins/vercel
+[apps.connector_690a90ec05c881918afb6a55dc9bbaa1]
+default_tools_approval_mode = "approve"
+
+[apps.connector_690a90ec05c881918afb6a55dc9bbaa1.tools.vercel_deploy_to_vercel]
+approval_mode = "prompt"
+
+[features]
+hooks = true
+prevent_idle_sleep = true
+
+[notice]
+hide_rate_limit_model_nudge = true
+
+[notice.model_migrations]
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.context7.env_http_headers]
+CONTEXT7_API_KEY = "CONTEXT7_API_KEY"
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp"
+bearer_token_env_var = "GITHUB_TOKEN"
+
+[mcp_servers.github.env_http_headers]
+X-MCP-Toolsets = "GITHUB_TOOLSETS"
+
+[mcp_servers.github.tools.actions_get]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.actions_list]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.actions_run_trigger]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.add_comment_to_pending_review]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.add_issue_comment]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.add_reply_to_pull_request_comment]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.create_branch]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.create_gist]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.create_or_update_file]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.create_pull_request]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_code_scanning_alert]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_commit]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_dependabot_alert]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_discussion]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_discussion_comments]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_file_contents]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_gist]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_global_security_advisory]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_job_logs]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_label]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_latest_release]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_me]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_release_by_tag]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_repository_tree]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.get_tag]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.github_support_docs_search]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.issue_read]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.issue_write]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_branches]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_code_scanning_alerts]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_commits]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_dependabot_alerts]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_discussion_categories]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_discussions]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_gists]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_global_security_advisories]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_issue_types]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_issues]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_label]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_org_repository_security_advisories]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_pull_requests]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_releases]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_repository_security_advisories]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.list_tags]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.projects_get]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.projects_list]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.pull_request_read]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.pull_request_review_write]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.search_code]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.search_issues]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.search_pull_requests]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.search_repositories]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.search_users]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.sub_issue_write]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.update_gist]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.update_pull_request]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.update_pull_request_branch]
+approval_mode = "approve"
+
+[mcp_servers.openai_developer_docs]
+url = "https://developers.openai.com/mcp"
+
+[mcp_servers.openai_developer_docs.tools.fetch_openai_doc]
+approval_mode = "approve"
+
+[mcp_servers.openai_developer_docs.tools.list_openai_docs]
+approval_mode = "approve"
+
+[mcp_servers.openai_developer_docs.tools.search_openai_docs]
+approval_mode = "approve"
+
+[mcp_servers.crawler]
+command = "uv"
+args = ["run", "--directory", "/Users/dylan/Projects/tools/searxNcrawl", "python", "-m", "crawler.mcp_server"]
+startup_timeout_sec = 30.0
+tool_timeout_sec = 120.0
+
+[mcp_servers.crawler.tools.crawl]
+approval_mode = "approve"
+
+[mcp_servers.crawler.tools.crawl_site]
+approval_mode = "approve"
+
+[mcp_servers.crawler.tools.search]
+approval_mode = "approve"
+
+[mcp_servers.home-assistant]
+url = "http://10.1.20.90:8123/api/webhook/mcp_f5ae89565be8421eecf8641c2e75bfa0"
+
+[mcp_servers.home-assistant.tools.ha_config_set_script]
+approval_mode = "approve"
+
+[mcp_servers.home-assistant.tools.ha_config_set_automation]
+approval_mode = "approve"
+
+[mcp_servers.home-assistant.tools.ha_manage_backup]
+approval_mode = "approve"
+
+[mcp_servers.rea]
+command = "npx"
+args = ["-y", "rea-agents@6.7.0", "mcp"]
+startup_timeout_sec = 30.0
+tool_timeout_sec = 450.0
+
+[mcp_servers.lucid]
+url = "https://mcp.lucid.app/mcp"
+
+# https://github.com/openai/plugins/tree/main/plugins/cloudflare
+[plugins."cloudflare@openai-curated"]
+enabled = true
+
+# https://github.com/openai/plugins/tree/main/plugins/github
+[plugins."github@openai-curated"]
+enabled = true
+
+# https://github.com/openai/plugins/tree/main/plugins/life-science-research
+[plugins."life-science-research@openai-curated"]
+enabled = true
+
+# https://github.com/openai/plugins/tree/main/plugins/vercel
+[plugins."vercel@openai-curated"]
+enabled = true
+
+# project paths are parsed as plain strings, so absolute paths must be used.
+# https://github.com/openai/codex/blob/8159f05/codex-rs/core/src/config_loader/mod.rs#L594-L605
+# https://github.com/openai/codex/issues/11061
+[projects."/Users/dylan/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/personal/datacloudeazy-web"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/aws-toyota-engagement/di-toybox-data-agent-main"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/tools/firstmate/projects/di-toybox-data-agent-main"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/toyota/di-toybox-data-agent"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/tools/firstmate/projects/di-toybox-data-agent"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/tools/firstmate"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/DataCloudEazy"]
+trust_level = "trusted"
+
+[projects."/Users/dylan"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/scratch"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/work/robots-and-pencils/rnp-ai-cost-reporter"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M2RJX3RXGNVGTM3G83XDHJ3X"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M2RKGEPPT5Z4H7QWG85G4ZHT"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/c7ca197743b1/01M2VYTVM99GJW7MDR6VP9D52Z"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/stowed"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/tools/firstmate/projects/homeassistant-config"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/ce2236eb2a94/01M2ZQPS0NQJ5ATK9Y0KRKRRCX"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/38e3369f0bd1/01M2ZSQ0B5BT2J3DP4K5EBJYWC"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/38e3369f0bd1/01M2ZVHSDRYY117T3NYN6146WC"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/scratch-work"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.ssh"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M3MCDHX9ZEC686XPN3KG9813"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/3edf63d053f1/01M3MDJ51MNAEXTZQNCZ7S0GB1"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/personal/second-brain"]
+trust_level = "trusted"
+
+[projects."/private/tmp/codex-probe"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/personal/homeassistant-config"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/aac4d318ce4e/01M6PJK2SQM8FVVZW9G8NC4BFH"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/aac4d318ce4e/01M6Q1HPMK9196V6X9CKEG7HEE"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/aac4d318ce4e/01M6QEYK25GQ4SBPKV613Z2RQV"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/aac4d318ce4e/01M6QJWZHWHNSJBJJFA7R3GHSM"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/aac4d318ce4e/01M6QNA8JTYATF55GHMRWV4Y65"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/.no-mistakes/worktrees/bd1607556773/01M6S4WP7YBK63GAV818YXG7J9"]
+trust_level = "trusted"
+
+[projects."/Users/dylan/Projects/personal/aws-lakehouse-accelerator"]
+trust_level = "trusted"
+
+# writable_roots are parsed as a list of AbsolutePathBuf, so tilde expansion can be used.
+# https://github.com/openai/codex/blob/main/codex-rs/utils/absolute-path/src/lib.rs
+# https://github.com/openai/codex/blob/f628824/codex-rs/core/src/config/types.rs#L797
+[sandbox_workspace_write]
+network_access = true
+writable_roots = ["~/Projects"]
+
+[shell_environment_policy]
+inherit = "core"
+
+[tui]
+theme = "dracula"
+status_line = ["model-with-reasoning", "current-dir", "weekly-limit", "reasoning", "git-branch", "run-state", "context-used", "total-input-tokens"]
+status_line_use_colors = true
+pet = "stacky"
+screen_reader_detection_done = true
+resume_cwd = "session"
+
+[tui.model_availability_nux]
+gpt-6-astra = 4
+"gpt-6.1-sol" = 4
+
+[hooks.state]
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:93fbfa14717a31d18c62d1ba6141b6d7dd89551c24972ca793fadfd6f74baa7f"
+
+[hooks.state."/Users/dylan/Projects/tools/firstmate/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a920c3e99340de2feaf624585635e43b8541c9fdd5aeb5c0d9dd2479ef05b411"
+
+[hooks.state."/Users/dylan/Projects/tools/firstmate/.codex/hooks.json:pre_tool_use:0:1"]
+trusted_hash = "sha256:224d6e3538b2957b83e5fd2de2701e9fc09362c01e2a01cb9dbf5755fd9a88fc"
+
+[hooks.state."/Users/dylan/Projects/tools/firstmate/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:bd1d74568c7a9e7aa86174b6c1a06d0d9cd8e891ac66159743cf518085cc5c38"
+
+[hooks.state."/Users/dylan/Projects/tools/firstmate/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:6874d92dd2befa3254ab2c99d3559399f98d3c155f533ce19c9872115504946b"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:282ef4f786ed6c3cd4d9639e029d006c516c39638b258d2f1da498b82c616a2e"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:permission_request:0:0"]
+trusted_hash = "sha256:1b7624ea48936b8f3258affd1669804316f5b45cff6d2326b7732916469eb48a"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:7fb54ca43d7113964f96d0d498701a354bf72e7f56f94448d0c156cc57edee3d"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:523d693b2584fd65e5910e1dd8df3b23c76fb2451655a4c1ac2e46c5fce70171"
+
+[hooks.state."/Users/dylan/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:fcbc53cb686f3694a40d2ec3621098c55069c901a0e0d4b1f30a54e1263ce2be"
+
+[hooks.state."/Users/dylan/Projects/personal/second-brain/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:759f4ec0bbc9b0a4648dfc82dee64bff575c6bf05775164a5ccfaedb7ee4e2be"

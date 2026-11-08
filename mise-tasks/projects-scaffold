@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#MISE description="Create empty ~/Projects bucket directories"
+# Does not delete or move existing trees.
+set -euo pipefail
+root="$HOME/Projects"
+for d in work/robots-and-pencils personal/products personal/home tools labs knowledge .archive .runtime; do
+  mkdir -p "$root/$d"
+  echo "ok  $root/$d"
+done
+echo "Projects scaffold ready. See docs/projects-layout.md for clone targets."

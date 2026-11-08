@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#MISE description="Restore user-scope Claude plugins from home/.claude/plugins-snapshot.json"
+# Marketplaces must be registered before plugins can resolve from them.
+set -euo pipefail
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if ! command -v claude >/dev/null 2>&1; then
+  echo "claude CLI not found - run 'mise run claude-cli' first." >&2
+  exit 1
+fi
+ensure_marketplace() {
+  if ! claude plugin marketplace list --json | jq -e --arg name "$1" 'any(.[]; .name == $name)' >/dev/null; then
+    claude plugin marketplace add "$2"
+  fi
+}
+fail=0
+ensure_marketplace claude-plugins-official anthropics/claude-plugins-official || fail=1
+ensure_marketplace compound-engineering-plugin EveryInc/compound-engineering-plugin || fail=1
+installed=$(claude plugin list --json)
+while read -r p; do
+  [ -z "$p" ] && continue
+  if printf '%s' "$installed" | jq -e --arg id "$p" 'any(.[]; .id == $id and .scope == "user" and .enabled)' >/dev/null; then
+    echo "Plugin already installed: $p"
+    continue
+  fi
+  echo "Installing plugin: $p"
+  claude plugin install "$p" || { echo "  FAILED: $p"; fail=1; }
+done < <(jq -r '.plugins[]' "$DOTFILES/home/.claude/plugins-snapshot.json")
+exit "$fail"

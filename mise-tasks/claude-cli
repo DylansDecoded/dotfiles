@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Install the Claude Code CLI if missing"
+set -euo pipefail
+if command -v claude >/dev/null 2>&1; then
+  echo "claude already installed: $(claude --version 2>/dev/null || echo present)"
+else
+  echo "Installing Claude Code CLI"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi

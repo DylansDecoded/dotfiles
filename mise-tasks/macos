@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Apply macOS system defaults"
+set -euo pipefail
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+bash "$DOTFILES/macos/defaults" --no-restart

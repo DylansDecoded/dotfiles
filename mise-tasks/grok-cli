@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Install the Grok CLI if missing"
+set -euo pipefail
+if command -v grok >/dev/null 2>&1; then
+  echo "grok already installed: $(grok --version 2>/dev/null || grok version 2>/dev/null || echo present)"
+else
+  echo "Installing Grok CLI"
+  # The vendor installer replaces config symlinks and writes fish completions.
+  # Stage it in a temporary home, then copy only the executable artifacts.
+  staging=$(mktemp -d)
+  trap 'rm -rf "$staging"' EXIT
+  curl -fsSL https://x.ai/cli/install.sh | HOME="$staging" GROK_BIN_DIR="$staging/.grok/bin" SHELL=/bin/sh bash
+  for dir in bin downloads completions; do
+    mkdir -p "$HOME/.grok/$dir"
+    cp -R "$staging/.grok/$dir/." "$HOME/.grok/$dir/"
+  done
+fi

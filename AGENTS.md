@@ -1,95 +1,65 @@
 # AGENTS.md
 This file provides guidance to all Agentic Agents working in the repository. Ensure to follow standards and never break from them.
 
-## Deployment Commands
+## Commands
 
-All orchestration goes through `just` (a `make` alternative). All recipes are idempotent.
+Deployment uses [mise dotfiles](https://mise.jdx.dev/dotfiles.html) and mise tasks. Everything is idempotent.
 
 | Command | Purpose |
 |---|---|
-| `just install` | Full deploy: brew → stow → macos → claude-cli → codex-cli → grok-cli → opencode-cli → herdr-cli → claude-plugins → secrets |
-| `just brew` | `brew bundle` from `macos/Brewfile` |
-| `just stow` | (Re-)apply GNU Stow symlinks from repo into `$HOME` |
-| `just doctor` | Verify tooling, symlinks, secrets, 1Password, plugins |
-| `just claude-cli` | Install the Claude Code CLI if missing |
-| `just codex-cli` | Install the Codex CLI if missing |
-| `just grok-cli` | Install the Grok CLI if missing |
-| `just opencode-cli` | Install the OpenCode CLI if missing |
-| `just herdr-cli` | Install the Herdr CLI if missing |
-| `just secrets` | Decrypt `secrets/env.sops.yaml` → `~/.config/secrets/env.sh` (keyless, via 1Password) |
-| `sops secrets/env.sops.yaml` | Edit encrypted secrets in-place |
+| `./bootstrap.sh` | Fresh Mac: Xcode CLT, Homebrew, sops toolchain, mise, clone, pin overlay, `mise bootstrap` |
+| `mise bootstrap` | Link dotfiles, install `[tools]`, then run `mise-tasks/bootstrap` (all setup tasks; reports failures at the end) |
+| `mise dot apply` / `mise dot status` | Apply / check the `[dotfiles]` links |
+| `mise tasks` | List setup tasks in `mise-tasks/` (`brew`, `macos`, `secrets`, `doctor`, agent CLIs, ...) |
+| `mise run doctor` | Verify tooling, dotfile drift, secrets, 1Password, gh, plugins |
+| `mise run secrets` | Decrypt `secrets/env.sops.yaml` → `~/.config/secrets/env.sh` (keyless, via 1Password) |
+| `sops secrets/env.sops.yaml` | Edit encrypted secrets in place |
 | `brew bundle dump --force --file=macos/Brewfile` | Update Brewfile from current machine state |
+| `python3 -m unittest discover -s tests -v` | Task and launcher regression tests (temporary home, no real secrets) |
 
 ## Architecture
 
-### GNU Stow Symlink Model
+### Layout
 
-Every top-level directory (except `macos/` and `secrets/`) is a stow package. `just stow` creates symlinks: `~/dotfiles/<pkg>/path/to/file` → `~/path/to/file`.
+- `mise.toml`: shared `[dotfiles]`, `[tools]`, settings. Linked to `~/.config/mise/config.toml`, so it is also the global mise config.
+- `mise.<machine>.toml`: per-machine overlay, selected by `env = ["<machine>"]` in the untracked `~/.config/mise/miserc.toml`. Only `mise.macos.toml` exists today.
+- `home/`: mirrors `$HOME` path for path (`home/.claude` is `~/.claude`, `home/.config/ghostty` is `~/.config/ghostty`). `mise.toml` links `~/.claude/*`, `~/.codex/*`, `~/.grok/*`, `~/.pi/agent/*`, `~/.agents/*`, `~/.local/bin/*` by glob, so a new file in those dirs needs only `mise dot apply`. `~/.config` apps are listed one by one.
+- `mise-tasks/`: one executable script per setup task. Scripts locate the repo from their own path, so they also run directly (`mise-tasks/secrets`).
+- `macos/` (Brewfile, `defaults`, app lists) and `secrets/` (sops ciphertext) are not deployed as files.
 
-**Always edit config files in the repo directory, not directly in `~/.config/`.**
-
-Stow packages: `aerospace`, `agents`, `claude`, `codex`, `direnv`, `fish`, `ghostty`, `git`, `grok`, `herdr`, `mise`, `moshi`, `opencode`, `pi`, `starship`, `zellij`, `zsh`
-
-`agents` deploys `agents/.agents/` into `~/.agents/`. That is how Pi finds the shared skills: Pi discovers `~/.agents/skills/` automatically and needs no configuration. `just stow` pre-creates `~/.agents/skills` so each shared skill links per entry and skills installed outside the repo can live beside the tracked ones.
-
-`pi` deploys `pi/.pi/agent/` into `~/.pi/agent/`: `settings.json`, redacted `models.json` (API keys via env vars), `mcp.json` (no auth tokens), `extensions/`, `agents/` (planner/researcher/scout/worker), and `prompts/`. `just stow` pre-creates those directories so runtime state (`sessions/`, `auth.json`, `mcp-auth.json`, caches) stays local and untracked. Never commit `auth.json` or `mcp-auth.json`.
-
-`agents/.agents/skills/pi-skills-public/` is vendored into the shared skills tree (upstream GitHub remote was unavailable at import time).
-
-`macos/` is applied via `just macos` (150+ macOS system defaults). `secrets/` is managed via `just secrets`. Neither is stowed.
+**Always edit config files under `home/`, not in `$HOME`.** Every `[dotfiles]` entry is a `symlink`, so edits through `$HOME` land in the repo. Put only authored files under `home/`: runtime state (auth, sessions, caches) must stay outside the repo. After adding or removing files, run `mise dot apply` and check `mise dot status`.
 
 ### Secrets Pipeline
 
 ```
 secrets/env.sops.yaml  (ciphertext, committed)
-    ↓  just secrets — sops (>=3.10) runs SOPS_AGE_KEY_CMD="op read op://Private/sops/SOPS_PRIVATE_KEY"
-    ↓                 to fetch the age key live from 1Password (key never touches disk)
-~/.config/secrets/env.sh  (plaintext, gitignored)
-    ↓  sourced in .zprofile at login
-SEARXNG_URL, CONTEXT7_API_KEY, GITHUB_TOKEN, GITHUB_TOOLSETS, CAMOFOX_API_KEY
+    ↓  mise run secrets — sops (>=3.10) runs SOPS_AGE_KEY_CMD="op read op://Private/sops/SOPS_PRIVATE_KEY"
+    ↓                     to fetch the age key live from 1Password (key never touches disk)
+~/.config/secrets/env.sh  (plaintext, outside the repo)
+    ↓  sourced by zprofile at login
+SEARXNG_URL, CONTEXT7_API_KEY, GITHUB_TOKEN, GITHUB_TOOLSETS, CAMOFOX_API_KEY, ...
 ```
 
-The sops age private key lives only in 1Password (`op://Private/sops/SOPS_PRIVATE_KEY`) — it is never committed and never written to disk. `SOPS_AGE_KEY_CMD` is exported in `.zprofile`, so manual `sops secrets/env.sops.yaml` edits also work keylessly (override the ref per-machine with `OP_AGE_REF`). Before `just secrets` will work on a fresh machine, 1Password CLI integration must be enabled in the app: **Settings → Developer → "Integrate with 1Password CLI"**.
+The sops age private key lives only in 1Password. `SOPS_AGE_KEY_CMD` is exported in `home/.zprofile`, so manual `sops` edits also work keylessly (override the ref per machine with `OP_AGE_REF`). On a fresh machine, enable 1Password CLI integration first: **Settings → Developer → "Integrate with 1Password CLI"**.
 
-### Fresh Mac Bootstrap
+### Agents
 
-`bootstrap.sh` solves the chicken-and-egg problem (no `just` on a blank machine): it installs Xcode CLI Tools, Homebrew, and a minimal toolchain (`just stow age sops jq 1password-cli` + 1Password app), clones the repo to `~/dotfiles`, then runs `just install`.
+- `home/AGENTS.md` is the one global instruction file. `home/.claude/CLAUDE.md`, `home/.codex/AGENTS.md`, `home/.pi/agent/AGENTS.md`, and `home/.config/opencode/AGENTS.md` are repo-internal links to it.
+- `home/.agents/skills/` is the one skills tree, linked to `~/.agents/skills` (Codex, OpenCode and Pi read it). `home/.claude/skills` links to it for Claude Code.
+- A skill must exist as exactly one real `SKILL.md`. Never copy a skill into a tool-specific directory: a second real copy with the same `name` is a collision and one is dropped.
+- `home/.agents/skills/advisor-strategy` is a git submodule; clone with `--recurse-submodules`. `pi-skills-public/` is vendored.
+- `*-workspace/` directories beside skills hold skill data (some skills read them from `~/.claude/skills/`); they have no `SKILL.md`.
+- All agents use the crawler MCP server (via `uv` from `~/Projects/tools/searxNcrawl`, cloned by `mise run mcp-repos`).
+- New agents follow the same pattern: put their config under `home/.<tool>/`, add a glob entry in `mise.toml`, read the shared AGENTS.md and skills, and need nothing beyond `bootstrap.sh` plus unavoidable logins.
 
-The intended outcome is a repeatable fresh-machine restore: on a new Mac, `bootstrap.sh` or `just install` should re-deploy the tracked agent toolchain, configs, shared skills, and MCP wiring without manual repo edits.
+### Claude Code
 
-### Multi-LLM Setup
+- `home/.claude/settings.json`: permissions, hooks (plan-executive-brief on ExitPlanMode, axi SessionStart hooks), statusline.
+- `home/.claude/rules/anti-ai-writing-style.md`: banned AI writing phrases; enforced globally.
+- `home/.claude/.mcp.json`: MCP servers. `home/.claude/plugins-snapshot.json`: restore with `mise run claude-plugins`.
 
-Four AI tools are configured here — Claude Code, Codex, opencode, and Gemini — and they share infrastructure:
-- All consume the same secrets (`SEARXNG_URL`, `CONTEXT7_API_KEY`, `GITHUB_TOKEN`, `GITHUB_TOOLSETS`, `CAMOFOX_API_KEY`)
-- All use the same MCP server (crawler, run via `uv` from `~/Projects/tools/searxNcrawl`) pointing at an internal SearxNG instance
-- `agents/.agents/AGENTS.md` is the canonical shared instruction file; Claude, Codex, and opencode point to it
-- `agents/.agents/skills/` is the source of truth for shared skills; LLM-specific skill directories should reference these skills with symlinks instead of duplicating files
+## Adding things
 
-### LLM Configuration Pattern
-
-For any LLM configured in this repo, follow this pattern:
-
-- `agents/.agents/AGENTS.md` is the canonical instruction file
-- `agents/.agents/skills/` is the source of truth for shared skills
-- LLM-specific skill directories should symlink back to `agents/.agents/skills/`
-- The repo-internal symlinks express shared ownership; GNU Stow then deploys the consumer package into `$HOME`
-- A shared skill must exist as exactly one real `SKILL.md`. Pi de-duplicates by canonical path, so a symlinked consumer copy loads once, but a second real copy with the same `name` becomes a name collision and one of the two is dropped. Copy a shared skill and you break Pi discovery for it.
-- Pi needs no configuration for shared skills. It discovers `~/.agents/skills/` on its own, so the `agents` stow package is what makes a shared skill reach a Pi session.
-- Agent-specific instructions or skills may live in the tool's own config directory only when they are not part of the shared set
-- New onboarded LLMs should follow the same pattern rather than introducing copied instruction or skill trees
-- New machine setup should require only `bootstrap.sh` or `just install`, plus unavoidable external authentication steps such as 1Password or OAuth re-auth
-
-## Claude Code Configuration
-
-All Claude Code config lives in `claude/.claude/`. Key locations:
-
-- **Skills**: `claude/.claude/skills/<name>/skill.md` — agent-specific workflows live here; shared skills are symlinked from `agents/.agents/skills/`
-- **Submodules**: `claude/.claude/skills/advisor-strategy` is a git submodule (third-party skill); bootstrap clones with `--recurse-submodules`
-- **Rules**: `claude/.claude/rules/anti-ai-writing-style.md` — 50+ banned AI writing phrases; enforced globally
-- **Hooks**: plan-executive-brief (HTML brief on ExitPlanMode)
-- **MCP servers**: `claude/.claude/.mcp.json` — context7, sequential-thinking, qmd, fff, crawler
-- **Plugin snapshot**: `claude/.claude/plugins-snapshot.json` — restore with `just claude-plugins`
-
-## Adding Packages
-
-To add a Homebrew formula or cask: edit `macos/Brewfile`, then run `just brew`.
+- Homebrew formula or cask: edit `macos/Brewfile`, then `mise run brew`.
+- A config file: put it at its `$HOME` path under `home/`. Inside a globbed dir that is enough; otherwise add a `[dotfiles]` entry (shared in `mise.toml`, machine-only in `mise.<machine>.toml`). Then `mise dot apply`.
+- A setup step: add an executable script to `mise-tasks/` with a `#MISE description=` line, and add it to `mise-tasks/bootstrap` if a fresh machine needs it.
